@@ -337,8 +337,8 @@
 
                     </select>
 
-                    <select class="signage-filter-dropdown" id="categories-fielter" >
-                        <option data-display="Signage Type" >Select Category...</option>
+                    <select class="signage-filter-dropdown" id="category">
+                        <option value="">Select Category...</option>
                         @foreach ($categories as $category)
                         <option value="{{ $category->name }}">{{ $category->name }}</option>
                         @endforeach
@@ -752,52 +752,51 @@
    
     //fieltering
 
-    $(document).ready(function() {
-        // Fetch and populate cities dynamically
-        function loadCities() {
-            $.ajax({
-                url: "{{ route('page.new.campaigns') }}", 
-                method: "GET",
-                dataType: "json",
-                success: function(response) {
-                    
-                    let citiesDropdown = $('#cities');
-                    citiesDropdown.empty(); 
-                    citiesDropdown.append('<option value="">Select City</option>');
+    $(document).ready(function () {
+    // Fetch and populate cities dynamically
+    function loadCities() {
+        $.ajax({
+            url: "{{ route('page.new.campaigns') }}",  // Adjust this route if needed
+            method: "GET",
+            dataType: "json",
+            success: function(response) {
+                // Dynamically populate the cities dropdown
+                let citiesDropdown = $('#cities');
+                citiesDropdown.empty(); // Clear existing options
+                citiesDropdown.append('<option value="">Select City</option>'); // Default option
 
-                    response.cities.forEach(function(city) {
-                        citiesDropdown.append('<option value="' + city.location + '">' + city.location + '</option>');
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error loading cities:", error);
-                }
-            });
-        }
-        loadCities();
+                response.cities.forEach(function(city) {
+                    citiesDropdown.append('<option value="' + city.location + '">' + city.location + '</option>');
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error("Error loading cities:", error);
+            }
+        });
+    }
 
-        // Handle city and category change
-        function filterBillboards() {
-            let selectedCity = $('#cities').val();
-            let selectedCategory = $('#categories-fielte').val();
+    // Call loadCities() to populate cities when the page loads
+    loadCities();
 
-            $.ajax({
-                url: "{{ route('page.new.campaigns') }}",
-                method: "GET",
-                data: {
-                    city: selectedCity,
-                    category: selectedCategory
-                },
-                dataType: "json",
-                success: function(response) {
-                    let container = $('.billboard-card-container');
-                    container.html('');
+    // Handle city and category change
+    function filterBillboards() {
+        let selectedCity = $('#cities').val();
+        let selectedCategory = $('#category').val();
 
-                    if (response.signages.length > 0) {
-                        response.signages.forEach(function(data) {
-                            let imageUrl = data.image ? '/' + data.image : '/default/banner.png';
+        $.ajax({
+            url: "{{ route('page.new.campaigns') }}",
+            method: "GET",
+            data: { city: selectedCity, category: selectedCategory },
+            dataType: "json",
+            success: function(response) {
+                let container = $('.billboard-card-container');
+                container.html('');
 
-                            let cardHtml = `
+                if (response.signages.length > 0) {
+                    response.signages.forEach(function(data) {
+                        let imageUrl = data.image ? '/' + data.image : '/default/banner.png';
+
+                        let cardHtml = `
                             <div
                                 class="billboard-card"
                                 data-bs-toggle="modal"
@@ -901,25 +900,24 @@
                                 </div>
                             </div>
                         `;
-                            container.append(cardHtml);
-                        });
-                    } else {
-                        container.html('<p class="text-center">No billboards found for this selection.</p>');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX Error:", error);
-                    console.log(xhr.responseText);
+                        container.append(cardHtml);
+                    });
+                } else {
+                    container.html('<p class="text-center">No billboards found for this selection.</p>');
                 }
-            });
-        }
-
-        // Trigger filtering when city or category is changed
-        $('#cities, #categories-fielter').on('change', function() {
-            filterBillboards();
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error:", error);
+                console.log(xhr.responseText);
+            }
         });
-    });
+    }
 
+    // Trigger filtering when city or category is changed
+    $('#cities, #category').on('change', function () {
+        filterBillboards();
+    });
+});
 
     
 </script>
