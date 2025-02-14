@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\CampaignDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Order;
@@ -80,24 +81,48 @@ class OrderController extends Controller
 
 
     //for modal 
-    public function getBookedDates($orderId)
-{
-    // Fetch the order by ID for the authenticated user
-    $order = Order::where('id', $orderId)
-                  ->where('user_id', auth('web')->user()->id)  // Ensure the order belongs to the current user
-                  ->first();
+    public function getBookedDates($campaignDetailId)
+    {
+        
+        $campaignDetail = CampaignDetails::find($campaignDetailId);
 
-    // Check if the order exists and belongs to the current user
-    if (!$order) {
-        return response()->json(['error' => 'Order not found or not authorized'], 403);
+        if (!$campaignDetail) {
+            return response()->json(['error' => 'Campaign detail not found'], 404);
+        }
+    
+        // Fetch the associated order for the campaign detail
+        $order = Order::where('id', $campaignDetail->order_id)
+                      ->where('user_id', auth('web')->user()->id)
+                      ->where('status', 'booked')
+                      ->first();
+ 
+        if (!$order) {
+            return response()->json(['error' => 'Order not found or not authorized'], 403);
+        }
+
+        $campaignDetails = $order->campaignDetails;
+
+        $bookedDates = [];
+        foreach ($campaignDetails as $detail) {
+            $startDate = \Carbon\Carbon::parse($detail->start_date);
+            $endDate = \Carbon\Carbon::parse($detail->end_date);
+    
+            // Loop through each date in the range
+            while ($startDate->lte($endDate)) {
+                if ($startDate->gte($campaignDetail->start_date) && $startDate->lte($campaignDetail->end_date)) {
+                    $bookedDates[] = [
+                        'title' => 'Booked', 
+                        'start' => $startDate->toDateString(), 
+                        'end' => $startDate->toDateString(), 
+                        'allDay' => true, 
+                        'backgroundColor' => 'yellow', 
+                        'borderColor' => 'yellow',
+                    ];
+                }
+                $startDate->addDay(); 
+            }
+        }
+    
+        return response()->json(['bookedDates' => $bookedDates]);
     }
-
-    // Assume the booked dates are stored in a related table 'bookings'
-    // and you have a 'booking_date' column
-    $bookedDates = $order->bookings()->pluck('booking_date');  // Adjust this according to your table structure
-
-    // Return the booked dates in a response
-    return response()->json(['bookedDates' => $bookedDates]);
-}
-
 }

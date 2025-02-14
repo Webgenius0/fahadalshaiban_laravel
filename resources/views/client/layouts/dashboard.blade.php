@@ -12,6 +12,21 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
         background-color: yellow !important;
         color: black !important;
     }
+
+    /* Ensure FullCalendar events are displayed correctly */
+.fc-event {
+    background-color: yellow !important;
+    border-color: yellow !important;
+    color: black !important; /* Text color for events */
+}
+.fc-day.fc-booked {
+    background-color: yellow !important; /* Highlight the entire cell */
+}
+/* Remove default FullCalendar today highlight */
+.fc-day.fc-today-success {
+    background-color: #28a745 !important; /* Success color (green) */
+    color: white !important; /* Ensure text is readable */
+}
 </style>
 @endpush
 @extends('client.app', ['title' => 'Home'])
@@ -145,7 +160,7 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
 
 
         <!-- Modal with FullCalendar -->
-        <div class="modal fade" id="bookedDaysModal" tabindex="-1" aria-labelledby="bookedDaysModalLabel" aria-hidden="true">
+        <div class="modal fade" id="bookingScheduleModal" tabindex="-1" aria-labelledby="bookedDaysModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -153,7 +168,7 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div id="calendar"></div> <!-- Calendar goes here -->
+                        <div id="calendars"></div> <!-- Calendar goes here -->
                     </div>
                 </div>
             </div>
@@ -162,9 +177,10 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
 
         <div class="campaign-list">
             <!-- Campaign Item -->
+             
             @foreach($orders as $order)
             <article class="campaign-item">
-                <button class="campaign-edit-btn" data-bs-toggle="modal" data-bs-target="#bookedDaysModal" data-order-id="{{ $order->id }}" data-booked-dates="{{ json_encode($order->created_at) }}">
+                <button class="campaign-edit-btn" data-bs-toggle="modal" data-bs-target="#bookingScheduleModal" data-campaign-detail-id="{{ $order->id }}">
                     View Booked Days
                 </button>
 
@@ -250,72 +266,49 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+    
     $(document).ready(function() {
-        // Fetch the completed orders from the backend
-        $.ajax({
-            url: '/get-completed-orders',
-            method: 'GET',
-            success: function(events) {
-                // Initialize FullCalendar with the events data
-                $('#calendar').fullCalendar({
-                    events: events,
-                    eventRender: function(event, element) {
-                        element.tooltip({
-                            title: event.description, // Show the description on hover
-                            placement: 'top'
-                        });
-                    },
-                    header: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'month,agendaWeek,agendaDay'
-                    },
-                    eventColor: '#FF5733', // Optional: Customize event color
-                });
+    $('#calendars').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        defaultView: 'month', 
+        events: [], 
+        dayRender: function(date, cell) {
+
+            if (date.isSame(moment(), 'day')) {
+                cell.addClass('fc-today-success'); 
             }
-        });
-    });
-
-
-    $(document).ready(function() {
-        // Initialize FullCalendar outside the modal
-        $('#calendar').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },
-            defaultView: 'month', // Default view
-            eventColor: '#FF5733', // Customize event color
-            eventRender: function(event, element) {
-                element.tooltip({
-                    title: event.description, // Show the description on hover
-                    placement: 'top'
-                });
-            }
-        });
-
-        // When the "View Booked Days" button is clicked
-        $('.campaign-edit-btn').on('click', function() {
-            var bookedDates = $(this).data('booked-dates'); // Get booked dates from the button data
-            var orderId = $(this).data('order-id'); // Get order ID from the button data
-
-            // Format the booked dates for FullCalendar
-            var events = bookedDates.map(function(date) {
-                return {
-                    title: 'Booked',
-                    start: date, // Date format should be 'YYYY-MM-DD'
-                    allDay: true, // Make it an all-day event
-                    backgroundColor: 'yellow', // Highlight booked dates
-                    borderColor: 'yellow'
-                };
+            var bookedDates = $('#calendars').fullCalendar('clientEvents');
+            var isBooked = bookedDates.some(function(event) {
+                return event.start.isSame(date, 'day');
             });
 
-            // Update the calendar with the new events
-            $('#calendar').fullCalendar('removeEvents'); // Clear existing events
-            $('#calendar').fullCalendar('addEventSource', events); // Add new events
-            $('#calendar').fullCalendar('rerenderEvents'); // Re-render the calendar
+            if (isBooked) {
+                cell.addClass('fc-booked'); 
+            }
+        }
+    });
+
+    // When the "View Booked Days" button is clicked
+    $('.campaign-edit-btn').on('click', function() {
+        var campaignDetailId = $(this).data('campaign-detail-id'); 
+        $.ajax({
+            url: '/get-booked-dates/' + campaignDetailId, 
+            method: 'GET',
+            success: function(response) {              
+                var bookedDates = response.bookedDates;             
+                $('#calendars').fullCalendar('removeEvents');    
+                $('#calendars').fullCalendar('addEventSource', bookedDates);
+                $('#calendars').fullCalendar('rerenderEvents');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching booked dates:', error);
+            }
         });
     });
+});
 </script>
 @endpush

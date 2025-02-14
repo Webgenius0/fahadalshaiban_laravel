@@ -42,4 +42,4 @@ Route::controller(OrderController::class)->group(function () {
     // Route::put('/order/{id}', 'update')->name('order.update');
     // Route::delete('/order/{id}', 'destroy')->name('order.destroy');
 });
-Route::get('/get-booked-dates/{orderId}', [OrderController::class, 'getBookedDates'])->name('getBookedDates');
+Route::get('/get-booked-dates/{campaignDetailId}', [OrderController::class, 'getBookedDates'])->name('getBookedDates');

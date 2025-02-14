@@ -350,11 +350,11 @@
                         <option value="100k-to-200k">100k to 200k</option>
                     </select>
 
-                    <select class="signage-filter-dropdown">
+                    <!-- <select class="signage-filter-dropdown">
                         <option data-display="Pricing">Nothing</option>
                         <option>Low to High</option>
                         <option>High to Low</option>
-                    </select>
+                    </select> -->
 
                     <div class="signage-filter-date">
                         <input
