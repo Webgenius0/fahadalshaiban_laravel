@@ -12,4 +12,14 @@ class Signage extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }

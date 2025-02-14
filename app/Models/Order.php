@@ -18,8 +18,12 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    //
-    public function campaignDetails(){
-        return $this->hasMany(CampaignDetails::class);
+    public function campaignDetails()
+    {
+        return $this->hasMany(CampaignDetails::class, 'order_id');
     }
+
+    
+
+    
 }

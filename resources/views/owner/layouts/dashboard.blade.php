@@ -2,6 +2,31 @@
 $total_signage = App\Models\Signage::where('user_id', auth()->user()->id)->count();
 
 ?>
+@push('style')
+<!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.3.0/dist/fullcalendar.min.css" rel="stylesheet">
+<style>
+    .fc-event {
+        background-color: yellow !important;
+        color: black !important;
+    }
+
+
+    .fc-event {
+        background-color: yellow !important;
+        border-color: yellow !important;
+        color: black !important;
+    }
+
+    .fc-day.fc-booked {
+        background-color: yellow !important;
+    }
+
+    .fc-day.fc-today-success {
+        background-color: rgb(161, 240, 180) !important;
+        color: white !important;
+    }
+</style>
 
 @extends('owner.app', ['title' => 'Home'])
 @section('content')
@@ -127,13 +152,29 @@ $total_signage = App\Models\Signage::where('user_id', auth()->user()->id)->count
             </div>
         </div>
 
-        <div class="billboard-card-container">
+        <!-- Modal with FullCalendar -->
+        <div class="modal fade" id="bookingScheduleModal" tabindex="-1" aria-labelledby="bookedDaysModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="bookedDaysModalLabel">Booked Dates</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="calendars"></div> <!-- Calendar goes here -->
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            @if(count($signages) > 0)
+        <div class="billboard-card-container">           
             @foreach($signages as $signage)
             <div class="billboard-card" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <img src="{{ asset($signage->image ??'default/banner.png') }}" alt="Billboard" class="billboard-card-image" />
                 <div class="billboard-card-content">
+                    <button class="view-calendar-btn btn btn-success col-md-3" data-bs-toggle="modal" data-bs-target="#bookingScheduleModal" data-signage-id="{{ $signage->id }}">
+                        Calender
+                    </button>
                     <div class="d-flex align-items-center justify-content-between gap-2">
                         <div>
                             <h3>{{ $signage->name ?? 'Billboard Location' }}</h3>
@@ -183,10 +224,79 @@ $total_signage = App\Models\Signage::where('user_id', auth()->user()->id)->count
                 </div>
             </div>
             @endforeach
-            @else
-            <p>You haven't add any signage here.</p>
-            @endIf
+
+        </div>
+        <div >
+            {{ $signages->links('pagination::bootstrap-5') }}
         </div>
     </section>
 </div>
 @endsection
+
+@push('script')
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.3.0/dist/fullcalendar.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script>
+    $(document).ready(function() {
+        // Initialize FullCalendar
+        $('#calendars').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            defaultView: 'month', // Default view
+            events: [], // Initially empty, events will be added dynamically
+            dayRender: function(date, cell) {
+                // Highlight today's date with a success color
+                if (date.isSame(moment(), 'day')) {
+                    cell.addClass('fc-today-success'); // Add a class for today's date
+                }
+
+                // Highlight booked dates
+                var bookedDates = $('#calendars').fullCalendar('clientEvents');
+                var isBooked = bookedDates.some(function(event) {
+                    return event.start.isSame(date, 'day');
+                });
+
+                if (isBooked) {
+                    cell.addClass('fc-booked'); // Highlight the cell
+                }
+            }
+        });
+
+        // When the "View Calendar" button is clicked
+        $('.view-calendar-btn').on('click', function() {
+            var signageId = $(this).data('signage-id'); // Get signage ID
+            console.log('Signage ID:', signageId);
+
+            // Fetch booked dates via AJAX
+            $.ajax({
+                url: '/owner/get-owner-booked-dates/' + signageId, // Ensure this URL is correct
+                method: 'GET',
+                success: function(response) {
+                    console.log('Booked Dates Response:', response); // Log the response
+                    var bookedDates = response.bookedDates;
+
+                    // Clear existing events
+                    $('#calendars').fullCalendar('removeEvents');
+
+                    // Add new events
+                    $('#calendars').fullCalendar('addEventSource', bookedDates);
+
+                    // Re-render the calendar to apply the dayRender changes
+                    $('#calendars').fullCalendar('rerenderEvents');
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching booked dates:', error);
+                }
+            });
+        });
+    });
+</script>
+@endpush

@@ -36,3 +36,6 @@ Route::controller(SignageController::class)->prefix('signage')->name('signage.')
 Route::controller(OrderListController::class)->group(function () {
     Route::get('/order', 'index')->name('order.index');
 });
+// In routes/web.php or routes/api.php
+Route::get('/get-owner-booked-dates/{signageId}', [OrderListController::class, 'getOwnerBookedDates'])->name('getOwnerBookedDates');
+

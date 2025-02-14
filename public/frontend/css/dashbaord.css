@@ -405,7 +405,7 @@
 .pagination {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 0px;
   display: flex;
   align-items: center;
   justify-content: flex-end;

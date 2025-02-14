@@ -12,4 +12,5 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/css/style.css" />
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/css/dashbaord.css" />
 
+<link id="style" href="{{ asset('backend/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
 @stack('style')

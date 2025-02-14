@@ -9,7 +9,10 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\JsonResponse;
 use Laravel\Pail\ValueObjects\Origin\Console;
-
+use App\Models\CampaignDetails;
+use App\Models\OrderItem;
+use App\Models\Signage;
+use Carbon\Carbon;
 use function Laravel\Prompts\alert;
 
 class OrderListController extends Controller
@@ -55,5 +58,83 @@ class OrderListController extends Controller
             ->make();
     }
         return view('owner.layouts.order-list');
+    }
+
+
+    //calender
+
+    
+
+    public function getOwnerBookedDates($signageId)
+    {
+       
+        $signage = Signage::find($signageId);
+    
+
+    
+        if (!$signage) {
+            return response()->json(['error' => 'Signage not found'], 404);
+        }
+    
+      
+        $orderItems = OrderItem::where('signage_id', $signageId)->get();
+    
+        if ($orderItems->isEmpty()) {
+            return response()->json(['error' => 'No orders found for this signage'], 404);
+        }
+    
+      
+        $bookedDates = [];
+    
+       
+        foreach ($orderItems as $orderItem) {
+           
+           
+            $order = Order::where('id', $orderItem->order_id)
+                ->where('status', 'booked') // Ensure this is the correct user
+                ->first();
+    
+            
+            if ($order) {
+                \Log::info("Found Order: " . $order->id);
+            } else {
+                \Log::info("No Order found for OrderItem: " . $orderItem->id);
+            }
+    
+            if (!$order) {
+                continue; // Skip if the order is not found or not authorized
+            }
+    
+            // Fetch the associated campaign details for the order from the campaign_details table
+            $campaignDetails = CampaignDetails::where('order_id', $order->id)->get();
+    
+            // Log campaign details to verify data
+            \Log::info("Campaign Details for Order ID " . $order->id . ": ", $campaignDetails->toArray());
+    
+            // Loop through each campaign detail
+            foreach ($campaignDetails as $detail) {
+                $startDate = Carbon::parse($detail->start_date);
+                $endDate = Carbon::parse($detail->end_date);
+    
+                // Log the start and end dates for debugging
+                \Log::info("Start Date: " . $startDate->toDateString() . ", End Date: " . $endDate->toDateString());
+    
+                // Loop through each date in the range
+                while ($startDate->lte($endDate)) {
+                    $bookedDates[] = [
+                        'title' => 'Booked', 
+                        'start' => $startDate->toDateString(), // Format as 'YYYY-MM-DD'
+                        'end' => $startDate->toDateString(), // Same as start for single-day events
+                        'allDay' => true, 
+                        'backgroundColor' => 'yellow', // Highlight in yellow
+                        'borderColor' => 'yellow',
+                    ];
+                    $startDate->addDay(); // Move to the next day
+                }
+            }
+        }
+    
+        // Return the booked dates in a response
+        return response()->json(['bookedDates' => $bookedDates]);
     }
 }

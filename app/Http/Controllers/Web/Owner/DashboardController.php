@@ -12,7 +12,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $signages = Signage::where('user_id', auth('web')->user()->id)->get();
+        $signages = Signage::where('user_id', auth('web')
+        ->user()->id)
+        ->paginate(3);
         return view('owner.layouts.dashboard', compact('signages'));
     }
 

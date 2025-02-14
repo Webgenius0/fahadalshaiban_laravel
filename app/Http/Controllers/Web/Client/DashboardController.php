@@ -18,7 +18,7 @@ class DashboardController extends Controller
         ->where('orders.user_id', auth('web')->user()->id)  // Make sure to filter by the user's ID
         ->select('orders.*', 'campaign_details.*')  // Select the columns you want from both tables
       
-        ->get();
+        ->paginate(3);
         return view('client.layouts.dashboard', compact('orders'));
     }
 }

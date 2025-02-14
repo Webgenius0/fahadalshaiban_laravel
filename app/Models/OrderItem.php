@@ -15,12 +15,19 @@ class OrderItem extends Model
     // Define the relationship with Order
     public function order()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Order::class, 'order_id');
     }
 
     // Define the relationship with Signage
     public function signage()
     {
-        return $this->belongsTo(Signage::class);
+        return $this->belongsTo(Signage::class, 'signage_id');
     }
+
+    public function campaignDetails()
+    {
+        return $this->belongsTo(CampaignDetails::class, 'signage_id');
+    }
+
+ 
 }

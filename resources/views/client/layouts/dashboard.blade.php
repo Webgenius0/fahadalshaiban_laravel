@@ -7,25 +7,25 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
 <!-- FullCalendar CSS -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.3.0/dist/fullcalendar.min.css" rel="stylesheet">
 <style>
-    /* Highlight booked dates */
+   
     .fc-event {
         background-color: yellow !important;
         color: black !important;
     }
 
-    /* Ensure FullCalendar events are displayed correctly */
+   
 .fc-event {
     background-color: yellow !important;
     border-color: yellow !important;
-    color: black !important; /* Text color for events */
+    color: black !important; 
 }
 .fc-day.fc-booked {
-    background-color: yellow !important; /* Highlight the entire cell */
+    background-color: yellow !important; 
 }
-/* Remove default FullCalendar today highlight */
+
 .fc-day.fc-today-success {
-    background-color: #28a745 !important; /* Success color (green) */
-    color: white !important; /* Ensure text is readable */
+    background-color:rgb(161, 240, 180) !important; 
+    color: white !important; 
 }
 </style>
 @endpush
@@ -179,9 +179,10 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
             <!-- Campaign Item -->
              
             @foreach($orders as $order)
-            <article class="campaign-item">
-                <button class="campaign-edit-btn" data-bs-toggle="modal" data-bs-target="#bookingScheduleModal" data-campaign-detail-id="{{ $order->id }}">
-                    View Booked Days
+            <article class="campaign-item ">
+            <img src="{{ asset($order->art_work ??'default/banner.png') }}" alt="Billboard" class="billboard-card-image"  />
+                <button class="campaign-edit-btn btn btn-success col-md-3" data-bs-toggle="modal" data-bs-target="#bookingScheduleModal" data-campaign-detail-id="{{ $order->id }}">
+                    calender
                 </button>
 
                 <div class="campaign-top">
@@ -238,20 +239,20 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
 
                 <div class="campaign-bottom">
                     <div class="campaign-end">Ending on <span>{{ \Carbon\Carbon::parse($order->end_date?? '2023-01-01')->format('d F Y') }}</div>
-                    <button class="campaign-edit-btn">View</button>
+                      <!-- Add payment button conditionally -->
+            @if($order->status == 'pending') <!-- Check if the order status is pending -->
+                <a href="{{ route('page.billing') }}" class="btn btn-success mt-1">
+                    Payment
+                </a>
+            @endif
                 </div>
 
             </article>
             @endforeach
         </div>
 
-        <div class="pagination">
-            <button class="prev">Pervious</button>
-            <div class="index-btn-wrapper">
-                <button class="index-btn active">1</button>
-                <button class="index-btn">2</button>
-            </div>
-            <button class="next">Next</button>
+        <div >
+            {{ $orders->links('pagination::bootstrap-5') }} 
         </div>
     </section>
 </div>
