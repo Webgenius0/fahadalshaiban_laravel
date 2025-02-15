@@ -5164,16 +5164,16 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "6.13.0",
+            "version": "6.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "bb3ad222d65ec804c219cc52a8b54f5af2e1636a"
+                "reference": "addf63f14c037afc16298724f2fa69bc010cd00d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/bb3ad222d65ec804c219cc52a8b54f5af2e1636a",
-                "reference": "bb3ad222d65ec804c219cc52a8b54f5af2e1636a",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/addf63f14c037afc16298724f2fa69bc010cd00d",
+                "reference": "addf63f14c037afc16298724f2fa69bc010cd00d",
                 "shasum": ""
             },
             "require": {
@@ -5235,7 +5235,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-permission/issues",
-                "source": "https://github.com/spatie/laravel-permission/tree/6.13.0"
+                "source": "https://github.com/spatie/laravel-permission/tree/6.14.0"
             },
             "funding": [
                 {
@@ -5243,7 +5243,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-05T15:42:48+00:00"
+            "time": "2025-02-13T19:57:18+00:00"
         },
         {
             "name": "stichoza/google-translate-php",
@@ -8728,16 +8728,16 @@
         },
         {
             "name": "maximebf/debugbar",
-            "version": "v1.23.5",
+            "version": "v1.23.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-debugbar/php-debugbar.git",
-                "reference": "eeabd61a1f19ba5dcd5ac4585a477130ee03ce25"
+                "reference": "4b3d5f1afe09a7db5a9d3282890f49f6176d6542"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-debugbar/php-debugbar/zipball/eeabd61a1f19ba5dcd5ac4585a477130ee03ce25",
-                "reference": "eeabd61a1f19ba5dcd5ac4585a477130ee03ce25",
+                "url": "https://api.github.com/repos/php-debugbar/php-debugbar/zipball/4b3d5f1afe09a7db5a9d3282890f49f6176d6542",
+                "reference": "4b3d5f1afe09a7db5a9d3282890f49f6176d6542",
                 "shasum": ""
             },
             "require": {
@@ -8790,9 +8790,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-debugbar/php-debugbar/issues",
-                "source": "https://github.com/php-debugbar/php-debugbar/tree/v1.23.5"
+                "source": "https://github.com/php-debugbar/php-debugbar/tree/v1.23.6"
             },
-            "time": "2024-12-15T19:20:42+00:00"
+            "time": "2025-02-13T12:22:36+00:00"
         },
         {
             "name": "mockery/mockery",
