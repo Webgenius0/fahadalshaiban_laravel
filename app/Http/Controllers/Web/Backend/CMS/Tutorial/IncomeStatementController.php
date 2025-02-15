@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\web\Backend\CMS\Tutorial;
+namespace App\Http\Controllers\Web\Backend\CMS\Tutorial;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

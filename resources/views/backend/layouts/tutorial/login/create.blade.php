@@ -1,4 +1,4 @@
-@extends('backend.app', ['title' => 'Update About'])
+@extends('backend.app', ['title' => 'Login Tutorial'])
 
 @section('content')
 <!--app-content open-->
@@ -49,12 +49,12 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="image" class="form-label">Side Image:</label>
+                                                    <label for="video" class="form-label">Video:</label>
                                                     <input type="file"
                                                         class="dropify @error('video') is-invalid @enderror"
                                                         name="video" id="image"
                                                         data-default-file="{{ isset($about->video) ? asset($about->video) : '' }}">
-                                                    @error('image')
+                                                    @error('video')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -81,5 +81,3 @@
 </div>
 <!-- CONTAINER CLOSED -->
 @endsection
-@push('scripts')
-@endpush

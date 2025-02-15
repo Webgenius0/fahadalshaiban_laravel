@@ -1,4 +1,4 @@
-@extends('backend.app', ['title' => 'Home Testimonial'])
+@extends('backend.app', ['title' => 'Login Tutorial'])
 
 @push('styles')
 <link href="{{ asset('default/datatable.css') }}" rel="stylesheet" />
