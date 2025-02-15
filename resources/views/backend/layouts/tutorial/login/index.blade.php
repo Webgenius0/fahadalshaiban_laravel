@@ -35,9 +35,9 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between border-bottom">
-                            <h3 class="card-title">All Home Testimonial Items</h3>
+                            <h3 class="card-title">User Login Tutorial</h3>
                             <!-- Add New Page Button -->
-                            <a href="{{route('admin.income.create')}}" class="btn btn-primary">
+                            <a href="{{route('admin.login.create')}}" class="btn btn-primary">
                                 <i class="bx bx-plus me-sm-1 "></i> Add New
                             </a>
                         </div>
@@ -105,7 +105,7 @@
                 pagingType: "full_numbers",
                 dom: "<'row justify-content-between table-topbar'<'col-md-4 col-sm-3'l><'col-md-5 col-sm-5 px-0'f>>tipr",
                 ajax: {
-                    url: "{{ route('admin.income.index') }}",
+                    url: "{{ route('admin.login.index') }}",
                     type: "GET",
                 },
 

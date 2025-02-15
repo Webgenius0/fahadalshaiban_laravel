@@ -131,7 +131,7 @@ $total_signage = App\Models\Signage::where('user_id', auth()->user()->id)->count
                     <h2>You haven't add any signage here.</h2>
                     <p>Lets add your first signage</p>
                     <a
-                        href="./owner-dashboard-new-signage.html"
+                        href="{{ route('owner.page.add.signage') }}"
                         class="btn-common">
                         Add New Signage
                         <svg
