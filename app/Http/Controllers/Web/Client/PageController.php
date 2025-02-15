@@ -13,8 +13,7 @@ use App\Models\OrderItem;
 use App\Models\Tutorial;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\Helper;
-use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Hash;
 
 class PageController extends Controller
 {
@@ -29,42 +28,74 @@ class PageController extends Controller
         return view('client.layouts.profile');
     }
 
-    public function updateProfile( Request $request)
+    public function updateProfile(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'confirm_password' => 'required|same:password',
-            'phone' => 'required',
-            'address' => 'required',
-            'vat_no' => 'required',
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $user = auth()->user();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->phone = $request->phone;
-        $user->address = $request->address;
-        $user->vat_no = $request->vat_no;
-
-        if ($request->hasFile('avatar')) {
+        
+        try {
+            
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'password' => 'nullable',  // Make password optional
+                'confirm_password' => 'nullable|same:password',  
+                'phone' => 'required',
+                'address' => 'required',
+                'vat_no' => 'required',
+                'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Uncomment if you want to validate the avatar image type
+            ]);
+    
+            // Get the currently authenticated user
+            $user = auth()->user();
+    
+            // Update user details
+            $user->name = $request->name;
+            $user->email = $request->email;      
+            $user->phone = $request->phone;
+            $user->address = $request->address;
+            $user->vat_no = $request->vat_no;
+    
+            // Handle avatar upload (if any)
             $avatar = $request->file('avatar');
-            $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
-            $avatar->move(public_path('images'), $avatarName);
-            $user->avatar = $avatarName;
+            if ($avatar) {
+                // Delete existing avatar if it exists
+                if ($user->avatar && file_exists(public_path($user->avatar))) {
+                    Helper::fileDelete(public_path($user->avatar));
+                }
+    
+              
+                $imageName = time() . '.' . $avatar->getClientOriginalExtension();
+                $imagePath = Helper::fileUpload($avatar, 'client/profile', $imageName);
+    
+               
+                if ($imagePath === null) {
+                    throw new \Exception('Failed to upload image.');
+                }
+    
+                
+                $user->avatar = $imagePath;
+            }
+    
+            // Update password if the user has provided it
+            if ($request->password) {
+
+                if (Hash::check($request->password, $user->password)) {
+                   
+                    $user->password = Hash::make($request->password);
+                } else {
+                  
+                    throw new \Exception('Current password is incorrect');
+                }
+            } 
+            $user->save();
+    
+          session()->put('t-success', 'Profile updated successfully.');
+            return redirect()->route('client.profile');
+    
+        } catch (\Exception $e) {
+            
+           
+            return redirect()->back()->with('t-error', 'Error: ' . $e->getMessage())->withInput();
         }
-
-        $user->save();
-
-        return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
     public function invoiceList()

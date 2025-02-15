@@ -170,11 +170,10 @@
             formData.append('_token', '{{ csrf_token() }}');
 
             $.ajax({
-                url: "{{ route('update.profile.picture') }}",
+                url: "{{ route('admin.setting.profile.update') }}",
                 type: 'POST',
                 data: formData,
                 processData: false,
-                contentType: false,
                 success: function(response) {
                     if (response.success) {
                         // Update the profile picture src in the profile settings page

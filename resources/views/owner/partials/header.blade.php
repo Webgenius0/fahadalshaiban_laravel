@@ -2,8 +2,8 @@
     <div class="dashboard-top-bar-title">
         <!-- Toggle Button for Sidebar -->
         <button class="toggle-button" id="toggle-button">☰</button>
-
-        Hello Tanzir
+    <h1> Hello {{Auth::user()->name ?? 'N/A'}} </h1>
+      
         <div class="dashboard-top-bar-date">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +24,8 @@
                     stroke-linecap="round"
                     stroke-linejoin="round" />
             </svg>
-            <span>May 19, 2025</span>
+            <span>{{ \Carbon\Carbon::now()->format('M d, Y') }}</span>
+
         </div>
     </div>
 
@@ -135,16 +136,16 @@
         </div>
 
         <a
-            href="./dashboard-profile.html"
+            href="{{route('owner.page.profile')}}"
             class="dashboard-profile-details">
             <div class="dashboard-profile-img-wrapper">
                 <img
-                    src="{{ asset('frontend') }}/images/profile-img.png"
+                    src="{{ asset(Auth::user()->avatar ?? 'images/profile-img.png') }}"
                     alt="Profile"
-                    width="40" />
+                    width="40" id="profilePreview"  style="border-radius: 50%;"/>
             </div>
 
-            <h4 class="dashboard-profile-name">Tanzir Rahman</h4>
+            <h4 class="dashboard-profile-name">{{Auth::user()->name ?? 'N/A'}}</h4>
         </a>
     </div>
 </div>
