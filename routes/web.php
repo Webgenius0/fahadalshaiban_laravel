@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\Web\Frontend\ContactUsController;
 use App\Http\Controllers\Web\Frontend\HomeController;
 use App\Http\Controllers\Web\Frontend\PageController;
@@ -32,8 +33,6 @@ Route::get('lang/{lang}', [LocalizationController::class, 'set'])->name('lang')-
 
 
 Route::get('contact/us',[ContactUsController::class, 'index'])->name('contact.us');
-
-
 
 
 
