@@ -17,6 +17,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('page/add/signage', 'signage')->name('page.add.signage');
     Route::get('page/income/statement', 'incomeStatement')->name('page.income.statement');
     Route::get('page/profile', 'profile')->name('page.profile');
+    Route::put('/page/profile/update', 'updateProfile')->name('page.profile.update');
 });
 
 

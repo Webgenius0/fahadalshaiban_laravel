@@ -23,4 +23,5 @@
 <script src="{{ asset('backend/js/index1.js') }}"></script>
 <script src="{{ asset('backend/js/index.js') }}"></script>
 
+
 @stack('script')

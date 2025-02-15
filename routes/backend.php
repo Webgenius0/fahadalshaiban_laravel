@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\CMS\Tutorial\HomeTutorialController;
 use App\Http\Controllers\web\Backend\CMS\Tutorial\IncomeStatementController;
 use App\Http\Controllers\Web\Backend\CMS\Tutorial\LoginTutorialController;
+use App\Http\Controllers\Web\Backend\Settings\DispatchFeeController;
 use App\Http\Controllers\Web\Backend\SignageRequest\SignageRequestController;
 use App\Http\Controllers\Web\Backend\userRequest\UserRequestController;
 
@@ -118,6 +119,12 @@ Route::controller(SettingController::class)->group(function () {
 Route::controller(GoogleMapController::class)->group(function () {
     Route::get('setting/google/map', 'index')->name('setting.google.map.index');
     Route::patch('setting/google/map', 'update')->name('setting.google.map.update');
+});
+
+Route::controller(DispatchFeeController::class)->group(function () {
+    Route::get('setting/dispatch/fee', 'index')->name('setting.dispatch.fee.index');
+    Route::patch('setting/dispatch/fee', 'update')->name('setting.dispatch.fee.update');
+
 });
 
 //CMS

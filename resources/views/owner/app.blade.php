@@ -25,7 +25,7 @@ $systemSetting = App\Models\Setting::first();
 
         <!-- Main Content -->
         <div class="main-content-wrapper" id="main-content">
-            @include('client.partials.header')
+            @include('owner.partials.header')
 
             @yield('content')
         </div>
@@ -36,6 +36,8 @@ $systemSetting = App\Models\Setting::first();
         @csrf
     </form>
     @include('owner.partials.script')
+
+   @include('owner.partials.toster')
 </body>
 
 </html>
