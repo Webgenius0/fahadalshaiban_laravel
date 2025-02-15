@@ -13,6 +13,7 @@ use App\Models\OrderItem;
 use App\Models\Tutorial;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\Helper;
+use Illuminate\Support\Facades\Validator;
 
 
 class PageController extends Controller
@@ -26,6 +27,44 @@ class PageController extends Controller
     public function profile()
     {
         return view('client.layouts.profile');
+    }
+
+    public function updateProfile( Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'confirm_password' => 'required|same:password',
+            'phone' => 'required',
+            'address' => 'required',
+            'vat_no' => 'required',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $user = auth()->user();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->vat_no = $request->vat_no;
+
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+            $avatar->move(public_path('images'), $avatarName);
+            $user->avatar = $avatarName;
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
     public function invoiceList()

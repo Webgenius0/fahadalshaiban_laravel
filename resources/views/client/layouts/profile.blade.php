@@ -14,31 +14,31 @@
         <form class="profile-form">
             <div class="profile-form-group">
                 <label for="companyName" class="profile-form-label">Company Name*</label>
-                <input type="text" id="companyName" class="profile-form-input" placeholder="Apple Inc">
+                <input type="text" id="companyName" class="profile-form-input" placeholder="Apple Inc" name="name" required>
             </div>
             <div class="profile-form-group">
                 <label for="companyEmail" class="profile-form-label">Company Email*</label>
-                <input type="email" id="companyEmail" class="profile-form-input" placeholder="admin_company@gmail.com">
+                <input type="email" id="companyEmail" class="profile-form-input" placeholder="admin_company@gmail.com" name="email" required>
             </div>
             <div class="profile-form-group">
                 <label for="password" class="profile-form-label">Your Password*</label>
-                <input type="password" id="password" class="profile-form-input" placeholder="********">
+                <input type="password" id="password" class="profile-form-input" placeholder="********" name="password" required>
             </div>
             <div class="profile-form-group">
                 <label for="confirmPassword" class="profile-form-label">Confirm Password*</label>
-                <input type="password" id="confirmPassword" class="profile-form-input" placeholder="********">
+                <input type="password" id="confirmPassword" class="profile-form-input" placeholder="********" name="confirm_password" required>
             </div>
             <div class="profile-form-group">
                 <label for="phoneNumber" class="profile-form-label">Phone Number*</label>
-                <input type="tel" id="phoneNumber" class="profile-form-input" placeholder="+1 999 555 123">
+                <input type="tel" id="phoneNumber" class="profile-form-input" placeholder="+1 999 555 123" name="phone" required>
             </div>
             <div class="profile-form-group">
                 <label for="address" class="profile-form-label">Address*</label>
-                <input type="text" id="address" class="profile-form-input" placeholder="134 Street, 5th Avenue">
+                <input type="text" id="address" class="profile-form-input" placeholder="134 Street, 5th Avenue" name="address" required>
             </div>
             <div class="profile-form-group">
                 <label for="vatNumber" class="profile-form-label">VAT Number*</label>
-                <input type="text" id="vatNumber" class="profile-form-input" placeholder="123-456-789-0123">
+                <input type="text" id="vatNumber" class="profile-form-input" placeholder="123-456-789-0123" name="vat_no" required>
             </div>
             <button type="submit" class=" btn-common w-100">Save</button>
         </form>
