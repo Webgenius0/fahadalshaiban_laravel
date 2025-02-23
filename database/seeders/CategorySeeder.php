@@ -15,23 +15,23 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->insert([
             [
-                'name' => 'yoga',
-                'slug' => 'yoga',
+                'name' => 'Large Outdoor Signage',
+                'slug' => 'Large Outdoor Signage',
                 'status' => 'active',
             ],
             [
-                'name' => 'strength',
-                'slug' => 'strength',
+                'name' => 'Midium Outdoor Signage',
+                'slug' => 'Midium Outdoor Signage',               
                 'status' => 'active',
             ],
             [
-                'name' => 'pilates',
-                'slug' => 'pilates',
+                'name' => 'Small Outdoor Signage',
+                'slug' => 'Small Outdoor Signage',
                 'status' => 'active',
             ],
             [
-                'name' => 'cardio',
-                'slug' => 'cardio',
+                'name' => 'Banner Signage',
+                'slug' => 'Banner Signage',
                 'status' => 'active',
             ]
         ]);

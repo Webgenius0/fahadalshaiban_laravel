@@ -16,7 +16,7 @@ use App\Enums\SectionEnum;
                 Reach a real and local engagead audience on Shashh. Drive results
                 on one platform for better connections.
             </p>
-            <a href="./register.html" class="btn-common">
+            <a href="{{ route('register.owner') }}" class="btn-common">
                 Sign up now
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
