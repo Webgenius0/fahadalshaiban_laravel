@@ -65,6 +65,7 @@
                 </div>
             </div>
 
+
             <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3">
                 <!-- Height Part -->
                 <div class="describe-campaign-input-wrapper w-50 pr-2">
@@ -86,7 +87,7 @@
             </div>
 
 
-            <div class="d-flex align-items-start flex-wrap column-gap-4 w-100">
+            <!-- <div class="d-flex align-items-start flex-wrap column-gap-4 w-100">
                 <div class="describe-campaign-input-wrapper w-100">
                     <label>On Going Ad<span>*</span></label>
                     <input name="on_going_ad" type="number" placeholder="10" min="0" />
@@ -101,18 +102,35 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+            </div> -->
+
+            <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3" >
+                <!-- Set Exposure Time -->
+                <div class="describe-campaign-input-wrapper w-50 pl-2">
+                    <label>Set Exposure Time<span>*</span></label>
+                    <select name="exposure_time" class="form-control" style="height: 75px; margin-right: 20px; ">
+                        <option value="5">SR 5</option>
+                        <option value="10">SR 10</option>
+                        <option value="15">SR 15</option>
+                        <option value="20">SR 20</option>
+                    </select>
+                    @error('exposure_time')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Signage Location -->
+                <div class="describe-campaign-input-wrapper w-50 pl-2">
+                    <label>Signage Location<span>*</span></label>
+                    <select name="location" class="form-control" id="cities" style="height: 75px; margin-right: 20px; ">
+                        <!-- You will dynamically populate cities here -->
+                    </select>
+                    @error('location')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
 
-            <div class="describe-campaign-input-wrapper w-100">
-                <label>Signage Location<span>*</span></label>
-                <!-- <input name="location" type="text" placeholder="Dammam" /> -->
-                <select name="location" class="form-control" id="cities">
-
-                </select>
-                @error('location')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
 
             <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100">
                 <div class="describe-campaign-input-wrapper w-50 mr-5">

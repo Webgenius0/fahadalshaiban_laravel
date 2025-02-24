@@ -2,6 +2,21 @@
 
 @push('styles')
 <style>
+    #details-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+#details-section .col-md-6 {
+    flex: 1;
+}
+
+#details-section img {
+    max-width: 100%;
+    height: auto;
+}
+
     #closeDetailsBtn i {
         font-size: 20px;
         /* Adjust the size of the icon */
@@ -36,7 +51,7 @@
             </div>
             <!-- PAGE-HEADER END -->
             <div class="row justify-content-evenly ">
-            <div class="card col-md-5 position-relative  justify-content-center align-items-center "  >
+            <div class="card col-md-12 position-relative  justify-content-left align-items-center "  >
                 <!-- Details Section (Initially hidden) -->
                 <div id="details-section" class="card-body" style="display:none;">
                     <!-- The data will be dynamically loaded here -->
@@ -198,47 +213,62 @@
 
 
     $(document).ready(function() {
-        // Define the showView function
-        function showView(id) {
-            $.ajax({
-                url: "{{ route('admin.signage.view', ':id') }}".replace(':id', id), // Replace ':id' with the actual id
-                type: 'GET',
-                success: function(response) {
-                    if (response && response.data) {
-                        var data = response.data;
-                        var user = data.users;
-                        var content = `
-                        <h3>Record Details</h3>
-                        <p><strong>ID:</strong> ${data.id}</p>
-                         <p><strong> Name:</strong> ${user.name}</p>
-                        <p><strong>Email:</strong> ${user.email}</p>
-                        <p><strong>Title:</strong> ${data.name}</p>
-                        <p><strong>Description:</strong> ${data.description}</p>
-                        
-                    `;
-                        // Load the data into the details section
-                        $('#details-section').html(content);
-                        $('#details-section').show();
-                    } else {
-                        $('#details-section').html("<p>Failed to load data. Please try again.</p>");
-                        $('#details-section').show();
-                    }
-                },
-                error: function(xhr, status, error) {
-                    $('#details-section').html("<p>There was an error fetching the data. Please try again.</p>");
+    // Define the showView function
+    function showView(id) {
+        $.ajax({
+            url: "{{ route('admin.signage.view', ':id') }}".replace(':id', id), // Replace ':id' with the actual id
+            type: 'GET',
+            success: function(response) {
+                if (response && response.data) {
+                    var data = response.data;
+                    var user = data.users;
+
+                    // If there's an image, show it, otherwise show a placeholder
+                    var imageUrl = data.image ? "{{asset('')}}" + data.image : "{{ asset('images/no-image-placeholder.png') }}";
+
+                    var content = `
+  
+    <div class="row" >
+      
+        <div class="col-md-6 mt-5">
+        <h3>Record Details</h3>
+            <p><strong>ID:</strong> ${data.id}</p>
+            <p><strong>Name:</strong> ${user.name}</p>
+            <p><strong>Email:</strong> ${user.email}</p>
+            <p><strong>Title:</strong> ${data.name}</p>
+            <p><strong>Description:</strong> ${data.description}</p>
+        </div>
+        <div class="col-md-6">
+            <!-- If there's an image, show it, otherwise show a placeholder -->
+           
+            <img src="${imageUrl}" alt="Signage Image" class="img-fluid" style="max-width: 100%; height: auto;" />  <!-- Display the image -->
+        </div>
+    </div>
+`;
+
+
+                    // Load the data into the details section
+                    $('#details-section').html(content);
+                    $('#details-section').show();
+                } else {
+                    $('#details-section').html("<p>Failed to load data. Please try again.</p>");
                     $('#details-section').show();
                 }
-            });
-        }
+            },
+            error: function(xhr, status, error) {
+                $('#details-section').html("<p>There was an error fetching the data. Please try again.</p>");
+                $('#details-section').show();
+            }
+        });
+    }
 
+    function hideDetails() {
+        $('#details-section').hide();
+    }
 
-        function hideDetails() {
-            $('#details-section').hide();
-        }
+    window.showView = showView;
+    window.hideDetails = hideDetails;
+});
 
-
-        window.showView = showView;
-        window.hideDetails = hideDetails;
-    });
 </script>
 @endpush
