@@ -23,6 +23,12 @@ $systemSetting = App\Models\Setting::first();
   </main>
   @include('frontend.partials.footer')
   @include('frontend.partials.script')
+  <script>
+    Echo.channel('messages')
+    .listen('NewMessage', (e) => {
+        console.log(e.message);
+    });
+  </script>
 </body>
 
 </html>
