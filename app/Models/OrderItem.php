@@ -26,8 +26,8 @@ class OrderItem extends Model
 
     public function campaignDetails()
     {
-        return $this->belongsTo(CampaignDetails::class, 'signage_id');
+        return $this->hasMany(CampaignDetails::class, 'order_id', 'order_id'); // Link by order_id
     }
 
- 
+   
 }

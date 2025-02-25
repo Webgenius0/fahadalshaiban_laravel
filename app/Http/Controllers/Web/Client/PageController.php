@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Web\Client;
+
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -28,30 +30,30 @@ class PageController extends Controller
 
     public function updateProfile(Request $request)
     {
-        
+
         try {
-            
+
             $request->validate([
                 'name' => 'required',
                 'email' => 'required|email',
                 'password' => 'nullable',  // Make password optional
-                'confirm_password' => 'nullable|same:password',  
+                'confirm_password' => 'nullable|same:password',
                 'phone' => 'required',
                 'address' => 'required',
                 'vat_no' => 'required',
                 'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Uncomment if you want to validate the avatar image type
             ]);
-    
+
             // Get the currently authenticated user
             $user = auth()->user();
-    
+
             // Update user details
             $user->name = $request->name;
-            $user->email = $request->email;      
+            $user->email = $request->email;
             $user->phone = $request->phone;
             $user->address = $request->address;
             $user->vat_no = $request->vat_no;
-    
+
             // Handle avatar upload (if any)
             $avatar = $request->file('avatar');
             if ($avatar) {
@@ -59,39 +61,38 @@ class PageController extends Controller
                 if ($user->avatar && file_exists(public_path($user->avatar))) {
                     Helper::fileDelete(public_path($user->avatar));
                 }
-    
-              
+
+
                 $imageName = time() . '.' . $avatar->getClientOriginalExtension();
                 $imagePath = Helper::fileUpload($avatar, 'client/profile', $imageName);
-    
-               
+
+
                 if ($imagePath === null) {
                     throw new \Exception('Failed to upload image.');
                 }
-    
-                
+
+
                 $user->avatar = $imagePath;
             }
-    
+
             // Update password if the user has provided it
             if ($request->password) {
 
                 if (Hash::check($request->password, $user->password)) {
-                   
+
                     $user->password = Hash::make($request->password);
                 } else {
-                  
+
                     throw new \Exception('Current password is incorrect');
                 }
-            } 
+            }
             $user->save();
-    
-          session()->put('t-success', 'Profile updated successfully.');
+
+            session()->put('t-success', 'Profile updated successfully.');
             return redirect()->route('client.profile');
-    
         } catch (\Exception $e) {
-            
-           
+
+
             return redirect()->back()->with('t-error', 'Error: ' . $e->getMessage())->withInput();
         }
     }
@@ -110,15 +111,59 @@ class PageController extends Controller
     {
         if ($request->ajax()) {
             $query = Signage::query();
-            
-            // Filter by city
+    
+            // Filter by city (only if city is provided)
             if ($request->has('city') && !empty($request->city)) {
                 $query->where('location', $request->city);
             }
     
-            // Filter by category
+            // Filter by category (only if category is provided)
             if ($request->has('category') && !empty(trim($request->category))) {
                 $query->where('category_name', $request->category);
+            }
+    
+            // Filter by daily views (only if daily_views is provided)
+            if ($request->has('daily_views') && !empty($request->daily_views)) {
+                $dailyViewsRange = explode('-', $request->daily_views);
+                if (count($dailyViewsRange) == 2) {
+                    $minViews = (int) $dailyViewsRange[0];
+                    $maxViews = (int) $dailyViewsRange[1];
+                    $query->whereBetween('avg_daily_views', [$minViews, $maxViews]);
+                }
+            }
+    
+            // Filter by exposure time (only if exposure_time is provided)
+            if ($request->has('exposure_time') && !empty($request->exposure_time)) {
+                $exposureTimeRange = explode('-', $request->exposure_time);
+                if (count($exposureTimeRange) == 2) {
+                    $minExposureTime = (int) $exposureTimeRange[0];
+                    $maxExposureTime = (int) $exposureTimeRange[1];
+                    $query->whereBetween('exposure_time', [$minExposureTime, $maxExposureTime]);
+                }
+            }
+    
+            // Filter by selected date (only if selected_date is provided)
+            if ($request->has('selected_date') && !empty($request->selected_date)) {
+                $selectedDate = $request->selected_date; // Format: YYYY-MM-DD
+    
+                // Filter signages with no campaigns or campaigns that ended before the selected date
+                $query->where(function ($query) use ($selectedDate) {
+                    // Signages with no campaigns
+                    $query->doesntHave('orderItems.campaignDetails')
+                          ->orWhereHas('orderItems.campaignDetails', function ($query) use ($selectedDate) {
+                              // Signages with campaigns that ended before the selected date
+                              $query->whereDate('end_date', '<', $selectedDate);
+                          });
+                });
+    
+                // Log the query and bindings
+                // \Log::info('Query with selected date:', [
+                //     'sql' => $query->toSql(),
+                //     'bindings' => $query->getBindings(),
+                // ]);
+            } else {
+                // If no date is selected, return all signages (no date filtering)
+                // \Log::info('Query without selected date: Returning all signages.');
             }
     
             // Get the filtered signages
@@ -137,10 +182,9 @@ class PageController extends Controller
         $signages = Signage::take(20)->get(); // You can limit the number of results for better performance
         $categories = Category::all();
         $cities = Signage::select('location')->distinct()->get(); // Get unique cities
-        
+    
         return view('client.layouts.new-campaigns', compact('signages', 'categories', 'cities'));
     }
-    
 
     public function billing()
     {
@@ -213,22 +257,22 @@ class PageController extends Controller
                 'status' => 'pending',
             ]);
 
-             // Handle Base64 image (artWork)
-        $artWorkUrl = null;
-        if ($request->artWork) {
-          
-            $artWorkUrl = Helper::saveBase64Image($request->artWork);
-        }
+            // Handle Base64 image (artWork)
+            $artWorkUrl = null;
+            if ($request->artWork) {
+
+                $artWorkUrl = Helper::saveBase64Image($request->artWork);
+            }
 
             CampaignDetails::create([
                 'order_id' => $order->id,
                 'ad_title' => $request->addTitle ?? '',
                 'campaign_description' => $request->description ?? '',
-                'start_date' => $request->startDate ,
-                'end_date' => $request->endDate ,
+                'start_date' => $request->startDate,
+                'end_date' => $request->endDate,
                 'art_work' => $artWorkUrl
             ]);
-       
+
             // Add order items
             foreach ($request->items as $item) {
                 OrderItem::create([
@@ -270,8 +314,13 @@ class PageController extends Controller
 
         return $randomString;
     }
+
+    //show details after click 
+    public function showsignageDetails($id)
+    {
+        $signage = Signage::findOrFail($id);
+      return response()->json([
+        'data' => $signage
+      ]);
+    }
 }
-
-
-
- 

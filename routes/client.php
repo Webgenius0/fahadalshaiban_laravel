@@ -26,6 +26,8 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/signages/filter','filterSignages')->name('filterSignages');
     Route::post('/checkout','checkout')->name('checkout');
 
+    Route::get('/signage/details/{id}', 'showsignageDetails')->name('showsignageDetails');
+
     //calender
 
     // Route to get completed orders

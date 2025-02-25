@@ -20,6 +20,16 @@ class Signage extends Model
 
     public function orderItems()
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->hasMany(OrderItem::class,'signage_id');
+    }
+
+    public function campaignDetails()
+    {
+        return $this->hasOne(CampaignDetails::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasManyThrough(Order::class, OrderItem::class);
     }
 }
