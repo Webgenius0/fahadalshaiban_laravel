@@ -20,7 +20,7 @@ class Order extends Model
 
     public function campaignDetails()
     {
-        return $this->hasMany(CampaignDetails::class, 'order_id');
+        return $this->hasMany(CampaignDetails::class);
     }
 
     

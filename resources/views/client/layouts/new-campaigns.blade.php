@@ -13,6 +13,18 @@
         background-color: #ff9800;
         /* warning yellow/orange */
     }
+
+
+    .close-btn-container {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 10;
+    }
+
+    #details-section {
+        position: relative;
+    }
 </style>
 @endpush
 @section('content')
@@ -246,9 +258,9 @@
                                 type="date"
                                 id="start-date"
                                 class="date-input"
-
+                                min="{{ date('Y-m-d') }}"
                                 placeholder="12 /06 / 24" />
-                             
+
                         </div>
                     </div>
 
@@ -259,8 +271,8 @@
                                 type="date"
                                 id="end-date"
                                 class="date-input"
-
-                                placeholder="DD / MM / YY" />    
+                                min="{{ date('Y-m-d') }}"
+                                placeholder="DD / MM / YY" />
 
                         </div>
                     </div>
@@ -333,21 +345,21 @@
                   </div> -->
                     <!-- Dropdowns for different filters -->
 
-                    <select class="signage-filter-dropdown" id="cities">
+                    <select class="signage-filter-dropdown" id="cities" style="background-color:rgb(244, 245, 247); border: 1px solid #b3b3b3; border-radius: 8px; padding-left: 20px;">
 
                     </select>
 
-                    <select class="signage-filter-dropdown" id="category">
+                    <select class="signage-filter-dropdown" id="category" style="background-color:rgb(244, 245, 247); border: 1px solid #b3b3b3; border-radius: 8px; padding-left: 20px;">
                         <option value="">Select Category...</option>
                         @foreach ($categories as $category)
                         <option value="{{ $category->name }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
 
-                    <select class="signage-filter-dropdown">
+                    <select class="signage-filter-dropdown" id="views" style="background-color:rgb(244, 245, 247); border: 1px solid #b3b3b3; border-radius: 8px; padding-left: 20px;">
                         <option data-display="Daily Views">Daily Views...</option>
-                        <option value="50k-to-100k">50k to 100k</option>
-                        <option value="100k-to-200k">100k to 200k</option>
+                        <option value="50-100">50k to 100k</option>
+                        <option value="100-200">100k to 200k</option>
                     </select>
 
                     <!-- <select class="signage-filter-dropdown">
@@ -356,24 +368,42 @@
                         <option>High to Low</option>
                     </select> -->
 
-                    <div class="signage-filter-date">
+                    <div class="signage-filter-date" id="">
                         <input
                             type="date"
-                            id="signage-date-input"
-                            placeholder="Date" />
-
+                            id="signage-date"
+                            placeholder="Date"
+                            min="{{ date('Y-m-d') }}" />
                     </div>
 
-                    <select class="filter-dropdown">
-                        <option data-display="Duration">Nothing</option>
-                        <option value="all">All</option>
-                        <option value="5-10s">5-10 Seconds</option>
-                        <option value="10-20s">10-20 Seconds</option>
-                        <option value="20-30s">20-30 Seconds</option>
+
+                    <select class="signage-filter-dropdown" id="exposure" style="background-color:rgb(244, 245, 247); border: 1px solid #b3b3b3; border-radius: 8px; padding-left: 20px;">
+                        <option data-display="Duration">Expousure Time</option>
+                        <option value="5-10">5-10 Seconds</option>
+                        <option value="10-20">10-20 Seconds</option>
+                        <option value="20-30">20-30 Seconds</option>
                     </select>
                 </div>
 
+                <!-- <div class="row justify-content-evenly ">
+                    <div class="card col-md-12 position-relative  justify-content-left align-items-center ">
+                       
+                        
+                    </div>
+                </div> -->
+
+
+
                 <h2 class="results-heading">Results</h2>
+                <!-- HERE SHOW DYNAMIC dETAILS -->
+                <div class="card">
+                <div id="details-section" class="card-body" style="display:none;">
+                 
+                    <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
+                        <i class="fe fe-x"></i>
+                    </button>
+                </div>
+                </div>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                         <div class="billboard-card-container">
@@ -539,7 +569,7 @@
 
                                             <button class="btn btn-primary" onclick="changeLocation(event, '{{ $data->lat }}', '{{ $data->lan }}')">
                                                 <i class="fa fa-location-arrow"></i>
-                                            </button>                                         
+                                            </button>
                                         </div>
 
                                         <div class="billboard-card-info">
@@ -749,67 +779,76 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-   
     //fieltering
 
-    $(document).ready(function () {
-    // Fetch and populate cities dynamically
-    function loadCities() {
-        $.ajax({
-            url: "{{ route('page.new.campaigns') }}",  // Adjust this route if needed
-            method: "GET",
-            dataType: "json",
-            success: function(response) {
-                // Dynamically populate the cities dropdown
-                let citiesDropdown = $('#cities');
-                citiesDropdown.empty(); // Clear existing options
-                citiesDropdown.append('<option value="">Select City</option>'); // Default option
+    $(document).ready(function() {
+        // Fetch and populate cities dynamically
+        function loadCities() {
+            $.ajax({
+                url: "{{ route('page.new.campaigns') }}", // Adjust this route if needed
+                method: "GET",
+                dataType: "json",
+                success: function(response) {
+                    // Dynamically populate the cities dropdown
+                    let citiesDropdown = $('#cities');
+                    citiesDropdown.empty(); // Clear existing options
+                    citiesDropdown.append('<option value="">Select City</option>'); // Default option
 
-                response.cities.forEach(function(city) {
-                    citiesDropdown.append('<option value="' + city.location + '">' + city.location + '</option>');
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error("Error loading cities:", error);
-            }
-        });
-    }
+                    response.cities.forEach(function(city) {
+                        citiesDropdown.append('<option value="' + city.location + '">' + city.location + '</option>');
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error loading cities:", error);
+                }
+            });
+        }
 
-    // Call loadCities() to populate cities when the page loads
-    loadCities();
+        // Call loadCities() to populate cities when the page loads
+        loadCities();
 
-    // Handle city and category change
-    function filterBillboards() {
-        let selectedCity = $('#cities').val();
-        let selectedCategory = $('#category').val();
+        // Handle city and category change
+        function filterBillboards() {
+            let selectedCity = $('#cities').val();
+            let selectedCategory = $('#category').val();
+            let dailyViews = $('#views').val();
+            let signageDate = $('#signage-date').val();
+            let exPosureTime = $('#exposure').val();
 
-        $.ajax({
-            url: "{{ route('page.new.campaigns') }}",
-            method: "GET",
-            data: { city: selectedCity, category: selectedCategory },
-            dataType: "json",
-            success: function(response) {
-                let container = $('.billboard-card-container');
-                container.html('');
+            $.ajax({
+                url: "{{ route('page.new.campaigns') }}",
+                method: "GET",
+                data: {
+                    city: selectedCity,
+                    category: selectedCategory,
+                    daily_views: dailyViews,
+                    selected_date: signageDate,
+                    exposure_time: exPosureTime,
 
-                if (response.signages.length > 0) {
-                    response.signages.forEach(function(data) {
-                        let imageUrl = data.image ? '/' + data.image : '/default/banner.png';
+                },
+                dataType: "json",
+                success: function(response) {
+                    let container = $('.billboard-card-container');
+                    container.html('');
 
-                        let cardHtml = `
+                    if (response.signages.length > 0) {
+                        response.signages.forEach(function(data) {
+                            let imageUrl = data.image ? '/' + data.image : '/default/banner.png';
+
+                            let cardHtml = `
                             <div
                                 class="billboard-card"
                                 data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
-                                <img src="{{ asset($data->image ??'default/banner.png') }}" alt="Billboard" class="billboard-card-image" />
+                                <img src="${imageUrl}" alt="Billboard" class="billboard-card-image" />
                                 <div class="billboard-card-content">
                                     <div
                                         class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
                                         <div>
                                             <h3>Billboard Location</h3>
-                                            <p class="billboard-card-id">#{{$data->id}}</p>
+                                            <p class="billboard-card-id">#${data.id}</p>
                                         </div>
-                                        <button type="button" class="add-signage" data-id="{{$data->id}}">
+                                        <button type="button" class="add-signage" data-id="${data.id}">
                                             Add signage
                                         </button>
                                     </div>
@@ -840,7 +879,7 @@
                                             <p class="billboard-card-info-label">
                                                 Estimated views
                                             </p>
-                                            <p class="billboard-card-info-value">{{$data->avg_daily_views}}</p>
+                                            <p class="billboard-card-info-value">${data.avg_daily_views}</p>
                                         </div>
                                         <div>
                                             <span class="billboard-card-info-icon">
@@ -867,7 +906,7 @@
                                             <p class="billboard-card-info-label">
                                                 Price per day
                                             </p>
-                                            <p class="billboard-card-info-value">{{$data->per_day_price}}</p>
+                                            <p class="billboard-card-info-value">${data.per_day_price}</p>
                                         </div>
                                         <div>
                                             <span class="billboard-card-info-icon">
@@ -900,26 +939,24 @@
                                 </div>
                             </div>
                         `;
-                        container.append(cardHtml);
-                    });
-                } else {
-                    container.html('<p class="text-center">No billboards found for this selection.</p>');
+                            container.append(cardHtml);
+                        });
+                    } else {
+                        container.html('<p class="text-center">No billboards found for this selection.</p>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", error);
+                    console.log(xhr.responseText);
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error("AJAX Error:", error);
-                console.log(xhr.responseText);
-            }
+            });
+        }
+
+        // Trigger filtering when city or category is changed
+        $('#cities, #category, #views, #exposure, #signage-date').on('change', function() {
+            filterBillboards();
         });
-    }
-
-    // Trigger filtering when city or category is changed
-    $('#cities, #category').on('change', function () {
-        filterBillboards();
     });
-});
-
-    
 </script>
 @endsection
 
@@ -931,95 +968,95 @@
 <!-- for fieltering -->
 <script src="{{asset('js/Filter.js')}}"></script>
 <script>
-     $(document).ready(function() {
+    $(document).ready(function() {
         $(document).on('click', '.add-signage', function() {
-        var button = $(this);
-        var signageId = button.data('id'); 
+            var button = $(this);
+            var signageId = button.data('id');
 
-        
-        if (button.text() === "Remove signage") {
-            button.text("Add signage"); 
-            button.toggleClass('btn-primary').toggleClass('btn-warning'); 
-        } else {
-            button.text("Remove signage"); 
-            button.toggleClass('btn-warning').toggleClass('btn-primary'); 
-        }
 
-        console.log('Signage ID:', signageId);
-    });
+            if (button.text() === "Remove signage") {
+                button.text("Add signage");
+                button.toggleClass('btn-primary').toggleClass('btn-warning');
+            } else {
+                button.text("Remove signage");
+                button.toggleClass('btn-warning').toggleClass('btn-primary');
+            }
+
+            console.log('Signage ID:', signageId);
+        });
     });
 
     //collect Details name
     function collectName() {
-    let name = document.getElementById('addTitle').value;
-    let campaign_description = document.getElementById('description').value;
-    let startDate = document.getElementById('start-date').value;
-    let endDate = document.getElementById('end-date').value;
-    let artWorkInput = document.getElementById('file-input');
-   
-    let artWork = ''; 
-  
-  if (artWorkInput.files && artWorkInput.files[0]) {
-        let file = artWorkInput.files[0];
+        let name = document.getElementById('addTitle').value;
+        let campaign_description = document.getElementById('description').value;
+        let startDate = document.getElementById('start-date').value;
+        let endDate = document.getElementById('end-date').value;
+        let artWorkInput = document.getElementById('file-input');
 
-        
-        let reader = new FileReader();
-        reader.onloadend = function() {
-            artWorkUrl = reader.result; 
-            localStorage.setItem('artWorkUrl', artWorkUrl); // Store Base64 string in localStorage
-            
-            // Now that the image is processed, save form data
+        let artWork = '';
+
+        if (artWorkInput.files && artWorkInput.files[0]) {
+            let file = artWorkInput.files[0];
+
+
+            let reader = new FileReader();
+            reader.onloadend = function() {
+                artWorkUrl = reader.result;
+                localStorage.setItem('artWorkUrl', artWorkUrl); // Store Base64 string in localStorage
+
+                // Now that the image is processed, save form data
+                saveFormData(name, campaign_description, startDate, endDate, artWorkUrl);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            artWorkUrl = 'No image uploaded';
             saveFormData(name, campaign_description, startDate, endDate, artWorkUrl);
-        };
-        reader.readAsDataURL(file); 
-    } else {
-        artWorkUrl = 'No image uploaded';
+        }
+
         saveFormData(name, campaign_description, startDate, endDate, artWorkUrl);
+
+        // Log the form values for debugging
+        console.log('Name:', name);
+        console.log('Description:', campaign_description);
+        console.log('Start Date:', startDate);
+        console.log('End Date:', endDate);
+        console.log('Art Work:', artWork);
     }
 
-    saveFormData(name, campaign_description, startDate, endDate, artWorkUrl);
+    function saveFormData(name, campaign_description, startDate, endDate, artWork) {
+        // Ensure dates are valid before calculating the difference
+        if (startDate && endDate) {
+            let start = new Date(startDate);
+            let end = new Date(endDate);
+            let difference = end - start;
+            let differenceDays = difference / (1000 * 3600 * 24);
 
-    // Log the form values for debugging
-    console.log('Name:', name);
-    console.log('Description:', campaign_description);
-    console.log('Start Date:', startDate);
-    console.log('End Date:', endDate);
-    console.log('Art Work:', artWork);
-}
+            localStorage.setItem('differenceDays', differenceDays);
+            console.log('Difference in days:', differenceDays);
+        }
 
-function saveFormData(name, campaign_description, startDate, endDate, artWork) {
-    // Ensure dates are valid before calculating the difference
-    if (startDate && endDate) {
-        let start = new Date(startDate);
-        let end = new Date(endDate);
-        let difference = end - start;
-        let differenceDays = difference / (1000 * 3600 * 24);
+        // Construct the formData object and check if it's populated correctly
+        let formData = {
+            name: name || 'Default Name',
+            campaign_description: campaign_description || 'No Description',
+            startDate: startDate || 'Not Set',
+            endDate: endDate || 'Not Set',
+            artWork: artWork || 'not set'
+        };
 
-        localStorage.setItem('differenceDays', differenceDays);
-        console.log('Difference in days:', differenceDays);  
+        console.log('Form Data:', formData);
+
+        // Store the formData object in localStorage as a JSON string
+        localStorage.setItem('formData', JSON.stringify(formData));
     }
 
-    // Construct the formData object and check if it's populated correctly
-    let formData = {
-        name: name || 'Default Name',  
-        campaign_description: campaign_description || 'No Description', 
-        startDate: startDate || 'Not Set', 
-        endDate: endDate || 'Not Set', 
-        artWork: artWork || 'not set'  
-    };
-
-    console.log('Form Data:', formData);
-
-    // Store the formData object in localStorage as a JSON string
-    localStorage.setItem('formData', JSON.stringify(formData));
-}
-
-// Attach event listeners to the form fields
-document.getElementById('addTitle').addEventListener('change', collectName);
-document.getElementById('description').addEventListener('change', collectName);
-document.getElementById('start-date').addEventListener('change', collectName);
-document.getElementById('end-date').addEventListener('change', collectName);
-document.getElementById('file-input').addEventListener('change', collectName);
+    // Attach event listeners to the form fields
+    document.getElementById('addTitle').addEventListener('change', collectName);
+    document.getElementById('description').addEventListener('change', collectName);
+    document.getElementById('start-date').addEventListener('change', collectName);
+    document.getElementById('end-date').addEventListener('change', collectName);
+    document.getElementById('file-input').addEventListener('change', collectName);
 
 
 
@@ -1045,24 +1082,100 @@ document.getElementById('file-input').addEventListener('change', collectName);
     const idArray = new Set();
 
     $(document).on('click', '.add-signage', function() {
-    var signageId = $(this).data('id'); 
-    if (idArray.has(signageId)) {
-        
-        idArray.delete(signageId);
-        console.log("Removed Signage ID: ", signageId);
-    } else {
-        
-        idArray.add(signageId);
-        console.log("Added Signage ID: ", signageId);
-        $(`.signage-table tbody tr[data-id="${signageId}"]`).remove(); 
-    }
+        var signageId = $(this).data('id');
+        if (idArray.has(signageId)) {
 
-    $('#signage-count').val(idArray.size);
+            idArray.delete(signageId);
+            console.log("Removed Signage ID: ", signageId);
+        } else {
 
-    localStorage.setItem('selectedSignageIds', JSON.stringify(Array.from(idArray)));
-    fetchSignageLocation(signageId);
-});
+            idArray.add(signageId);
+            console.log("Added Signage ID: ", signageId);
+            $(`.signage-table tbody tr[data-id="${signageId}"]`).remove();
+        }
 
+        $('#signage-count').val(idArray.size);
+
+        localStorage.setItem('selectedSignageIds', JSON.stringify(Array.from(idArray)));
+        fetchSignageLocation(signageId);
+        showDetails(signageId);
+
+    });
+
+    $(document).ready(function() {
+        // Define the showDetails function
+        function showDetails(signageId) {
+            if (!signageId) return; // Ensure a valid signageId is passed
+
+            $.ajax({
+                url: '/get-signage-location/' + signageId, // Fetch signage details by ID
+                type: 'GET',
+                success: function(response) {
+                    // Check if response has the necessary data
+                    if (response) {
+                        // Extract data from the response object
+                        var signage = response;
+                      
+                        // Construct content dynamically based on the response
+                        var content = `
+                            <div class="row mr-5">
+                               
+                                    <h3>Signage Details</h3>
+                                    <div class="col-md-6 pt-2">                                 
+                                    <p><strong>Name:</strong> ${signage.name}</p>
+                                    <p><strong>Location:</strong> ${signage.location}</p>                     
+                                    <p><strong>Category:</strong> ${signage.category_name || 'N/A'}</p>
+                                      <p><strong>Price Per Day:</strong> $${signage.price_per_day}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <p><strong>Hight:</strong> ${signage.height || 'N/A'} Centimeter</p>
+                                    <p><strong>Width:</strong> ${signage.width || 'N/A'} Centimeter</p>
+                                    <p><strong>Expousure Time:</strong> ${signage.exposure_time || 'N/A'} Second</p>
+                                    <p><strong>Average Daily Views:</strong> ${signage.avg_daily_views || 'N/A'} K</p>
+                                </div>
+                                <div class="col-md-12 card d-flex justify-content-center ">
+                                <strong>Description:</strong>
+                                <p> ${signage.description || 'N/A'}</p>
+                                </div>
+
+                            </div>
+                        `;
+
+                        // Add the close button to the details section
+                        var closeButton = `
+                            <div class="close-btn-container">
+                                <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
+                                    <i class="fe fe-x"></i> Close <!-- Feather icon for 'X' -->
+                                </button>
+                            </div>
+                        `;
+
+                        // Update the details section with the generated content and close button
+                        $('#details-section').html(content + closeButton);
+                        $('#details-section').show(); // Show the details section
+                    } else {
+                        // Show an error message if the response is not valid
+                        $('#details-section').html("<p>Failed to load signage details. Please try again.</p>");
+                        $('#details-section').show();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Show an error message if there is an AJAX request failure
+                    $('#details-section').html("<p>There was an error fetching the data. Please try again.</p>");
+                    $('#details-section').show();
+                }
+            });
+        }
+
+        // Define the hideDetails function to hide the details section
+        function hideDetails() {
+            $('#details-section').hide(); // Hide the details section
+        }
+
+        // Expose functions to global scope for use with buttons and other events
+        window.showDetails = showDetails;
+        window.hideDetails = hideDetails;
+    });
 
     //image file upload
     let uploadedFile = null;
@@ -1109,10 +1222,9 @@ document.getElementById('file-input').addEventListener('change', collectName);
         });
 
     }
- 
 </script>
 <script>
-    function changeLocation(event, lat, lan) { 
+    function changeLocation(event, lat, lan) {
         event.preventDefault();
         const apiKey = "{{ env('GOOGLE_MAPS_API_KEY') }}";
         const url = `https://www.google.com/maps/embed/v1/view?key=${apiKey}&center=${parseInt(lat)},${parseInt(lan)}&zoom=5`;
@@ -1130,5 +1242,23 @@ document.getElementById('file-input').addEventListener('change', collectName);
         `;
     }
 
+    //ajax for show details
+
+    $(document).ready(function() {
+        $(document).on('click', '.show-details', function() {
+            var signageId = $(this).data('id');
+            $.ajax({
+                url: '/show-signage-details/' + signageId,
+                type: 'GET',
+                success: function(response) {
+                    console.log(response);
+                    $('.signage-table tbody').html(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX request failed:", error);
+                }
+            });
+        });
+    });
 </script>
 @endpush

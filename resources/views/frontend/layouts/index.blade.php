@@ -558,147 +558,81 @@ $home_hero = $cms->firstWhere('section', SectionEnum::HOME_HERO);
                 <div class="slide-container swiper">
                     <div class="slide-content">
                         <div class="card-wrapper swiper-wrapper">
-                            <div class="card swiper-slide">
+                            <div class="swiper-slide">
                                 <div class="review-card">
                                     <div class="review-header">
-                                        <h3>Adam Smith</h3>
-                                        <img src="./assets/images/google.png" alt="Google Logo" />
+                                        <h3></h3>
+                                        <!-- <img src="" alt="" /> -->
                                     </div>
-                                    <div class="review-rating">⭐ ⭐ ⭐ ⭐ ⭐</div>
-                                    <p class="review-date">11 days ago</p>
+                                    <div class="review-rating"></div>
+                                    <p class="review-date"></p>
                                     <p class="review-text">
-                                        Find the optimal location for your signage to meet your business
-                                        needs. Find the optimal location for your signage to meet your
-                                        business needs. Find the optimal location for your signage to
-                                        meet your business needs. Find the optimal location for your
-                                        signage to meet your business needs. Find the optimal location
-                                        for your signage to meet your business needs. Find the optimal
-                                        location for your signage to meet your business needs. Find the
-                                        optimal location for your signage to meet your business needs.
-                                        Find the optimal location for your signage to meet your business
-                                        needs. Find the optimal location for your signage to meet your
-                                        business needs. Find the optimal location for your signage to
-                                        meet your business needs.
+                                        
                                     </p>
                                 </div>
                             </div>
-                            <div class="card swiper-slide">
+                            <div class="swiper-slide">
                                 <div class="review-card">
                                     <div class="review-header">
-                                        <h3>Adam Smith</h3>
-                                        <img src="./assets/images/google.png" alt="Google Logo" />
+                                        <h3></h3>
+                                        <!-- <img src="" alt="" /> -->
                                     </div>
-                                    <div class="review-rating">⭐ ⭐ ⭐ ⭐ ⭐</div>
-                                    <p class="review-date">11 days ago</p>
+                                    <div class="review-rating"></div>
+                                    <p class="review-date"></p>
                                     <p class="review-text">
-                                        Find the optimal location for your signage to meet your business
-                                        needs. Find the optimal location for your signage to meet your
-                                        business needs. Find the optimal location for your signage to
-                                        meet your business needs. Find the optimal location for your
-                                        signage to meet your business needs. Find the optimal location
-                                        for your signage to meet your business needs. Find the optimal
-                                        location for your signage to meet your business needs. Find the
-                                        optimal location for your signage to meet your business needs.
-                                        Find the optimal location for your signage to meet your business
-                                        needs. Find the optimal location for your signage to meet your
-                                        business needs. Find the optimal location for your signage to
-                                        meet your business needs.
+                                        
                                     </p>
                                 </div>
                             </div>
-                            <div class="card swiper-slide">
+                            <div class="swiper-slide">
                                 <div class="review-card">
                                     <div class="review-header">
-                                        <h3>Adam Smith</h3>
-                                        <img src="./assets/images/google.png" alt="Google Logo" />
+                                        <h3></h3>
+                                        <!-- <img src="" alt="" /> -->
                                     </div>
-                                    <div class="review-rating">⭐ ⭐ ⭐ ⭐ ⭐</div>
-                                    <p class="review-date">11 days ago</p>
+                                    <div class="review-rating"></div>
+                                    <p class="review-date"></p>
                                     <p class="review-text">
-                                        Find the optimal location for your signage to meet your business
-                                        needs. Find the optimal location for your signage to meet your
-                                        business needs. Find the optimal location for your signage to
-                                        meet your business needs. Find the optimal location for your
-                                        signage to meet your business needs. Find the optimal location
-                                        for your signage to meet your business needs. Find the optimal
-                                        location for your signage to meet your business needs. Find the
-                                        optimal location for your signage to meet your business needs.
-                                        Find the optimal location for your signage to meet your business
-                                        needs. Find the optimal location for your signage to meet your
-                                        business needs. Find the optimal location for your signage to
-                                        meet your business needs.
+                                        
                                     </p>
                                 </div>
                             </div>
-                            <div class="card swiper-slide">
+                            <div class="swiper-slide">
                                 <div class="review-card">
                                     <div class="review-header">
-                                        <h3>Adam Smith</h3>
-                                        <img src="./assets/images/google.png" alt="Google Logo" />
+                                        <h3></h3>
+                                        <!-- <img src="" alt="" /> -->
                                     </div>
-                                    <div class="review-rating">⭐ ⭐ ⭐ ⭐ ⭐</div>
-                                    <p class="review-date">11 days ago</p>
+                                    <div class="review-rating"></div>
+                                    <p class="review-date"></p>
                                     <p class="review-text">
-                                        Find the optimal location for your signage to meet your business
-                                        needs. Find the optimal location for your signage to meet your
-                                        business needs. Find the optimal location for your signage to
-                                        meet your business needs. Find the optimal location for your
-                                        signage to meet your business needs. Find the optimal location
-                                        for your signage to meet your business needs. Find the optimal
-                                        location for your signage to meet your business needs. Find the
-                                        optimal location for your signage to meet your business needs.
-                                        Find the optimal location for your signage to meet your business
-                                        needs. Find the optimal location for your signage to meet your
-                                        business needs. Find the optimal location for your signage to
-                                        meet your business needs.
+                                        
                                     </p>
                                 </div>
                             </div>
-                            <div class="card swiper-slide">
+                            <div class="swiper-slide">
                                 <div class="review-card">
                                     <div class="review-header">
-                                        <h3>Adam Smith</h3>
-                                        <img src="./assets/images/google.png" alt="Google Logo" />
+                                        <h3></h3>
+                                        <!-- <img src="" alt="" /> -->
                                     </div>
-                                    <div class="review-rating">⭐ ⭐ ⭐ ⭐ ⭐</div>
-                                    <p class="review-date">11 days ago</p>
+                                    <div class="review-rating"></div>
+                                    <p class="review-date"></p>
                                     <p class="review-text">
-                                        Find the optimal location for your signage to meet your business
-                                        needs. Find the optimal location for your signage to meet your
-                                        business needs. Find the optimal location for your signage to
-                                        meet your business needs. Find the optimal location for your
-                                        signage to meet your business needs. Find the optimal location
-                                        for your signage to meet your business needs. Find the optimal
-                                        location for your signage to meet your business needs. Find the
-                                        optimal location for your signage to meet your business needs.
-                                        Find the optimal location for your signage to meet your business
-                                        needs. Find the optimal location for your signage to meet your
-                                        business needs. Find the optimal location for your signage to
-                                        meet your business needs.
+                                       
                                     </p>
                                 </div>
                             </div>
-                            <div class="card swiper-slide">
+                            <div class="swiper-slide">
                                 <div class="review-card">
                                     <div class="review-header">
-                                        <h3>Adam Smith</h3>
-                                        <img src="./assets/images/google.png" alt="Google Logo" />
+                                        <h3></h3>
+                                        <!-- <img src="" alt="" /> -->
                                     </div>
-                                    <div class="review-rating">⭐ ⭐ ⭐ ⭐ ⭐</div>
-                                    <p class="review-date">11 days ago</p>
+                                    <div class="review-rating"></div>
+                                    <p class="review-date"></p>
                                     <p class="review-text">
-                                        Find the optimal location for your signage to meet your business
-                                        needs. Find the optimal location for your signage to meet your
-                                        business needs. Find the optimal location for your signage to
-                                        meet your business needs. Find the optimal location for your
-                                        signage to meet your business needs. Find the optimal location
-                                        for your signage to meet your business needs. Find the optimal
-                                        location for your signage to meet your business needs. Find the
-                                        optimal location for your signage to meet your business needs.
-                                        Find the optimal location for your signage to meet your business
-                                        needs. Find the optimal location for your signage to meet your
-                                        business needs. Find the optimal location for your signage to
-                                        meet your business needs.
+                                        
                                     </p>
                                 </div>
                             </div>

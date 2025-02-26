@@ -21,7 +21,7 @@
                     </select> -->
                     <!-- <input type="text" value="client" placeholder="client" name="is_role"> -->
                 </div>
-                <input type="text" value="client" placeholder="client" name="is_role" hidden>
+                <input type="text" value="owner" placeholder="owner" name="is_role" hidden>
                 @error('is_role')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror

@@ -21,6 +21,21 @@ class CampaignDetails extends Model
 
     public function order()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Order::class, 'order_id');
+    }
+    
+    public function signage()
+    {
+        return $this->belongsTo(Signage::class);
+    }
+    
+    public function orders()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function orderItem()
+    {
+        return $this->belongsTo(OrderItem::class, 'order_id', 'order_id');
     }
 }

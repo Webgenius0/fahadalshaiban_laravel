@@ -19,11 +19,14 @@ return new class extends Migration
             $table->string('slug');
             $table->longText('description');
             $table->integer('avg_daily_views');
-            $table->float('per_day_price');
-            $table->string('display_size');
+            $table->float('per_day_price');          
+            $table->string('height');
+            $table->string('width');
+            $table->string('height_cm')->nullable();
+            $table->string('width_cm')->nullable();
             $table->string('exposure_time');
-            $table->integer('on_going_ad');
-            $table->integer('space_left_for_ad');
+            $table->integer('on_going_ad')->nullable();
+            $table->integer('space_left_for_ad')->nullable();
             $table->string('location');
             $table->string('lat');
             $table->string('lan');
