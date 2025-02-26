@@ -21,9 +21,10 @@
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">CMS</li>
-                        <li class="breadcrumb-item">Home</li>
-                        <li class="breadcrumb-item active" aria-current="page">Testimonial</li>
+                    <li class="breadcrumb-item">Client</li>
+                        <li class="breadcrumb-item">Tutorial</li>
+                        <li class="breadcrumb-item">New Campaign</li>
+                        <li class="breadcrumb-item">Update</li>
                     </ol>
                 </div>
             </div>

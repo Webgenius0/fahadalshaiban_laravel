@@ -10,14 +10,14 @@
 
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">CMS : About</h1>
+                    <h1 class="page-title">Tutorial:Income Statement</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">CMS</li>
-                        <li class="breadcrumb-item">Home</li>
-                        <li class="breadcrumb-item">About</li>
-                        <li class="breadcrumb-item">Update</li>
+                       
+                        <li class="breadcrumb-item">Tutorial</li>
+                        <li class="breadcrumb-item">Income Statement</li>
+                        <li class="breadcrumb-item">Create</li>
                     </ol>
                 </div>
             </div>
