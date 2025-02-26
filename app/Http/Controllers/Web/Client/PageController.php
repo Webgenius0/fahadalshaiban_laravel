@@ -213,10 +213,14 @@ class PageController extends Controller
                 'name' => $signage->name,
                 'signage_id' => $signage->id,
                 'location' => $signage->location,
+                'description' => $signage->description,
                 'type' => $signage->type,
                 'price_per_day' => $signage->per_day_price,
                 'rotation_time' => $signage->rotation_time,
                 'total_views' => $signage->total_views,
+                'height' => $signage->height,
+                'width' => $signage->width,
+                'exposure_time' => $signage->exposure_time,
                 'category_name' => $signage->category_name,
                 'avg_daily_views' => $signage->avg_daily_views
             ]);

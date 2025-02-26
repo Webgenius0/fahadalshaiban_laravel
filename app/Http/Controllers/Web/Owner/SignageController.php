@@ -78,7 +78,8 @@ class SignageController extends Controller
             'status' => 'inactive',
         ]);
 
-        return redirect()->route('owner.dashboard')->with('success', 'Created successfully');
+        flash('Signage created successfully.');
+        return redirect()->route('owner.dashboard');
     }
 
     public function showDetails($id)

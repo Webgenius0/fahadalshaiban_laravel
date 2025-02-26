@@ -106,29 +106,30 @@
 
             <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3" >
                 <!-- Set Exposure Time -->
-                <div class="describe-campaign-input-wrapper w-50 pl-2">
-                    <label>Set Exposure Time<span>*</span></label>
-                    <select name="exposure_time" class="form-control" style="height: 75px; margin-right: 20px; ">
-                        <option value="5">SR 5</option>
-                        <option value="10">SR 10</option>
-                        <option value="15">SR 15</option>
-                        <option value="20">SR 20</option>
+              
+                    <label class="pt-2"><strong>Set Exposure Time</strong><span>*</span></label>
+                    <select name="exposure_time" class="form-control " style="height: 55px; margin-right: 20px; width: 20%;  ">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
                     </select>
+                    <label><strong>second</strong></label>
                     @error('exposure_time')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
-                </div>
+              
 
                 <!-- Signage Location -->
-                <div class="describe-campaign-input-wrapper w-50 pl-2">
-                    <label>Signage Location<span>*</span></label>
-                    <select name="location" class="form-control" id="cities" style="height: 75px; margin-right: 20px; ">
+          
+                    <label class='ml-5 pl-5'>Signage Location<span>*</span></label>
+                    <select name="location" class="form-control" id="cities" style="height: 55px; margin-right: 20px; width: 20%;">
                         <!-- You will dynamically populate cities here -->
                     </select>
                     @error('location')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
-                </div>
+              
             </div>
 
 

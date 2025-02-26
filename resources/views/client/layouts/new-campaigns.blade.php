@@ -13,6 +13,18 @@
         background-color: #ff9800;
         /* warning yellow/orange */
     }
+
+
+    .close-btn-container {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 10;
+    }
+
+    #details-section {
+        position: relative;
+    }
 </style>
 @endpush
 @section('content')
@@ -380,18 +392,17 @@
                     </div>
                 </div> -->
 
-                
+
 
                 <h2 class="results-heading">Results</h2>
                 <!-- HERE SHOW DYNAMIC dETAILS -->
-
+                <div class="card">
                 <div id="details-section" class="card-body" style="display:none;">
-                    <!-- The data will be dynamically loaded here -->
-
-                    <!-- Close (cross) button to hide the details -->
+                 
                     <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
-                        <i class="fe fe-x"></i> Close <!-- Feather icon for 'X' -->
+                        <i class="fe fe-x"></i>
                     </button>
+                </div>
                 </div>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
@@ -1087,8 +1098,84 @@
 
         localStorage.setItem('selectedSignageIds', JSON.stringify(Array.from(idArray)));
         fetchSignageLocation(signageId);
+        showDetails(signageId);
+
     });
 
+    $(document).ready(function() {
+        // Define the showDetails function
+        function showDetails(signageId) {
+            if (!signageId) return; // Ensure a valid signageId is passed
+
+            $.ajax({
+                url: '/get-signage-location/' + signageId, // Fetch signage details by ID
+                type: 'GET',
+                success: function(response) {
+                    // Check if response has the necessary data
+                    if (response) {
+                        // Extract data from the response object
+                        var signage = response;
+                      
+                        // Construct content dynamically based on the response
+                        var content = `
+                            <div class="row mr-5">
+                               
+                                    <h3>Signage Details</h3>
+                                    <div class="col-md-6 pt-2">                                 
+                                    <p><strong>Name:</strong> ${signage.name}</p>
+                                    <p><strong>Location:</strong> ${signage.location}</p>                     
+                                    <p><strong>Category:</strong> ${signage.category_name || 'N/A'}</p>
+                                      <p><strong>Price Per Day:</strong> $${signage.price_per_day}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <p><strong>Hight:</strong> ${signage.height || 'N/A'} Centimeter</p>
+                                    <p><strong>Width:</strong> ${signage.width || 'N/A'} Centimeter</p>
+                                    <p><strong>Expousure Time:</strong> ${signage.exposure_time || 'N/A'} Second</p>
+                                    <p><strong>Average Daily Views:</strong> ${signage.avg_daily_views || 'N/A'} K</p>
+                                </div>
+                                <div class="col-md-12 card d-flex justify-content-center ">
+                                <strong>Description:</strong>
+                                <p> ${signage.description || 'N/A'}</p>
+                                </div>
+
+                            </div>
+                        `;
+
+                        // Add the close button to the details section
+                        var closeButton = `
+                            <div class="close-btn-container">
+                                <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
+                                    <i class="fe fe-x"></i> Close <!-- Feather icon for 'X' -->
+                                </button>
+                            </div>
+                        `;
+
+                        // Update the details section with the generated content and close button
+                        $('#details-section').html(content + closeButton);
+                        $('#details-section').show(); // Show the details section
+                    } else {
+                        // Show an error message if the response is not valid
+                        $('#details-section').html("<p>Failed to load signage details. Please try again.</p>");
+                        $('#details-section').show();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Show an error message if there is an AJAX request failure
+                    $('#details-section').html("<p>There was an error fetching the data. Please try again.</p>");
+                    $('#details-section').show();
+                }
+            });
+        }
+
+        // Define the hideDetails function to hide the details section
+        function hideDetails() {
+            $('#details-section').hide(); // Hide the details section
+        }
+
+        // Expose functions to global scope for use with buttons and other events
+        window.showDetails = showDetails;
+        window.hideDetails = hideDetails;
+    });
 
     //image file upload
     let uploadedFile = null;
