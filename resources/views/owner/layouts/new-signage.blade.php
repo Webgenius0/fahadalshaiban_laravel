@@ -7,6 +7,33 @@
         #info { margin-top: 10px; font-size: 18px; }
         .loading { color: #666; font-style: italic; }
         #search-box { width: 100%; padding: 10px; font-size: 16px; margin-bottom: 10px; }
+
+
+.height-width-space select{
+        border-radius: 12px;
+    background: #f2f2f2;
+    padding: 28px 42px;
+    border: 1px solid transparent !important;
+    outline: none;
+    color: #4d4d4d;
+    font-size: 16px;
+    transition: border-color 0.4s, background-color 0.4s;
+    
+      }
+   
+      .height-width-space .form-select:focus {
+    border-color: #34b26f !important;
+    background-color: #ffffff !important;
+    box-shadow: none;
+}
+@media screen and (max-width: 768px) {
+.height-width-wrapper{
+  flex-direction: column;
+  gap: 0 !important;
+}
+
+}
+        
     </style>
 @endpush
 @section('content')
@@ -71,8 +98,8 @@
             </div>
 
 
-            <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3">
-                <!-- Height Part -->
+            <!-- <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3">
+               
                 <div class="describe-campaign-input-wrapper w-50 pr-2">
                     <label>Height<span>*</span></label>
                     <input name="height" type="text" placeholder="638px" />
@@ -81,7 +108,7 @@
                     @enderror
                 </div>
 
-                <!-- Width Part -->
+                
                 <div class="describe-campaign-input-wrapper w-50 pl-2">
                     <label>Width<span>*</span></label>
                     <input name="width" type="text" placeholder="176px" />
@@ -89,8 +116,30 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-            </div>
-
+            </div> -->
+            <div class="height-width-wrapper d-flex justify-content-between w-100 gap-5">
+                <div class="height-width-space describe-campaign-input-wrapper w-100">
+                  <label>Height<span>*</span></label>
+                  <div class="tm-input-wrapper d-flex align-items-center gap-1">
+                     <input name="height" type="text" placeholder="638px" class="w-100" />
+                    @error('height')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                  <label for="quantity">px</label>
+                  </div>
+                </div>
+                <div class="height-width-space describe-campaign-input-wrapper w-100">
+                  <label>Width<span>*</span></label>
+                  <div class="tm-input-wrapper d-flex align-items-center gap-1">
+                  <input name="width" type="text" placeholder="176px" class="w-100"/>
+                    @error('width')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                  <label for="quantity">px</label>
+                  </div>
+                 
+                </div>
+               </div>
 
             <!-- <div class="d-flex align-items-start flex-wrap column-gap-4 w-100">
                 <div class="describe-campaign-input-wrapper w-100">
@@ -109,8 +158,8 @@
                 </div>
             </div> -->
 
-            <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3">
-                <!-- Set Exposure Time -->
+            <!-- <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3">
+                
 
                 <label class="pt-2"><strong>Set Exposure Time</strong><span>*</span></label>
                 <select name="exposure_time" class="form-control " style="height: 55px; margin-right: 20px; width: 20%;  ">
@@ -125,43 +174,67 @@
                 @enderror
 
 
-                <!-- Signage Location -->
+               
 
                 <label class='ml-5 pl-5'>Signage Location<span>*</span></label>
                 <select name="location" class="form-control" id="cities" style="height: 55px; margin-right: 20px; width: 20%;">
-                    <!-- You will dynamically populate cities here -->
+                   
                 </select>
                 @error('location')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
 
-            </div>
+            </div> -->
 
+            <div class="height-width-wrapper d-flex justify-content-between w-100 gap-5">
+                <!-- <div class="height-width-space describe-campaign-input-wrapper w-100"> -->
+                  <label><strong>Set Exposure Time</strong><span>*</span></label>
+                  <!-- <div class="tm-input-wrapper d-flex align-items-center gap-1"> -->
+                  <select name="exposure_time" class="form-control " style="height: 55px; margin-right: 20px; width: 80%;  ">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+                @error('exposure_time')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+                  <label for="quantity">Second</label>
+                  <!-- </div> -->
+                 
+                <!-- </div> -->
+                <!-- <div class="height-width-space describe-campaign-input-wrapper w-100"> -->
+                  <label><strong>Siganage Location</strong><span>*</span></label>
+                 
+                  <select name="location" class="form-control" id="cities" style="height: 55px; margin-right: 20px; width: 100%;  ">
+                   
+                </select>
+                <!-- </div> -->
+               </div>
 
-            <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100">
+            <!-- <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3"> -->
                 <div class="describe-campaign-input-wrapper w-50 mr-5">
-                    <label>Latitude <span>*</span></label>
-                    <input name="lat" type="text" placeholder="latitude" />
+                    <!-- <label>Latitude <span>*</span></label> -->
+                    <input name="lat" type="text" placeholder="latitude" id="latitude"  hidden/>
                     @error('lat')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
 
-                    <label>Latitude <span>*</span></label>
-                    <input name="lat" type="text" placeholder="latitude" />
+                    <!-- <label>Longitude <span>*</span></label> -->
+                    <input name="lan" type="text" placeholder="longitude" value="{{ old('lan') }}" id="longitude" hidden />
                     @error('lat')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
-
-                    <label>Latitude <span>*</span></label>
-                    <input name="lat" type="text" placeholder="latitude" />
-                    @error('lat')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                 
                 </div>
+                <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3">
+                    <div>
+                    <div id="info">Click on the map to see latitude, longitude, and address.</div>
+                    </div>
                 <div class="describe-campaign-input-wrapper w-50 ml-5">
                     <input id="search-box" type="text" placeholder="Search for an address...">
                     <div id="map"></div>
-                    <div id="info">Click on the map to see latitude, longitude, and address.</div>
+                    
                 </div>
             </div>
 
@@ -171,7 +244,7 @@
                     <input name="image" type="file" id="file-input" />
                     <div class="upload-content">
                         <span class="upload-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="24" viewBox="0 0 24 24" fill="none">
                                 <path d="M19 15V17C19 18.1046 18.1046 19 17 19H7C5.89543 19 5 18.1046 5 17V15M12 15L12 5M12 5L14 7M12 5L10 7" stroke="#344051" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </span>
@@ -288,9 +361,13 @@
     }
 
     function updateInfo(lat, lng, address) {
+        document.getElementById("latitude").value=lat;
+        document.getElementById("longitude").value=lng;
         document.getElementById("info").innerHTML = `Latitude: ${lat}<br>Longitude: ${lng}<br>Address: ${address}`;
         infoWindow.setContent(`<p><strong>Latitude:</strong> ${lat}<br><strong>Longitude:</strong> ${lng}<br><strong>Address:</strong> ${address}</p>`);
         infoWindow.open(map, marker);
     }
+
+    
 </script>
 @endpush
