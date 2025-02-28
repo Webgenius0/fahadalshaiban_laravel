@@ -25,6 +25,54 @@
     #details-section {
         position: relative;
     }
+
+
+
+    //* Full-Width Image Container */
+#fullWidthImageContainer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+/* Centering Wrapper */
+#fullWidthImageContainer > div {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Image and Close Button Container */
+#fullWidthImageContainer > div > div {
+    position: relative;
+    margin-top: 20px; /* Add some top margin */
+}
+
+/* Full-Width Image */
+#fullWidthImage {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+/* Close Button */
+#closeFullWidthImage {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
 </style>
 @endpush
 @section('content')
@@ -345,6 +393,7 @@
                   </div> -->
                     <!-- Dropdowns for different filters -->
 
+
                     <select class="signage-filter-dropdown" id="cities" style="background-color:rgb(244, 245, 247); border: 1px solid #b3b3b3; border-radius: 8px; padding-left: 20px;">
 
                     </select>
@@ -396,14 +445,30 @@
 
                 <h2 class="results-heading">Results</h2>
                 <!-- HERE SHOW DYNAMIC dETAILS -->
-                <div class="card">
-                <div id="details-section" class="card-body" style="display:none;">
-                 
-                    <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
-                        <i class="fe fe-x"></i>
-                    </button>
+                <div class="row">
+                    <div class="card col-md-6">
+                        <div id="details-section" class="card-body" style="display:none;">
+
+                            <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
+                                <i class="fe fe-x"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="fullWidthImageContainer" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000;">
+                        <div style="display: flex; justify-content: center; align-items: flex-start; width: 100%; height: 100%; background-size: cover; background-position: center;">
+                            <!-- Image and Close Button Container -->
+                            <div style="position: relative; margin-top: 20px;">
+                                <img id="fullWidthImage" src="" alt="Full Width Image" style="max-width: 90%; max-height: 90%;">
+                                <button id="closeFullWidthImage" style="position: absolute; top: 10px; right: 60px; background: red; color: white; border: none; padding: 10px; cursor: pointer;">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                </div>
+                <!-- Add this container outside your banner section -->
+
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                         <div class="billboard-card-container">
@@ -412,7 +477,7 @@
                                 class="billboard-card"
                                 data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
-                                <img src="{{ asset($data->image ??'default/banner.png') }}" alt="Billboard" class="billboard-card-image" />
+                                <img src="{{ asset($data->image ?? 'default/banner.png') }}" alt="Billboard" class="billboard-card-image" onclick="showFullWidthImage('{{ asset($data->image ?? 'default/banner.png') }}')" />
                                 <div class="billboard-card-content">
                                     <div
                                         class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
@@ -1115,30 +1180,16 @@
                     if (response) {
                         // Extract data from the response object
                         var signage = response;
-                      
+
                         // Construct content dynamically based on the response
                         var content = `
-                            <div class="row mr-5">
-                               
                                     <h3>Signage Details</h3>
                                     <div class="col-md-6 pt-2">                                 
-                                    <p><strong>Name:</strong> ${signage.name}</p>
-                                    <p><strong>Location:</strong> ${signage.location}</p>                     
-                                    <p><strong>Category:</strong> ${signage.category_name || 'N/A'}</p>
+                                    
                                       <p><strong>Price Per Day:</strong> $${signage.price_per_day}</p>
                                     </div>
-                                    <div class="col-md-6">
-                                    <p><strong>Hight:</strong> ${signage.height || 'N/A'} Centimeter</p>
-                                    <p><strong>Width:</strong> ${signage.width || 'N/A'} Centimeter</p>
-                                    <p><strong>Expousure Time:</strong> ${signage.exposure_time || 'N/A'} Second</p>
+                                    
                                     <p><strong>Average Daily Views:</strong> ${signage.avg_daily_views || 'N/A'} K</p>
-                                </div>
-                                <div class="col-md-12 card d-flex justify-content-center ">
-                                <strong>Description:</strong>
-                                <p> ${signage.description || 'N/A'}</p>
-                                </div>
-
-                            </div>
                         `;
 
                         // Add the close button to the details section
@@ -1260,5 +1311,23 @@
             });
         });
     });
+
+
+    //show image
+    // Function to show the full-width image
+    function showFullWidthImage(imageSrc) {
+        // Set the src of the full-width image
+        document.getElementById('fullWidthImage').src = imageSrc;
+        // Show the full-width image container
+        document.getElementById('fullWidthImageContainer').style.display = 'flex';
+    }
+
+    // Function to close the full-width image
+    document.getElementById('closeFullWidthImage').addEventListener('click', function() {
+        // Hide the full-width image container
+        document.getElementById('fullWidthImageContainer').style.display = 'none';
+    });
 </script>
+
+
 @endpush

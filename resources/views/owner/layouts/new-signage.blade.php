@@ -3,38 +3,55 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css" rel="stylesheet">
 <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> -->
 <style>
-        #map { height: 500px; width: 100%; }
-        #info { margin-top: 10px; font-size: 18px; }
-        .loading { color: #666; font-style: italic; }
-        #search-box { width: 100%; padding: 10px; font-size: 16px; margin-bottom: 10px; }
+    #map {
+        height: 500px;
+        width: 100%;
+    }
+
+    #info {
+        margin-top: 10px;
+        font-size: 18px;
+    }
+
+    .loading {
+        color: #666;
+        font-style: italic;
+    }
+
+    #search-box {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
 
 
-.height-width-space select{
+    .height-width-space select {
         border-radius: 12px;
-    background: #f2f2f2;
-    padding: 28px 42px;
-    border: 1px solid transparent !important;
-    outline: none;
-    color: #4d4d4d;
-    font-size: 16px;
-    transition: border-color 0.4s, background-color 0.4s;
-    
-      }
-   
-      .height-width-space .form-select:focus {
-    border-color: #34b26f !important;
-    background-color: #ffffff !important;
-    box-shadow: none;
-}
-@media screen and (max-width: 768px) {
-.height-width-wrapper{
-  flex-direction: column;
-  gap: 0 !important;
-}
+        background: #f2f2f2;
+        padding: 28px 42px;
+        border: 1px solid transparent !important;
+        outline: none;
+        color: #4d4d4d;
+        font-size: 16px;
+        transition: border-color 0.4s, background-color 0.4s;
 
-}
-        
-    </style>
+    }
+
+    .height-width-space .form-select:focus {
+        border-color: #34b26f !important;
+        background-color: #ffffff !important;
+        box-shadow: none;
+    }
+
+    @media screen and (max-width: 768px) {
+        .height-width-wrapper {
+            flex-direction: column;
+            gap: 0 !important;
+        }
+
+    }
+</style>
 @endpush
 @section('content')
 <div class="main-content">
@@ -117,29 +134,29 @@
                     @enderror
                 </div>
             </div> -->
-            <div class="height-width-wrapper d-flex justify-content-between w-100 gap-5">
-                <div class="height-width-space describe-campaign-input-wrapper w-100">
-                  <label>Height<span>*</span></label>
-                  <div class="tm-input-wrapper d-flex align-items-center gap-1">
-                     <input name="height" type="text" placeholder="638px" class="w-100" />
-                    @error('height')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                  <label for="quantity">px</label>
-                  </div>
+            <div class="height-width-wrapper d-flex  justify-content-between w-100 gap-5">
+                <div class="height-width-space describe-campaign-input-wrapper flex w-100">
+                    <label>Height<span>*</span></label>
+                    <div class="tm-input-wrapper d-flex align-items-center gap-1">
+                        <input name="height" type="text" placeholder="638px" class="w-100" />
+                        @error('height')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                        <label for="quantity">px</label>
+                    </div>
                 </div>
                 <div class="height-width-space describe-campaign-input-wrapper w-100">
-                  <label>Width<span>*</span></label>
-                  <div class="tm-input-wrapper d-flex align-items-center gap-1">
-                  <input name="width" type="text" placeholder="176px" class="w-100"/>
-                    @error('width')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                  <label for="quantity">px</label>
-                  </div>
-                 
+                    <label>Width<span>*</span></label>
+                    <div class="tm-input-wrapper d-flex align-items-center gap-1">
+                        <input name="width" type="text" placeholder="176px" class="w-100" />
+                        @error('width')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                        <label for="quantity">px</label>
+                    </div>
+
                 </div>
-               </div>
+            </div>
 
             <!-- <div class="d-flex align-items-start flex-wrap column-gap-4 w-100">
                 <div class="describe-campaign-input-wrapper w-100">
@@ -188,9 +205,9 @@
 
             <div class="height-width-wrapper d-flex justify-content-between w-100 gap-5">
                 <!-- <div class="height-width-space describe-campaign-input-wrapper w-100"> -->
-                  <label><strong>Set Exposure Time</strong><span>*</span></label>
-                  <!-- <div class="tm-input-wrapper d-flex align-items-center gap-1"> -->
-                  <select name="exposure_time" class="form-control " style="height: 55px; margin-right: 20px; width: 80%;  ">
+                <label><strong>Set Exposure Time</strong><span>*</span></label>
+                <!-- <div class="tm-input-wrapper d-flex align-items-center gap-1"> -->
+                <select name="exposure_time" class="form-control " style="height: 55px; margin-right: 20px; width: 80%;  ">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>
@@ -199,42 +216,42 @@
                 @error('exposure_time')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
-                  <label for="quantity">Second</label>
-                  <!-- </div> -->
-                 
+                <label for="quantity">Second</label>
+                <!-- </div> -->
+
                 <!-- </div> -->
                 <!-- <div class="height-width-space describe-campaign-input-wrapper w-100"> -->
-                  <label><strong>Siganage Location</strong><span>*</span></label>
-                 
-                  <select name="location" class="form-control" id="cities" style="height: 55px; margin-right: 20px; width: 100%;  ">
-                   
+                <label><strong>Siganage Location</strong><span>*</span></label>
+
+                <select name="location" class="form-control" id="cities" style="height: 55px; margin-right: 20px; width: 100%;  ">
+
                 </select>
                 <!-- </div> -->
-               </div>
+            </div>
 
             <!-- <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3"> -->
-                <div class="describe-campaign-input-wrapper w-50 mr-5">
-                    <!-- <label>Latitude <span>*</span></label> -->
-                    <input name="lat" type="text" placeholder="latitude" id="latitude"  hidden/>
-                    @error('lat')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
+            <div class="describe-campaign-input-wrapper w-50 mr-5">
+                <!-- <label>Latitude <span>*</span></label> -->
+                <input name="lat" type="text" placeholder="latitude" id="latitude" hidden />
+                @error('lat')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
 
-                    <!-- <label>Longitude <span>*</span></label> -->
-                    <input name="lan" type="text" placeholder="longitude" value="{{ old('lan') }}" id="longitude" hidden />
-                    @error('lat')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                 
-                </div>
-                <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3">
-                    <div>
+                <!-- <label>Longitude <span>*</span></label> -->
+                <input name="lan" type="text" placeholder="longitude" value="{{ old('lan') }}" id="longitude" hidden />
+                @error('lat')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+
+            </div>
+            <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3">
+                <div>
                     <div id="info">Click on the map to see latitude, longitude, and address.</div>
-                    </div>
+                </div>
                 <div class="describe-campaign-input-wrapper w-50 ml-5">
                     <input id="search-box" type="text" placeholder="Search for an address...">
                     <div id="map"></div>
-                    
+
                 </div>
             </div>
 
@@ -292,7 +309,7 @@
         $('.upload-content').html(`<img src="${URL.createObjectURL(event.target.files[0])}" alt="Upload" style="width: 100%;" />`);
         uploadedFile = event.target.files[0];
         $('#uploaded-image-preview').val(uploadedFile.name);
-        
+
     });
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initMap" async defer></script>
@@ -361,13 +378,11 @@
     }
 
     function updateInfo(lat, lng, address) {
-        document.getElementById("latitude").value=lat;
-        document.getElementById("longitude").value=lng;
+        document.getElementById("latitude").value = lat;
+        document.getElementById("longitude").value = lng;
         document.getElementById("info").innerHTML = `Latitude: ${lat}<br>Longitude: ${lng}<br>Address: ${address}`;
         infoWindow.setContent(`<p><strong>Latitude:</strong> ${lat}<br><strong>Longitude:</strong> ${lng}<br><strong>Address:</strong> ${address}</p>`);
         infoWindow.open(map, marker);
     }
-
-    
 </script>
 @endpush
