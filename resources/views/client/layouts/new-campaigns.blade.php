@@ -854,78 +854,77 @@
     //fieltering
 
     $(document).ready(function() {
-        // Fetch and populate cities dynamically
-        function loadCities() {
-            $.ajax({
-                url: "{{ route('page.new.campaigns') }}", // Adjust this route if needed
-                method: "GET",
-                dataType: "json",
-                success: function(response) {
-                    // Dynamically populate the cities dropdown
-                    let citiesDropdown = $('#cities');
-                    citiesDropdown.empty(); // Clear existing options
-                    citiesDropdown.append('<option value="">Select City</option>'); // Default option
+    // Fetch and populate cities dynamically
+    function loadCities() {
+        $.ajax({
+            url: "{{ route('page.new.campaigns') }}", // Adjust this route if needed
+            method: "GET",
+            dataType: "json",
+            success: function(response) {
+                // Dynamically populate the cities dropdown
+                let citiesDropdown = $('#cities');
+                citiesDropdown.empty(); // Clear existing options
+                citiesDropdown.append('<option value="">Select City</option>'); // Default option
 
-                    response.cities.forEach(function(city) {
-                        citiesDropdown.append('<option value="' + city.location + '">' + city.location + '</option>');
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error loading cities:", error);
-                }
-            });
-        }
+                response.cities.forEach(function(city) {
+                    citiesDropdown.append('<option value="' + city.location + '">' + city.location + '</option>');
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("Error loading cities:", error);
+            }
+        });
+    }
 
-        // Call loadCities() to populate cities when the page loads
-        loadCities();
+    // Call loadCities() to populate cities when the page loads
+    loadCities();
 
-        // Handle city and category change
-        function filterBillboards() {
-            let selectedCity = $('#cities').val();
-            let selectedCategory = $('#category').val();
-            let dailyViews = $('#views').val();
-            let signageDate = $('#signage-date').val();
-            let exPosureTime = $('#exposure').val();
+    // Handle city and category change
+    function filterBillboards() {
+        let selectedCity = $('#cities').val();
+        let selectedCategory = $('#category').val();
+        let dailyViews = $('#views').val();
+        let signageDate = $('#signage-date').val();
+        let exPosureTime = $('#exposure').val();
 
-            $.ajax({
-                url: "{{ route('page.new.campaigns') }}",
-                method: "GET",
-                data: {
-                    city: selectedCity,
-                    category: selectedCategory,
-                    daily_views: dailyViews,
-                    selected_date: signageDate,
-                    exposure_time: exPosureTime,
+        $.ajax({
+            url: "{{ route('page.new.campaigns') }}",
+            method: "GET",
+            data: {
+                city: selectedCity,
+                category: selectedCategory,
+                daily_views: dailyViews,
+                selected_date: signageDate,
+                exposure_time: exPosureTime,
+            },
+            dataType: "json",
+            success: function(response) {
+                let container = $('.billboard-card-container');
+                container.html(''); // Clear the container
 
-                },
-                dataType: "json",
-                success: function(response) {
-                    let container = $('.billboard-card-container');
-                    container.html('');
+                if (response.signages.length > 0) {
+                    response.signages.forEach(function(data) {
+                        let imageUrl = data.image ? '/' + data.image : '/default/banner.png';
 
-                    if (response.signages.length > 0) {
-                        response.signages.forEach(function(data) {
-                            let imageUrl = data.image ? '/' + data.image : '/default/banner.png';
-
-                            let cardHtml = `
-                            <div
-                                class="billboard-card"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                <img src="${imageUrl}" alt="Billboard" class="billboard-card-image" />
-                                <div class="billboard-card-content">
-                                    <div
-                                        class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
-                                        <div>
-                                            <h3>Billboard Location</h3>
-                                            <p class="billboard-card-id">#${data.id}</p>
-                                        </div>
-                                        <button type="button" class="add-signage" data-id="${data.id}">
-                                            Add signage
-                                        </button>
+                        let cardHtml = `
+                        <div
+                            class="billboard-card"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            <img src="${imageUrl}" alt="Billboard" class="billboard-card-image" data-id="${data.id}" />
+                            <div class="billboard-card-content">
+                                <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+                                    <div>
+                                        <h3>Billboard Location</h3>
+                                        <p class="billboard-card-id">#${data.id}</p>
                                     </div>
+                                    <button type="button" class="add-signage" data-id="${data.id}">
+                                        Add signage
+                                    </button>
+                                </div>
 
-                                    <div class="billboard-card-info">
+                                
+                                   <div class="billboard-card-info">
                                         <div>
                                             <span class="billboard-card-info-icon">
                                                 <svg
@@ -1008,27 +1007,41 @@
                                             </p>
                                         </div>
                                     </div>
-                                </div>
+                                
                             </div>
-                        `;
-                            container.append(cardHtml);
-                        });
-                    } else {
-                        container.html('<p class="text-center">No billboards found for this selection.</p>');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX Error:", error);
-                    console.log(xhr.responseText);
+                        </div>
+                    `;
+                        container.append(cardHtml);
+                    });
+                } else {
+                    container.html('<p class="text-center">No billboards found for this selection.</p>');
                 }
-            });
-        }
-
-        // Trigger filtering when city or category is changed
-        $('#cities, #category, #views, #exposure, #signage-date').on('change', function() {
-            filterBillboards();
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", error);
+            }
         });
+    }
+
+    // Trigger filtering when city or category is changed
+    $('#cities, #category, #views, #exposure, #signage-date').on('change', function() {
+        filterBillboards();
     });
+
+    // Delegate click event for dynamically generated images
+    $(document).on('click', '.billboard-card-image', function() {
+        var imageUrl = $(this).attr('src');
+        // Display the image in the modal
+        $('#fullWidthImage').attr('src', imageUrl);
+        $('#fullWidthImageContainer').show(); // Show the modal container
+    });
+
+    // Close modal when close button is clicked
+    $('#closeFullWidthImage').on('click', function() {
+        $('#fullWidthImageContainer').hide(); // Hide the modal container
+    });
+});
+
 </script>
 @endsection
 
@@ -1223,7 +1236,11 @@
                     $('#details-section').html("<p>There was an error fetching the data. Please try again.</p>");
                     $('#details-section').show();
                 }
+
+
+                
             });
+            
         }
 
         function hideDetails() {
