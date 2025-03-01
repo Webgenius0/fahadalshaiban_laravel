@@ -28,51 +28,53 @@
 
 
 
-    //* Full-Width Image Container */
-#fullWidthImageContainer {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-}
+    /* Full-Width Image Container */
+    #fullWidthImageContainer {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+    }
 
-/* Centering Wrapper */
-#fullWidthImageContainer > div {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Align items to the top */
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-}
+    /* Centering Wrapper */
+    #fullWidthImageContainer>div {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        /* Align items to the top */
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+    }
 
-/* Image and Close Button Container */
-#fullWidthImageContainer > div > div {
-    position: relative;
-    margin-top: 20px; /* Add some top margin */
-}
+    /* Image and Close Button Container */
+    #fullWidthImageContainer>div>div {
+        position: relative;
+        margin-top: 20px;
+        /* Add some top margin */
+    }
 
-/* Full-Width Image */
-#fullWidthImage {
-    max-width: 90%;
-    max-height: 90%;
-}
+    /* Full-Width Image */
+    #fullWidthImage {
+        max-width: 90%;
+        max-height: 90%;
+    }
 
-/* Close Button */
-#closeFullWidthImage {
-    position: absolute;
-    top: 10px;
-    right: 30px;
-    background: red;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-}
+    /* Close Button */
+    #closeFullWidthImage {
+        position: absolute;
+        top: 10px;
+        right: 30px;
+        background: red;
+        color: black;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+    }
 </style>
 @endpush
 @section('content')
@@ -306,7 +308,8 @@
                                 type="date"
                                 id="start-date"
                                 class="date-input"
-                                min="{{ date('Y-m-d') }}"
+                                min="{{ \Carbon\Carbon::now()->addDays(2)->format('Y-m-d') }}"
+
                                 placeholder="12 /06 / 24" />
 
                         </div>
@@ -319,7 +322,7 @@
                                 type="date"
                                 id="end-date"
                                 class="date-input"
-                                min="{{ date('Y-m-d') }}"
+                                min="{{ \carbon\carbon::now()->addDays(2)->format('Y-m-d') }}"
                                 placeholder="DD / MM / YY" />
 
                         </div>
@@ -458,14 +461,18 @@
                     <div id="fullWidthImageContainer" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000;">
                         <div style="display: flex; justify-content: center; align-items: flex-start; width: 100%; height: 100%; background-size: cover; background-position: center;">
                             <!-- Image and Close Button Container -->
-                            <div style="position: relative; margin-top: 20px;">
+                            <div style="border-radius: 10px; margin-top: 20px; border-radius: 10px; overflow: hidden;">
                                 <img id="fullWidthImage" src="" alt="Full Width Image" style="max-width: 90%; max-height: 90%;">
-                                <button id="closeFullWidthImage" style="position: absolute; top: 10px; right: 60px; background: red; color: white; border: none; padding: 10px; cursor: pointer;">
-                                    Close
+
+                                <!-- Close Button with Black Color -->
+                                <button id="closeFullWidthImage"
+                                    style="position: absolute; top: 10px; right: 60px;  color: white; border: none; padding: 10px; cursor: pointer; border-radius: 5px;">
+                                    <i class="fe fe-x" >Close</i> <!-- Icon color set to white -->
                                 </button>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <!-- Add this container outside your banner section -->
 
@@ -1168,31 +1175,33 @@
     });
 
     $(document).ready(function() {
-        // Define the showDetails function
         function showDetails(signageId) {
-            if (!signageId) return; // Ensure a valid signageId is passed
+            if (!signageId) return;
 
             $.ajax({
-                url: '/get-signage-location/' + signageId, // Fetch signage details by ID
+                url: '/get-signage-location/' + signageId,
                 type: 'GET',
                 success: function(response) {
-                    // Check if response has the necessary data
+                    console.log(response);
                     if (response) {
-                        // Extract data from the response object
                         var signage = response;
-
-                        // Construct content dynamically based on the response
+                        var differenceDays = localStorage.getItem('differenceDays');
+                        var totalprice = signage.price_per_day * differenceDays;                      
                         var content = `
                                     <h3>Signage Details</h3>
+                                    <div class="row">
                                     <div class="col-md-6 pt-2">                                 
                                     
-                                      <p><strong>Price Per Day:</strong> $${signage.price_per_day}</p>
+                                      <p><strong>Price Per Day:</strong> ${signage.price_per_day ||'N/A'} Rs </p>
+                                        <p><strong>Total Days:</strong> ${differenceDays}</p>
                                     </div>
-                                    
+                                    <div class="col-md-6 pt-2">
                                     <p><strong>Average Daily Views:</strong> ${signage.avg_daily_views || 'N/A'} K</p>
+                                    <p><strong>Total Price:</strong> ${totalprice || 'N/A'} RS</p>
+                                  
+                                    </div>
+                                    </div>
                         `;
-
-                        // Add the close button to the details section
                         var closeButton = `
                             <div class="close-btn-container">
                                 <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
@@ -1201,32 +1210,31 @@
                             </div>
                         `;
 
-                        // Update the details section with the generated content and close button
                         $('#details-section').html(content + closeButton);
-                        $('#details-section').show(); // Show the details section
+                        $('#details-section').show();
                     } else {
-                        // Show an error message if the response is not valid
+
                         $('#details-section').html("<p>Failed to load signage details. Please try again.</p>");
                         $('#details-section').show();
                     }
                 },
                 error: function(xhr, status, error) {
-                    // Show an error message if there is an AJAX request failure
+
                     $('#details-section').html("<p>There was an error fetching the data. Please try again.</p>");
                     $('#details-section').show();
                 }
             });
         }
 
-        // Define the hideDetails function to hide the details section
         function hideDetails() {
-            $('#details-section').hide(); // Hide the details section
+            $('#details-section').hide();
+            event.preventDefault();
         }
-
-        // Expose functions to global scope for use with buttons and other events
         window.showDetails = showDetails;
         window.hideDetails = hideDetails;
     });
+
+
 
     //image file upload
     let uploadedFile = null;
@@ -1295,36 +1303,32 @@
 
     //ajax for show details
 
-    $(document).ready(function() {
-        $(document).on('click', '.show-details', function() {
-            var signageId = $(this).data('id');
-            $.ajax({
-                url: '/show-signage-details/' + signageId,
-                type: 'GET',
-                success: function(response) {
-                    console.log(response);
-                    $('.signage-table tbody').html(response);
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX request failed:", error);
-                }
-            });
-        });
-    });
+    // $(document).ready(function() {
+    //     $(document).on('click', '.show-details', function() {
+    //         var signageId = $(this).data('id');
+    //         $.ajax({
+    //             url: '/show-signage-details/' + signageId,
+    //             type: 'GET',
+    //             success: function(response) {
+    //                 console.log(response);
+    //                 $('.signage-table tbody').html(response);
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 console.error("AJAX request failed:", error);
+    //             }
+    //         });
+    //     });
+    // });
 
 
     //show image
-    // Function to show the full-width image
+
     function showFullWidthImage(imageSrc) {
-        // Set the src of the full-width image
         document.getElementById('fullWidthImage').src = imageSrc;
-        // Show the full-width image container
         document.getElementById('fullWidthImageContainer').style.display = 'flex';
     }
-
-    // Function to close the full-width image
     document.getElementById('closeFullWidthImage').addEventListener('click', function() {
-        // Hide the full-width image container
+        event.preventDefault();
         document.getElementById('fullWidthImageContainer').style.display = 'none';
     });
 </script>
