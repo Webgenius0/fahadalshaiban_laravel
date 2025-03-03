@@ -1,5 +1,69 @@
 <style>
-    
+    .dashboard-sidebar {
+  width: 280px;
+  /* background color change to linear gradient */
+  /* background-color: #ffffff; */
+  background: linear-gradient(to bottom, #6bc89a, #34b26f);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  /* left: 0; */
+  right: 0;
+  transition: transform 0.3s ease;
+  z-index: 2;
+  padding: 20px 12px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  /* text color change to white */
+  /* color: #4d4d4d; */
+  color: #f2f2f2;
+  font-size: 16px;
+  line-height: 24px;
+  transition-duration: 0.3s;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+/*  text & background color , svg color change to white */
+.menu-item:hover,
+.menu-item.active {
+  /* background-color: #34b26f; */
+  /* background-color: #1d8a50; */
+  background-color: linear-gradient(to right,rgb(50, 158, 104), #34b26f);
+  /* color: #4d4d4d; */
+  color: #fff;
+}
+
+.menu-item-svg {
+  /* stroke: #4d4d4d; */
+  stroke: #fff;
+}
+
+.menu-item:hover .menu-item-svg,
+.menu-item.active .menu-item-svg {
+  stroke: #fff;
+}
+
+.menu-item.hover .menu-item-svg {
+  stroke: #fff;
+}
+.issue-item svg {
+  /* fill: #4d4d4d; */
+  fill: #fff;
+}
+.issue-item:hover svg {
+  fill: #fff;
+}
+
+.issue-item.active svg {
+  fill: #fff;
+}
+
 </style>
 <aside class="dashboard-sidebar" id="sidebar">
         <a href="{{ route('owner.dashboard') }}" class="logo d-block">

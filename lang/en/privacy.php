@@ -32,7 +32,12 @@ return [
                     'description7'=> 'We may update this Privacy Policy from time to time. Any changes
                     will be posted on the App, and your continued use of the App
                     after such changes have been posted will constitute your
-                    acceptance of the changes.'
+                    acceptance of the changes.',
+                    'subtitle1' => 'To service providers who perform services on our behalf.',
+                    'subtitle2' => 'To comply with legal obligations.',
+                    'subtitle3' => 'To protect our rights and property.',
+
+
 
 
 ];

@@ -42,10 +42,10 @@ use App\Enums\SectionEnum;
                 </p>
                 <ul>
                     <li>
-                        To service providers who perform services on our behalf.
+                        {{__('privacy.subtitle1')}}
                     </li>
-                    <li>To comply with legal obligations.</li>
-                    <li>To protect our rights and property.</li>
+                    <li>{{__('privacy.subtitle2')}}.</li>
+                    <li>{{__('privacy.subtitle3')}}</li>
                 </ul>
             </div>
             <div class="policy-item">

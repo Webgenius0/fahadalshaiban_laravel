@@ -13,10 +13,10 @@ class ContactUsController extends Controller
     {
         //cms start
         $query = CMS::where('page', PageEnum::HOME)->where('status', 'active');
-        $cms = [];
-        foreach (SectionEnum::HomePage() as $key => $section) {
-            $cms[$key] = (clone $query)->where('section', $key)->latest()->take($section['item'])->{$section['type']}();
-        }
+        $cms= $query->get();
+        // foreach (SectionEnum::HomePage() as $key => $section) {
+        //     $cms[$key] = (clone $query)->where('section', $key)->latest()->take($section['item'])->{$section['type']}();
+        // }
         //cms end
         return view('frontend.layouts.contact-us', compact('cms'));
     }

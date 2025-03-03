@@ -19,6 +19,7 @@ enum SectionEnum: string
     //Footer
     case FOOTER = 'footer';
     case SOLUTION = "solution";
+    case HomePage = "home_page";
 
     //Tutorial
     case OWNER = 'owner';

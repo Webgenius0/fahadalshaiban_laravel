@@ -134,7 +134,7 @@
                     @enderror
                 </div>
             </div> -->
-            <div class="height-width-wrapper d-flex  justify-content-between w-100 gap-5">
+            <!-- <div class="height-width-wrapper d-flex  justify-content-between w-100 gap-5">
                 <div class="height-width-space describe-campaign-input-wrapper flex w-100">
                     <label>Height<span>*</span></label>
                     <div class="tm-input-wrapper d-flex align-items-center gap-1">
@@ -156,7 +156,69 @@
                     </div>
 
                 </div>
+            </div> -->
+            <div>
+            <label style="margin-right: 1rem;"><strong>Signage ArthWork Dimension</strong><span><strong>*</strong></span></label>
             </div>
+            <div class="height-width-wrapper d-flex items-center justify-content-between w-100 gap-5">
+                
+                <div class="height-width-space describe-campaign-input-wrapper w-100">
+                  <div class="tm-input-wrapper d-flex align-items-center gap-1"> 
+                    <!-- update here with margin right -->
+                    <label style="margin-right: 1rem;">Height<span>*</span></label>
+                    <input name="height" type="text" placeholder="638px" class="w-100" />
+                        @error('height')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                  <label for="quantity">px</label>
+                  </div>
+                </div>
+                <div class="height-width-space describe-campaign-input-wrapper w-100">
+                  <div class="tm-input-wrapper d-flex align-items-center gap-1">
+                     <!-- update here with margin right -->
+                    <label style="margin-right: 1rem;">Width<span>*</span></label>
+                    <input name="width" type="text" placeholder="176px" class="w-100" />
+                        @error('width')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                  <label for="quantity">px</label>
+                  </div>
+                 
+                </div>
+               </div>
+
+
+               <!-- Actuall Arthwork Dimension -->
+
+               <div>
+            <label style="margin-right: 1rem;"><strong>Signage Actuall Dimension</strong><span><strong>*</strong></span></label>
+            </div>
+            <div class="height-width-wrapper d-flex items-center justify-content-between w-100 gap-5">
+                
+                <div class="height-width-space describe-campaign-input-wrapper w-100">
+                  <div class="tm-input-wrapper d-flex align-items-center gap-1"> 
+                    <!-- update here with margin right -->
+                    <label style="margin-right: 1rem;">Height<span>*</span></label>
+                    <input name="width" type="text" placeholder="176cm" class="w-100" />
+                        @error('width')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                  <label for="quantity">CM</label>
+                  </div>
+                </div>
+                <div class="height-width-space describe-campaign-input-wrapper w-100">
+                  <div class="tm-input-wrapper d-flex align-items-center gap-1">
+                     <!-- update here with margin right -->
+                    <label style="margin-right: 1rem;">Width<span>*</span></label>
+                    <input name="width" type="text" placeholder="176cm" class="w-100" />
+                        @error('width')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                  <label for="quantity">CM</label>
+                  </div>
+                 
+                </div>
+               </div>
 
             <!-- <div class="d-flex align-items-start flex-wrap column-gap-4 w-100">
                 <div class="describe-campaign-input-wrapper w-100">

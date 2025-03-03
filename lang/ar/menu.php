@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'home' => 'الصفحة الرئيسية',
+    'home' => 'الرئيسية',
     'owner' => 'الرئيسية',
     'about' => 'من نحن',
-    'contact' => 'اتصل بنا',
+    'contact' => 'التواصل',
     'login' => 'تسجيل الدخول',
     'signup' => 'انشاء حساب',
     'findsignage' => 'ابحث عن لافتات',
@@ -18,16 +18,16 @@ return [
 تجربة سلسة وفعالة وفعالة بشكل لا يصدق.',
     'dropdown' => 'اللغة',
     'arabic' => 'العربية',
-    'terms&condition'=> 'الشروط والاحكام',
+    'terms&condition'=> 'الشروط والأحكام',
     'privacypolicy'=> 'سياسة الخصوصية',
-    'refundpolicy'=> 'سياسة الاسترجاع',
+    'refundpolicy'=> 'سياسة الاسترداد',
     'cookiespolicy'=> 'سياسة الكوكيز',
-    'joinusowner' => 'انضم كمالك لافتات',
-    'quicklinks'=> 'روابط سريعة',
-    'policies' => 'السياسات',
-    'followus' =>'تابعنا على',
-    'subscribeus' => 'اشترك بنا',
-    'subscribe' => 'اشترك',
+    'joinusowner' => 'إنضم إلينا',
+    'quicklinks'=> 'القائمة',
+    'policies' => 'دعنا نساعدك',
+    'followus' =>'تابعونا',
+    'subscribeus' =>'اعرف المزيد عنا',
+    'subscribe' => 'إرسال',
     'copyright' => 'جميع الحقوق محفوظة © ٢٠٢٤ . مصنوع من شاش™'
 
 ];

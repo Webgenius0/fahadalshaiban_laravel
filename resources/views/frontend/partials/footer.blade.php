@@ -50,7 +50,7 @@
                     <a href="{{ route('terms.conditions') }}">{{__('menu.terms&condition')}}</a>
                     <a href="{{ route('privacy.policy') }}">{{__('menu.privacypolicy')}}</a>
                     <a href="{{ route('refund.policy') }}">{{__('menu.refundpolicy')}}</a>
-                    <a href="{{ route('cookie.policy') }}">{{__('menu.cookiespolicy')}}</a>
+                    <!-- <a href="{{ route('cookie.policy') }}">{{__('menu.cookiespolicy')}}</a> -->
                 </div>
             </div>
             <div class="footer-item">

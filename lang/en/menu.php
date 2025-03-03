@@ -7,7 +7,7 @@ return [
     'login' => 'Login',
     'register' => 'Register',
     'findsignage' => 'Find Signage',
-    'signup' => 'Sign Up',
+    'signup' => 'Get Started',
     'logout' => 'Logout',
     'startnewcampaign' => 'Start New Campaign',
     'protips' => 'Pro Tips',
