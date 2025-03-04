@@ -22,6 +22,8 @@ return new class extends Migration
             $table->float('per_day_price');          
             $table->string('height');
             $table->string('width');
+            $table->string('actual_height');
+            $table->string('actual_width');
             $table->string('height_cm')->nullable();
             $table->string('width_cm')->nullable();
             $table->string('exposure_time');

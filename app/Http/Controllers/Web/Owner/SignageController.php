@@ -23,6 +23,7 @@ class SignageController extends Controller
 
     public function store(Request $request)
     {
+       
         // Validate the incoming request
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
@@ -32,6 +33,8 @@ class SignageController extends Controller
             'per_day_price' => 'required|numeric|min:0',
             'height' => 'required|string|max:255',
             'width' => 'required|string|max:255',
+            'actual_height' => 'required|string|max:255',
+            'actual_width' => 'required|string|max:255',
             'on_going_ad' => 'nullable|integer|min:0',
             'exposure_time' => 'required|string|max:255',
             'space_left_for_ad' => 'nullable|integer|min:0',
@@ -66,6 +69,8 @@ class SignageController extends Controller
             'per_day_price' => $validatedData['per_day_price'],
             'height' => $validatedData['height'],
             'width' => $validatedData['width'],
+            'actual_height' => $validatedData['actual_height'],
+            'actual_width' => $validatedData['actual_width'],
             'exposure_time' => $validatedData['exposure_time'], // Assuming exposure time is the current time
             // 'on_going_ad' => $validatedData['on_going_ad'],
             // 'space_left_for_ad' => $validatedData['space_left_for_ad'],
@@ -114,6 +119,8 @@ class SignageController extends Controller
         'exposure_time' => 'nullable|string|max:255',
         'height' => 'nullable|string|max:255',
         'width' => 'nullable|string|max:255',
+        'actual_height' => 'nullable|string|max:255',
+        'actual_width' => 'nullable|string|max:255',
         'location' => 'nullable|string|max:255',
         'lat' => 'nullable|string|max:255',
         'lan' => 'nullable|string|max:255',
@@ -158,6 +165,8 @@ class SignageController extends Controller
        'exposure_time' => $validatedData['exposure_time'],
         'height' => $validatedData['height'],
         'width' => $validatedData['width'],
+        'actual_height' => $validatedData['actual_height'],
+        'actual_width' => $validatedData['actual_width'],
         'location' => $validatedData['location'],
         'lat' => $validatedData['lat'],
         'lan' => $validatedData['lan'],

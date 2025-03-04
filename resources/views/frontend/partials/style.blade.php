@@ -13,5 +13,4 @@
 
 <!-- for carousel -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/freeps2/a7rarpress@main/swiper-bundle.min.css">
-
 @stack('style')

@@ -199,7 +199,7 @@
                   <div class="tm-input-wrapper d-flex align-items-center gap-1"> 
                     <!-- update here with margin right -->
                     <label style="margin-right: 1rem;">Height<span>*</span></label>
-                    <input name="width" type="text" placeholder="176cm" class="w-100" />
+                    <input name="actual_height" type="text" placeholder="176cm" class="w-100" />
                         @error('width')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -210,7 +210,7 @@
                   <div class="tm-input-wrapper d-flex align-items-center gap-1">
                      <!-- update here with margin right -->
                     <label style="margin-right: 1rem;">Width<span>*</span></label>
-                    <input name="width" type="text" placeholder="176cm" class="w-100" />
+                    <input name="actual_width" type="text" placeholder="176cm" class="w-100" />
                         @error('width')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -382,8 +382,8 @@
         map = new google.maps.Map(document.getElementById("map"), {
             zoom: 5,
             center: {
-                lat: 23.8103,
-                lng: 90.4125
+                lat: 26.4206828,
+                lng: 50.0887943
             } // Default to Dhaka, Bangladesh
         });
 
