@@ -492,7 +492,7 @@
                                             <h3>Billboard Location</h3>
                                             <p class="billboard-card-id">#{{$data->id}}</p>
                                         </div>
-                                        <button type="button" class="add-signage" data-id="{{$data->id}}">
+                                        <button type="button" class="add-signage" onclick="changeLocation(event, '{{ $data->lat }}', '{{ $data->lan }}')" data-id="{{$data->id}}">
                                             Add signage
                                         </button>
                                     </div>
@@ -643,8 +643,8 @@
                                                         <p class="billboard-card-id">#{{$data->id}}</p>
                                                     </div>
 
-                                                    <button class="btn btn-primary" onclick="changeLocation(event, '{{ $data->lat }}', '{{ $data->lan }}')">
-                                                        <span>showMap</span>
+                                                    <button type="button" class=" add-signage" onclick="changeLocation(event, '{{ $data->lat }}', '{{ $data->lan }}')">
+                                                        <span>Add signage</span>
                                                     </button>
 
                                                 </div>
@@ -924,7 +924,7 @@
                                         <h3>Billboard Location</h3>
                                         <p class="billboard-card-id">#${data.id}</p>
                                     </div>
-                                    <button type="button" class="add-signage" data-id="${data.id}">
+                                    <button type="button" class="add-signage" onclick="changeLocation(event, '${ data.lat }', '${data.lan }')"  data-id="${data.id}">
                                         Add signage
                                     </button>
                                 </div>
