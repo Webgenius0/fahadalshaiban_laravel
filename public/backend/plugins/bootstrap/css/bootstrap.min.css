@@ -6290,10 +6290,11 @@ fieldset:disabled .btn {
 }
 
 .modal-content {
-    position: relative;
+    position: fixed;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 40%;
+    height: 90%;
     pointer-events: auto;
     background-color: #fff;
     background-clip: padding-box;
