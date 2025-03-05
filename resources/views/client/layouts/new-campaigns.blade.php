@@ -79,6 +79,32 @@
 @endpush
 @section('content')
 <div class="main-content">
+    <div id="details-section" class="card-body" style="display:none; position: fixed; top: 50%; left: 30%; z-index: 1000; width:700px; height:200px; background-color: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <div class="close-btn-container">
+            <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
+                <i class="fe fe-x"></i>
+            </button>
+
+            <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
+                <i class="fe fe-x"></i>
+            </button>
+        </div>
+    </div>
+    <div id="fullWidthImageContainer" style="display: none; position: fixed; top: 30%; left: 35%; width: 50%; height: 50%; z-index: 1000;">
+        <div style="display: flex; justify-content: center; align-items: flex-start; width: 100%; height: 100%; background-size: cover; background-position: center;">
+            <!-- Image and Close Button Container -->
+            <div style="border-radius: 10px; margin-top: 20px; border-radius: 10px; overflow: hidden;">
+                <img id="fullWidthImage" src="" alt="Full Width Image" style="max-width: 90%; max-height: 90%;">
+
+                <!-- Close Button with Black Color -->
+                <button id="closeFullWidthImage"
+                    style="position: absolute; top: 10px; right: 60px;  color: white; border: none; padding: 10px; cursor: pointer; border-radius: 5px;">
+                    <i class="fe fe-x">Close</i> <!-- Icon color set to white -->
+                </button>
+                
+            </div>
+        </div>
+    </div>
     <div
         class="d-flex justify-content-between align-items-start mb-5 gap-4 flex-wrap">
         <div>
@@ -127,12 +153,12 @@
                         <label>Ad Title <span>*</span></label>
                         <input
                             type="text"
-                            placeholder="Get 70% OFF Discount from Shashh" id="addTitle" name="addTitle" required />
+                            placeholder="Enter your campaign name" id="addTitle" name="addTitle" required />
                     </div>
 
                     <div class="describe-campaign-input-wrapper">
                         <label>Campaign Description <span>*</span></label>
-                        <textarea name="description" id="description" required></textarea>
+                        <textarea name="description" id="description" placeholder="Descrive your campaign to help us better understand your needs" required></textarea>
                     </div>
 
                     <div class="objectives-container">
@@ -450,28 +476,9 @@
                 <!-- HERE SHOW DYNAMIC dETAILS -->
                 <div class="row">
                     <div class="card col-md-6">
-                        <div id="details-section" class="card-body" style="display:none;">
 
-                            <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
-                                <i class="fe fe-x"></i>
-                            </button>
-                        </div>
                     </div>
 
-                    <div id="fullWidthImageContainer" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000;">
-                        <div style="display: flex; justify-content: center; align-items: flex-start; width: 100%; height: 100%; background-size: cover; background-position: center;">
-                            <!-- Image and Close Button Container -->
-                            <div style="border-radius: 10px; margin-top: 20px; border-radius: 10px; overflow: hidden;">
-                                <img id="fullWidthImage" src="" alt="Full Width Image" style="max-width: 90%; max-height: 90%;">
-
-                                <!-- Close Button with Black Color -->
-                                <button id="closeFullWidthImage"
-                                    style="position: absolute; top: 10px; right: 60px;  color: white; border: none; padding: 10px; cursor: pointer; border-radius: 5px;">
-                                    <i class="fe fe-x">Close</i> <!-- Icon color set to white -->
-                                </button>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
                 <!-- Add this container outside your banner section -->
@@ -490,7 +497,7 @@
                                         class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
                                         <div>
                                             <h3>Billboard Location</h3>
-                                            <p class="billboard-card-id">#{{$data->id}}</p>
+                                            <!-- <p class="billboard-card-id">#{{$data->id}}</p> -->
                                         </div>
                                         <button type="button" class="add-signage" onclick="changeLocation(event, '{{ $data->lat }}', '{{ $data->lan }}')" data-id="{{$data->id}}">
                                             Add signage
@@ -527,25 +534,7 @@
                                         </div>
                                         <div>
                                             <span class="billboard-card-info-icon">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none">
-                                                    <path
-                                                        d="M12 1V23"
-                                                        stroke="#4D4D4D"
-                                                        stroke-width="2"
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                    <path
-                                                        d="M17 5H9.5C8.57174 5 7.6815 5.36875 7.02513 6.02513C6.36875 6.6815 6 7.57174 6 8.5C6 9.42826 6.36875 10.3185 7.02513 10.9749C7.6815 11.6313 8.57174 12 9.5 12H14.5C15.4283 12 16.3185 12.3687 16.9749 13.0251C17.6313 13.6815 18 14.5717 18 15.5C18 16.4283 17.6313 17.3185 16.9749 17.9749C16.3185 18.6313 15.4283 19 14.5 19H6"
-                                                        stroke="#4D4D4D"
-                                                        stroke-width="2"
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                </svg>
+                                                <img src="{{ asset('currency/realcurrency.png') }}" style="width: 20px; height: 20px;" alt="">
                                             </span>
                                             <p class="billboard-card-info-label">
                                                 Price per day
@@ -574,9 +563,9 @@
                                                         stroke-linejoin="round" />
                                                 </svg>
                                             </span>
-                                            <p class="billboard-card-info-label">Rotations</p>
+                                            <p class="billboard-card-info-label">Exposure time</p>
                                             <p class="billboard-card-info-value">
-                                                10 seconds
+                                                {{ $data->exposure_time > 60 ? round($data->exposure_time / 60, 2) . ' min' : $data->exposure_time . ' sec'}} per a minuit
                                             </p>
                                         </div>
                                     </div>
@@ -1192,69 +1181,231 @@
 
     });
 
-    $(document).ready(function() {
-        function showDetails(signageId) {
-            if (!signageId) return;
+    // $(document).ready(function() {
+    //     function showDetails(signageId) {
+    //         if (!signageId) return;
 
+    //         $.ajax({
+    //             url: '/get-signage-location/' + signageId,
+    //             type: 'GET',
+    //             success: function(response) {
+    //                 console.log(response);
+    //                 if (response) {
+    //                     var signage = response;
+    //                     var differenceDays = localStorage.getItem('differenceDays');
+    //                     var totalprice = signage.price_per_day * differenceDays;
+    //                     var estimatedViews = signage.avg_daily_views * 1000;
+    //                     var content = `
+    //                                 <h3>Signage Details</h3>
+    //                                 <div class="row">
+    //                                 <div class="col-md-4 pt-2">                                 
+
+    //                                   <p><strong>Price Per Day:</strong> ${signage.price_per_day ||''} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"> </p>
+    //                                     <p><strong>Total Days:</strong> ${differenceDays || '0'}</p>
+    //                                 </div>
+    //                                 <div class="col-md-4 pt-2">
+    //                                 <p><strong>Estimated views:</strong> ${estimatedViews || ''} </p>
+    //                                 <p><strong>Total Price:</strong> ${totalprice || ''} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"></p>
+
+    //                                 </div>
+    //                                 <div class="col-md-4 pt-2">
+    //                                  <p><strong>Sub Total:</strong> ${signage.price_per_day || ''}</p>
+    //                                  </div>
+    //                                 </div>
+
+
+
+    //                     `;
+    //                     var closeButton = `
+    //                         <div class="close-btn-container">
+    //                             <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
+    //                                 <i class="fe fe-x"></i> Close <!-- Feather icon for 'X' -->
+    //                             </button>
+    //                         </div>
+    //                     `;
+
+    //                     $('#details-section').html(content + closeButton);
+    //                     $('#details-section').show();
+    //                 } else {
+
+    //                     $('#details-section').html("<p>Failed to load signage details. Please try again.</p>");
+    //                     $('#details-section').show();
+    //                 }
+    //             },
+    //             error: function(xhr, status, error) {
+
+    //                 $('#details-section').html("<p>There was an error fetching the data. Please try again.</p>");
+    //                 $('#details-section').show();
+    //             }
+
+
+
+    //         });
+
+    //     }
+
+    //     function hideDetails() {
+    //         $('#details-section').hide();
+    //         event.preventDefault();
+    //     }
+    //     window.showDetails = showDetails;
+    //     window.hideDetails = hideDetails;
+    // });
+
+
+
+    $(document).ready(function() {
+    // Clear localStorage when page reloads
+    localStorage.clear();  // This will clear all data every time the page is loaded
+    console.log('localStorage data cleared on page reload.');
+
+    // Initialize the 'selectedSignages' array in localStorage if it doesn't exist
+    if (localStorage.getItem('selectedSignages') === null) {
+        localStorage.setItem('selectedSignages', JSON.stringify([]));  // Empty array
+    }
+
+    // Initialize the 'totalSubtotal' in localStorage if it doesn't exist
+    if (localStorage.getItem('totalSubtotal') === null) {
+        localStorage.setItem('totalSubtotal', 0);
+    }
+
+    function showDetails(signageId) {
+        if (!signageId) return;
+
+        // Retrieve the selectedSignages array from localStorage
+        let selectedSignages = JSON.parse(localStorage.getItem('selectedSignages'));
+        let signageIndex = selectedSignages.findIndex(signage => signage.id === signageId);
+        
+        if (signageIndex !== -1) {
+            // If the signage already exists, remove it and subtract its price
+            let removedSignage = selectedSignages.splice(signageIndex, 1)[0]; // Remove and get the signage
+            localStorage.setItem('selectedSignages', JSON.stringify(selectedSignages));
+
+            // Recalculate the subtotal (subtract the removed signage's total_price)
+            let totalSubtotal = parseFloat(localStorage.getItem('totalSubtotal')) - removedSignage.total_price;
+
+            // Update the subtotal in localStorage
+            localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
+
+            console.log("Signage removed. New Subtotal:", totalSubtotal);
+
+            // Update the UI to show the new subtotal
+            updateUI(totalSubtotal);
+
+        } else {
+            // If the signage doesn't exist, add it and add its price to the subtotal
             $.ajax({
                 url: '/get-signage-location/' + signageId,
                 type: 'GET',
                 success: function(response) {
-                    console.log(response);
+                    console.log("response:", response);
                     if (response) {
                         var signage = response;
                         var differenceDays = localStorage.getItem('differenceDays');
                         var totalprice = signage.price_per_day * differenceDays;
+                        var estimatedViews = signage.avg_daily_views * 1000;
+
+                        // Add the current signage details to the array
+                        selectedSignages.push({
+                            id: signageId,
+                            price_per_day: signage.price_per_day,
+                            total_price: totalprice
+                        });
+
+                        // Update the selectedSignages in localStorage
+                        localStorage.setItem('selectedSignages', JSON.stringify(selectedSignages));
+
+                        // Recalculate the subtotal (sum of all total prices)
+                        let totalSubtotal = selectedSignages.reduce((total, signage) => {
+                            return total + signage.total_price;
+                        }, 0);
+
+                        // Update the subtotal in localStorage
+                        localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
+
+                        console.log("Updated Subtotal:", totalSubtotal);
+
+                        // Update the UI with the new subtotal
+                        updateUI(totalSubtotal);
+
                         var content = `
-                                    <h3>Signage Details</h3>
-                                    <div class="row">
-                                    <div class="col-md-6 pt-2">                                 
-                                    
-                                      <p><strong>Price Per Day:</strong> ${signage.price_per_day ||'N/A'} Rs </p>
-                                        <p><strong>Total Days:</strong> ${differenceDays}</p>
-                                    </div>
-                                    <div class="col-md-6 pt-2">
-                                    <p><strong>Average Daily Views:</strong> ${signage.avg_daily_views || 'N/A'} K</p>
-                                    <p><strong>Total Price:</strong> ${totalprice || 'N/A'} RS</p>
-                                  
-                                    </div>
-                                    </div>
+                            <h3>Signage Details</h3>
+                            <div class="row">
+                                <div class="col-md-4 pt-2">
+                                    <p><strong>Price Per Day:</strong> ${signage.price_per_day || ''} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"></p>
+                                    <p><strong>Total Days:</strong> ${differenceDays || '0'}</p>
+                                </div>
+                                <div class="col-md-4 pt-2">
+                                    <p><strong>Estimated Views:</strong> ${estimatedViews || ''}</p>
+                                    <p><strong>Sub Total:</strong> ${totalprice || ''} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"></p>
+                                </div>
+                                <div class="col-md-4 pt-2">
+                                    <p><strong> Total:</strong> ${totalSubtotal} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"></p>
+                                </div>
+                            </div>
                         `;
+
                         var closeButton = `
                             <div class="close-btn-container">
                                 <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
-                                    <i class="fe fe-x"></i> Close <!-- Feather icon for 'X' -->
+                                    <i class="fe fe-x"></i> Close
                                 </button>
                             </div>
                         `;
 
                         $('#details-section').html(content + closeButton);
                         $('#details-section').show();
-                    } else {
 
+                        // Add the double-click event to subtract the price when double-clicked
+                        $('#details-section').on('dblclick', '.signage-item', function() {
+                            var signageId = $(this).data('id'); // Assuming the signage item has data-id attribute
+                            removeSignageFromTotal(signageId);
+                        });
+                    } else {
                         $('#details-section').html("<p>Failed to load signage details. Please try again.</p>");
                         $('#details-section').show();
                     }
                 },
                 error: function(xhr, status, error) {
-
                     $('#details-section').html("<p>There was an error fetching the data. Please try again.</p>");
                     $('#details-section').show();
                 }
-
-
-
             });
-
         }
+    }
 
-        function hideDetails() {
-            $('#details-section').hide();
-            event.preventDefault();
+    // Function to remove signage and subtract its price
+    function removeSignageFromTotal(signageId) {
+        let selectedSignages = JSON.parse(localStorage.getItem('selectedSignages'));
+        let signageIndex = selectedSignages.findIndex(signage => signage.id === signageId);
+
+        if (signageIndex !== -1) {
+            let removedSignage = selectedSignages.splice(signageIndex, 1)[0];
+            localStorage.setItem('selectedSignages', JSON.stringify(selectedSignages));
+
+            let totalSubtotal = parseFloat(localStorage.getItem('totalSubtotal')) - removedSignage.total_price;
+            localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
+
+            updateUI(totalSubtotal);
+
+            console.log("Signage removed on double-click. New Subtotal:", totalSubtotal);
         }
-        window.showDetails = showDetails;
-        window.hideDetails = hideDetails;
-    });
+    }
+
+    // Function to update the UI with the latest subtotal
+    function updateUI(subtotal) {
+        // Display the updated subtotal in the UI
+        $('#subtotalDisplay').text(`Subtotal: ${subtotal} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;">`);
+    }
+
+    function hideDetails() {
+        $('#details-section').hide();
+        event.preventDefault();
+    }
+
+    window.showDetails = showDetails;
+    window.hideDetails = hideDetails;
+});
 
 
 
@@ -1412,6 +1563,11 @@
         event.preventDefault();
         document.getElementById('fullWidthImageContainer').style.display = 'none';
     });
+
+
+
+
+    // clear localstorage
 </script>
 
 

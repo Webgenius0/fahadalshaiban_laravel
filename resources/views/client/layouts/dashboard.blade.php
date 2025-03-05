@@ -1,9 +1,13 @@
 <?php
+
+use GPBMetadata\Google\Api\Auth;
+
 $book = App\Models\Order::where('user_id', auth()->user()->id)->where('status', 'booked')->count();
 $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
 
 ?>
 @push('style')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <!-- FullCalendar CSS -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.3.0/dist/fullcalendar.min.css" rel="stylesheet">
 <style>
@@ -26,6 +30,18 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
     .fc-day.fc-today-success {
         background-color: rgb(161, 240, 180) !important;
         color: white !important;
+    }
+
+    .left-side,
+    .right-side {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .left-side div,
+    .right-side div {
+        margin-bottom: 10px;
+        /* Adjust spacing as needed */
     }
 </style>
 @endpush
@@ -117,7 +133,7 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
         </div>
     </section>
 
-    <div id="calendar"></div>
+    <!-- <div id="calendar"></div> -->
 
     <section class="campaign-wrapper">
         <div class="campaign-header">
@@ -167,28 +183,115 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
                         <h5 class="modal-title" id="bookedDaysModalLabel">Booked Dates</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <div id="calendars"></div> <!-- Calendar goes here -->
-                    </div>
+                    <!-- <div class="modal-body">
+                        <div id="calendars"></div>
+                    </div> -->
                 </div>
             </div>
         </div>
 
         <div class="campaign-list">
             @foreach($orders as $order)
-            <article class="campaign-item">
+            <article class="campaign-item ">
+                @php
+                $endDate = $order->end_date; // Replace with the actual variable you're using
+                $today = \Carbon\Carbon::today(); // Get today's date
+                @endphp
+
+                <div class="d-flex justify-content-end">
+                    <span class="d-flex align-items-center">
+                        @if (\Carbon\Carbon::parse($endDate)->isPast())
+                        <!-- Red round icon for Campaign End -->
+
+                        <strong style="color: red;">Campaign End</strong>
+                        <i class="fa fa-circle" style="color: red; font-size: 18px; margin-left: 5px;"></i>
+                        @else
+                        <!-- Green round icon for Live Campaign -->
+
+                        <strong style="color: #34b26f;">Live Campaign</strong>
+                        <i class="fa fa-circle d-flex justify-items-end" style=" color: #34b26f; font-size: 18px; margin-left: 5px;border-radius: 50%;"></i>
+                        @endif
+                    </span>
+                </div>
+
+
                 <!-- Billboard Image -->
                 <img src="{{ asset($order->art_work ?? 'default/banner.png') }}" alt="Billboard" class="billboard-card-image" />
+                <div>
+                    <strong style="color: #198754;">Campaign Title: {{$order->ad_title}}</strong>
+                </div>
 
-                <!-- Button and Campaign Top Section -->
-                <div class="d-flex align-items-center gap-3 mb-3">
-                    <!-- Calendar Button -->
-                    <button class="campaign-edit-btn btn btn-success" data-bs-toggle="modal" data-bs-target="#bookingScheduleModal" data-campaign-detail-id="{{ $order->id }}">
+                <div class="d-flex flex-column">
+                    <!-- <div class="d-flex justify-content-between">
+                        <strong>Start Date: {{ \Carbon\Carbon::parse($order->start_date)->format('M d, Y') }}</strong>
+
+                        <strong><span style="color: red;">End Date:</span> {{ \Carbon\Carbon::parse($order->end_date)->format('M d, Y') }}</strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        @php
+                        $startDate = \Carbon\Carbon::parse($order->start_date);
+                        $endDate = \Carbon\Carbon::parse($order->end_date);
+                        $totalDays = $startDate->diffInDays($endDate);
+                        @endphp
+
+                        @if($totalDays > 0)
+                        <strong>Total Days: {{ $totalDays }}</strong>
+                        @else
+                        <strong>Total Days:0 </strong>
+                        @endif
+
+                        <strong>Total Price: {{ $order->per_day_price }} </strong>
+                    </div>
+
+
+                    <div class="d-flex justify-content-between">
+                        @php
+                        $dailyViews = $order->avg_daily_views*1000;
+
+                        @endphp
+                        <strong>Daily Views: {{ $dailyViews }} </strong>
+
+                        <strong>Total Signage:{{$totalOrders}}</strong>
+                    </div> -->
+
+                    <div class="d-flex justify-content-between">
+                        <div class="left-side">
+                            <div><strong style="color: #34b26f;">Start Date:</strong> {{ \Carbon\Carbon::parse($order->start_date)->format('M d, Y') }}</div>
+                            <div>
+                                <strong>Total Days:</strong>
+                                @php
+                                $startDate = \Carbon\Carbon::parse($order->start_date);
+                                $endDate = \Carbon\Carbon::parse($order->end_date);
+                                $totalDays = $startDate->diffInDays($endDate);
+                                @endphp
+                                {{ $totalDays > 0 ? $totalDays : 0 }}
+                            </div>
+                            <div><strong>Daily Views:</strong> {{ $order->avg_daily_views * 1000 }}</div>
+                        </div>
+                        <div class="right-side">
+                            <div><strong style="color: red;">End Date:</strong> {{ \Carbon\Carbon::parse($order->end_date)->format('M d, Y') }}</div>
+                            @php
+                            $startDate = \Carbon\Carbon::parse($order->start_date);
+                            $endDate = \Carbon\Carbon::parse($order->end_date);
+                            $TotalDays = $startDate->diffInDays($endDate);
+                            $perDayPrice = $order->per_day_price;
+                            $totalPrice = $perDayPrice * ($TotalDays > 0 ? $TotalDays : 1); // Ensure at least 1 day is calculated
+                            @endphp
+                            <div><strong>Total Price:</strong> {{ $totalPrice }} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"></div>
+                            <div><strong>Total Signage:</strong> {{ $totalOrders }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Button and Campaign Top Section -->
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <!-- Calendar Button -->
+                        <!-- <button class="campaign-edit-btn btn btn-success" data-bs-toggle="modal" data-bs-target="#bookingScheduleModal" data-campaign-detail-id="{{ $order->id }}">
                         Calendar
-                    </button>
+                    </button> -->
 
-                    <!-- Campaign Status Section -->
-                    <div class="campaign-top" style="display: flex; justify-content: flex-end; align-items: center; width: 100%; padding: 0;">
+                        <!-- Campaign Status Section -->
+                        <!-- <div class="campaign-top" style="display: flex; justify-content: flex-end; align-items: center; width: 100%; padding: 0;">
                         <div id="chart1" style="margin-right: 10px;"></div>
                         <div>
                             @if(\Carbon\Carbon::parse($order->end_date)->isPast())
@@ -199,34 +302,38 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
                             <span class="campaign-status">On Going</span>
                             @endif
                         </div>
+                    </div> -->
                     </div>
-                </div>
 
-                <!-- Campaign ID -->
-                <p class="campaign-id">#{{ $order->uuid }}</p>
+                    <!-- Campaign ID -->
+                    <!-- <p class="campaign-id">#{{ $order->uuid }}</p> -->
 
-                <!-- Published Date -->
-                <p class="campaign-details">
+                    <!-- Published Date -->
+                    <!-- <p class="campaign-details">
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="15" viewBox="0 0 17 15" fill="none">
                         <path d="M15 2.2998L5 12.3098L2 9.3098" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     Published on <span>{{ \Carbon\Carbon::parse($order->created_at)->format('d F Y') }}</span>
-                </p>
+                </p> -->
 
-                <!-- Campaign Bottom Section -->
-                <div class="campaign-bottom">
-                    <!-- End Date -->
-                    <div class="campaign-end">
+                    <!-- Campaign Bottom Section -->
+                    <div class="campaign-bottom">
+                        <!-- End Date -->
+                        <!-- <div class="campaign-end">
                         Ending on <span>{{ \Carbon\Carbon::parse($order->end_date ?? '2023-01-01')->format('d F Y') }}</span>
+                    </div> -->
+
+                        <!-- Payment Button (Conditional) -->
+                        <!-- @if($order->status == 'pending')
+                        <a href="{{ route('page.billing') }}" class="btn btn-success mt-1">
+                            Payment
+                        </a>
+                        @endif -->
                     </div>
 
-                    <!-- Payment Button (Conditional) -->
-                    @if($order->status == 'pending')
-                    <a href="{{ route('page.billing') }}" class="btn btn-success mt-1">
-                        Payment
-                    </a>
-                    @endif
-                </div>
+                    <div class="campaign-bottom d-flex justify-content-center">
+                        <button class="btn btn-success mt-1">Campaign Details</button>
+                    </div>
             </article>
             @endforeach
         </div>
@@ -248,48 +355,48 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    $(document).ready(function() {
-        $('#calendars').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },
-            defaultView: 'month',
-            events: [],
-            dayRender: function(date, cell) {
+    // $(document).ready(function() {
+    //     $('#calendars').fullCalendar({
+    //         header: {
+    //             left: 'prev,next today',
+    //             center: 'title',
+    //             right: 'month,agendaWeek,agendaDay'
+    //         },
+    //         defaultView: 'month',
+    //         events: [],
+    //         dayRender: function(date, cell) {
 
-                if (date.isSame(moment(), 'day')) {
-                    cell.addClass('fc-today-success');
-                }
-                var bookedDates = $('#calendars').fullCalendar('clientEvents');
-                var isBooked = bookedDates.some(function(event) {
-                    return event.start.isSame(date, 'day');
-                });
+    //             if (date.isSame(moment(), 'day')) {
+    //                 cell.addClass('fc-today-success');
+    //             }
+    //             var bookedDates = $('#calendars').fullCalendar('clientEvents');
+    //             var isBooked = bookedDates.some(function(event) {
+    //                 return event.start.isSame(date, 'day');
+    //             });
 
-                if (isBooked) {
-                    cell.addClass('fc-booked');
-                }
-            }
-        });
+    //             if (isBooked) {
+    //                 cell.addClass('fc-booked');
+    //             }
+    //         }
+    //     });
 
-        // When the "View Booked Days" button is clicked
-        $('.campaign-edit-btn').on('click', function() {
-            var campaignDetailId = $(this).data('campaign-detail-id');
-            $.ajax({
-                url: '/get-booked-dates/' + campaignDetailId,
-                method: 'GET',
-                success: function(response) {
-                    var bookedDates = response.bookedDates;
-                    $('#calendars').fullCalendar('removeEvents');
-                    $('#calendars').fullCalendar('addEventSource', bookedDates);
-                    $('#calendars').fullCalendar('rerenderEvents');
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching booked dates:', error);
-                }
-            });
-        });
+    // When the "View Booked Days" button is clicked
+    $('.campaign-edit-btn').on('click', function() {
+    var campaignDetailId = $(this).data('campaign-detail-id');
+    $.ajax({
+        url: '/get-booked-dates/' + campaignDetailId,
+        method: 'GET',
+        success: function(response) {
+            var bookedDates = response.bookedDates;
+            $('#calendars').fullCalendar('removeEvents');
+            $('#calendars').fullCalendar('addEventSource', bookedDates);
+            $('#calendars').fullCalendar('rerenderEvents');
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching booked dates:', error);
+        }
+    });
+    });
     });
 </script>
 @endpush
