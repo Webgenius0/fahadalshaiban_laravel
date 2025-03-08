@@ -70,7 +70,7 @@
             <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3">
                 <div class="describe-campaign-input-wrapper w-50 mr-5">
                     <label>Signage Title <span>*</span></label>
-                    <input name="name" type="text" class="form-control" placeholder="Get 70% OFF Discount from Shashh" />
+                    <input name="name" type="text" class="form-control" placeholder="Enter your campaign name" required />
                     @error('name')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -80,10 +80,10 @@
                     <select name="category_name" class="form-control" style="height: 75px; margin-right: 20px; ">
                         <option value="">Select Category</option>
                         @foreach ($categories as $category)
-                        <option value="{{ $category->name }}">{{ $category->name }}</option>
+                        <option value="{{ $category->name }}" required>{{ $category->name }}</option>
                         @endforeach
                     </select>
-                    @error('category_id')
+                    @error('category_name')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -91,7 +91,7 @@
 
             <div class="describe-campaign-input-wrapper">
                 <label>Description <span>*</span></label>
-                <textarea name="description"></textarea>
+                <textarea name="description" placeholder="Descrive your campaign to help us better understand your needs" required></textarea>
                 @error('description')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -100,73 +100,30 @@
             <div class="d-flex align-items-start flex-wrap column-gap-4 w-100">
                 <div class="describe-campaign-input-wrapper w-100">
                     <label>Average Daily Views<span>*</span></label>
-                    <input name="avg_daily_views" type="number" placeholder="50k" min="0" />
+                    <input name="avg_daily_views" type="number" placeholder="5000" min="0" required />
                     @error('avg_daily_views')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="describe-campaign-input-wrapper w-100">
                     <label>Set Per Day Price<span>*</span></label>
-                    <input name="per_day_price" type="number" placeholder="SR 5" min="0" />
+                    <input name="per_day_price" type="number" placeholder="5" min="0" required />
                     @error('per_day_price')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
             </div>
 
-
-            <!-- <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3">
-               
-                <div class="describe-campaign-input-wrapper w-50 pr-2">
-                    <label>Height<span>*</span></label>
-                    <input name="height" type="text" placeholder="638px" />
-                    @error('height')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                
-                <div class="describe-campaign-input-wrapper w-50 pl-2">
-                    <label>Width<span>*</span></label>
-                    <input name="width" type="text" placeholder="176px" />
-                    @error('width')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div> -->
-            <!-- <div class="height-width-wrapper d-flex  justify-content-between w-100 gap-5">
-                <div class="height-width-space describe-campaign-input-wrapper flex w-100">
-                    <label>Height<span>*</span></label>
-                    <div class="tm-input-wrapper d-flex align-items-center gap-1">
-                        <input name="height" type="text" placeholder="638px" class="w-100" />
-                        @error('height')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        <label for="quantity">px</label>
-                    </div>
-                </div>
-                <div class="height-width-space describe-campaign-input-wrapper w-100">
-                    <label>Width<span>*</span></label>
-                    <div class="tm-input-wrapper d-flex align-items-center gap-1">
-                        <input name="width" type="text" placeholder="176px" class="w-100" />
-                        @error('width')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        <label for="quantity">px</label>
-                    </div>
-
-                </div>
-            </div> -->
             <div>
-            <label style="margin-right: 1rem;"><strong>Signage ArthWork Dimension</strong><span><strong>*</strong></span></label>
+            <label style="margin-right: 1rem;"><strong>Signage ArthWork Dimension</strong><span><strong class="text-danger">*</strong></span></label>
             </div>
             <div class="height-width-wrapper d-flex items-center justify-content-between w-100 gap-5">
                 
                 <div class="height-width-space describe-campaign-input-wrapper w-100">
                   <div class="tm-input-wrapper d-flex align-items-center gap-1"> 
                     <!-- update here with margin right -->
-                    <label style="margin-right: 1rem;">Height<span>*</span></label>
-                    <input name="height" type="text" placeholder="638px" class="w-100" />
+                    <label style="margin-right: 1rem;">Height<span class="text-danger">*</span></label>
+                    <input name="height" type="text" placeholder="600" class="w-100" required/>
                         @error('height')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -176,8 +133,8 @@
                 <div class="height-width-space describe-campaign-input-wrapper w-100">
                   <div class="tm-input-wrapper d-flex align-items-center gap-1">
                      <!-- update here with margin right -->
-                    <label style="margin-right: 1rem;">Width<span>*</span></label>
-                    <input name="width" type="text" placeholder="176px" class="w-100" />
+                    <label style="margin-right: 1rem;">Width<span class="text-danger">*</span></label>
+                    <input name="width" type="text" placeholder="350" class="w-100" required/>
                         @error('width')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -191,15 +148,15 @@
                <!-- Actuall Arthwork Dimension -->
 
                <div>
-            <label style="margin-right: 1rem;"><strong>Signage Actuall Dimension</strong><span><strong>*</strong></span></label>
+            <label style="margin-right: 1rem;"><strong>Signage Actual Dimension</strong><span><strong class="text-danger">*</strong></span></label>
             </div>
             <div class="height-width-wrapper d-flex items-center justify-content-between w-100 gap-5">
                 
                 <div class="height-width-space describe-campaign-input-wrapper w-100">
                   <div class="tm-input-wrapper d-flex align-items-center gap-1"> 
                     <!-- update here with margin right -->
-                    <label style="margin-right: 1rem;">Height<span>*</span></label>
-                    <input name="actual_height" type="text" placeholder="176cm" class="w-100" />
+                    <label style="margin-right: 1rem;">Height<span class="text-danger">*</span></label>
+                    <input name="actual_height" type="text" placeholder="400" class="w-100" required/>
                         @error('width')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -209,8 +166,8 @@
                 <div class="height-width-space describe-campaign-input-wrapper w-100">
                   <div class="tm-input-wrapper d-flex align-items-center gap-1">
                      <!-- update here with margin right -->
-                    <label style="margin-right: 1rem;">Width<span>*</span></label>
-                    <input name="actual_width" type="text" placeholder="176cm" class="w-100" />
+                    <label style="margin-right: 1rem;">Width<span class="text-danger">*</span></label>
+                    <input name="actual_width" type="text" placeholder="200" class="w-100" required/>
                         @error('width')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -220,54 +177,11 @@
                 </div>
                </div>
 
-            <!-- <div class="d-flex align-items-start flex-wrap column-gap-4 w-100">
-                <div class="describe-campaign-input-wrapper w-100">
-                    <label>On Going Ad<span>*</span></label>
-                    <input name="on_going_ad" type="number" placeholder="10" min="0" />
-                    @error('on_going_ad')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="describe-campaign-input-wrapper w-100">
-                    <label>Space Left for Ad<span>*</span></label>
-                    <input name="space_left_for_ad" type="number" placeholder="5" min="0" />
-                    @error('space_left_for_ad')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div> -->
-
-            <!-- <div class="describe-campaign-input-wrapper-container gap-3 d-flex w-100 gap-3">
-                
-
-                <label class="pt-2"><strong>Set Exposure Time</strong><span>*</span></label>
-                <select name="exposure_time" class="form-control " style="height: 55px; margin-right: 20px; width: 20%;  ">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                </select>
-                <label><strong>second</strong></label>
-                @error('exposure_time')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-
-
-               
-
-                <label class='ml-5 pl-5'>Signage Location<span>*</span></label>
-                <select name="location" class="form-control" id="cities" style="height: 55px; margin-right: 20px; width: 20%;">
-                   
-                </select>
-                @error('location')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-
-            </div> -->
+           
 
             <div class="height-width-wrapper d-flex justify-content-between w-100 gap-5">
                 <!-- <div class="height-width-space describe-campaign-input-wrapper w-100"> -->
-                <label><strong>Set Exposure Time</strong><span>*</span></label>
+                <label><strong>Set Exposure Time</strong><span class="text-danger">*</span></label>
                 <!-- <div class="tm-input-wrapper d-flex align-items-center gap-1"> -->
                 <select name="exposure_time" class="form-control " style="height: 55px; margin-right: 20px; width: 80%;  ">
                     <option value="5">5</option>
@@ -278,7 +192,7 @@
                 @error('exposure_time')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
-                <label for="quantity">Second</label>
+                <label for="quantity"><strong>Second</strong></label>
                 <!-- </div> -->
 
                 <!-- </div> -->
@@ -320,7 +234,7 @@
             <div class="describe-campaign-input-wrapper w-100">
                 <label>Upload Signage Photo</label>
                 <div class="upload-box">
-                    <input name="image" type="file" id="file-input" />
+                    <input name="image" type="file" id="file-input" required/>
                     <div class="upload-content">
                         <span class="upload-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="24" viewBox="0 0 24 24" fill="none">

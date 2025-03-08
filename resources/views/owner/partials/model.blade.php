@@ -112,7 +112,7 @@
                                             stroke-linejoin="round" />
                                     </svg>
                                 </span>
-                                <p class="billboard-card-info-label">Rotations</p>
+                                <p class="billboard-card-info-label">Exposure time</p>
                                 <p class="billboard-card-info-value" id="modal-rotations"></p>
                             </div>
                             <div>

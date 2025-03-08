@@ -6,7 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Signage extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'category_name',
+        'slug',
+        'description',
+        'avg_daily_views',
+        'per_day_price',
+        'exposure_time',
+        'height',
+        'width',
+        'actual_height',
+        'actual_width',
+        'location',
+        'lat', // Ensure this is included
+        'lan', // Ensure this is included
+        'image',
+        'terms_and_conditions',
+        'privacy_policy',
+    ];
 
     public function users()
     {

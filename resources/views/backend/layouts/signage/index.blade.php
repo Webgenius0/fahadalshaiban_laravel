@@ -50,8 +50,8 @@
                 </div>
             </div>
             <!-- PAGE-HEADER END -->
-            <div class="row justify-content-evenly ">
-                <div class="card col-md-12 position-relative  justify-content-left align-items-center ">
+            <div class="row justify-content-evenly z-index-1 ">
+                <div class="card col-md-12 position-relative  justify-content-left  ">
                     <!-- Details Section (Initially hidden) -->
                     <div id="details-section" class="card-body" style="display:none;">
                         <!-- The data will be dynamically loaded here -->
@@ -230,15 +230,31 @@
   
                             <div class="row" >
                             
-                                <div class="col-md-6 mt-5">
-                                <h3>Record Details</h3>
+                                <div class="col-md-3 mt-5">
+                                <h3>Owner Details</h3>
                                     <p><strong>ID:</strong> ${data.id}</p>
                                     <p><strong>Name:</strong> ${user.name}</p>
                                     <p><strong>Email:</strong> ${user.email}</p>
+                                    
+                                </div>
+
+                                <div class="col-md-3 mt-5">
+                                <h3>Signage Details</h3>
                                     <p><strong>Title:</strong> ${data.name}</p>
                                     <p><strong>Description:</strong> ${data.description}</p>
+                                    <p><strong>Daily Views:</strong> ${data.avg_daily_views}</p>
+                                    <p><strong>Per day price:</strong> ${data.per_day   }</p>
                                 </div>
-                                <div class="col-md-6">
+
+                                <div class="col-md-3 mt-5">
+                                <small>Signage ArthWork Dimension</small>
+                                    <p><strong>Height:</strong> ${data.height} px</p>
+                                    <p><strong>Width:</strong> ${data.width} px</p>
+                                    <small>Signage Actual Dimension</small>
+                                    <p><strong>Actual Height:</strong> ${data.actual_height} cm</p>
+                                    <p><strong>Actual Width:</strong> ${data.actual_width} cm</p>
+                                </div>
+                                <div class="col-md-3">
                                     <!-- If there's an image, show it, otherwise show a placeholder -->
                                 
                                     <img src="${imageUrl}" alt="Signage Image" class="img-fluid" style="max-width: 100%; height: auto;" />  <!-- Display the image -->

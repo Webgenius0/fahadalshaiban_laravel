@@ -153,7 +153,7 @@ $total_signage = App\Models\Signage::where('user_id', auth()->user()->id)->count
         </div>
 
         <!-- Modal with FullCalendar -->
-        <div class="modal fade" id="bookingScheduleModal" tabindex="-1" aria-labelledby="bookedDaysModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="bookingScheduleModal" tabindex="-1" aria-labelledby="bookedDaysModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -161,11 +161,11 @@ $total_signage = App\Models\Signage::where('user_id', auth()->user()->id)->count
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div id="calendars"></div> <!-- Calendar goes here -->
+                        <div id="calendars"></div> 
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="billboard-card-container">           
     @foreach($signages as $signage)
@@ -174,9 +174,9 @@ $total_signage = App\Models\Signage::where('user_id', auth()->user()->id)->count
         <div class="billboard-card-content">
             <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
                 <!-- Calendar Button -->
-                <button class="view-calendar-btn btn btn-success col-md-3" data-bs-toggle="modal" data-bs-target="#bookingScheduleModal" data-signage-id="{{ $signage->id }}">
+                <!-- <button class="view-calendar-btn btn btn-success col-md-3" data-bs-toggle="modal" data-bs-target="#bookingScheduleModal" data-signage-id="{{ $signage->id }}">
                     Calendar
-                </button>
+                </button> -->
                 
                 <!-- View Button -->
                 <button class="campaign-edit-btn  col-md-3" data-id="{{ $signage->id }}" id="show-signage">
@@ -187,7 +187,7 @@ $total_signage = App\Models\Signage::where('user_id', auth()->user()->id)->count
             <div class="d-flex align-items-center justify-content-between gap-2">
                 <div>
                     <h3>{{ $signage->name ?? 'Billboard Location' }}</h3>
-                    <p class="billboard-card-id">{{ $signage->id }}</p>
+                   
                 </div>
             </div>
 
@@ -216,8 +216,8 @@ $total_signage = App\Models\Signage::where('user_id', auth()->user()->id)->count
                             <path d="M12 6V12L16 14" stroke="#4D4D4D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </span>
-                    <p class="billboard-card-info-label">Rotations</p>
-                    <p class="billboard-card-info-value">{{ $signage->exposure_time }}</p>
+                    <p class="billboard-card-info-label">Exposure time</p>
+                    <p class="billboard-card-info-value">{{ $signage->exposure_time }} sec per a minuit</p>
                 </div>
             </div>
         </div>

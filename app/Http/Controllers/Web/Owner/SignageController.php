@@ -104,8 +104,9 @@ class SignageController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-   
+    {
+        
+
     // Find the signage by ID
     $signage = Signage::findOrFail($id);
 
