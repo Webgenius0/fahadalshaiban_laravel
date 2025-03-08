@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Web\Client\CampaignDetailsController;
 use App\Http\Controllers\Web\Client\DashboardController;
 use App\Http\Controllers\Web\Client\PageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Client\OrderController;
+use App\Models\CampaignDetails;
 use App\Models\Order;
 
 Route::controller(DashboardController::class)->group(function () {
@@ -46,3 +48,4 @@ Route::controller(OrderController::class)->group(function () {
     // Route::delete('/order/{id}', 'destroy')->name('order.destroy');
 });
 Route::get('/get-booked-dates/{campaignDetailId}', [OrderController::class, 'getBookedDates'])->name('getBookedDates');
+Route::get('/get-booking-details/{id}', [CampaignDetailsController::class, 'getBookingDetails'])->name('getBookingDetails');

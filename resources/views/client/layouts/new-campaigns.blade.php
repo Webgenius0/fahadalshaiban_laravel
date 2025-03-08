@@ -101,7 +101,7 @@
                     style="position: absolute; top: 10px; right: 60px;  color: white; border: none; padding: 10px; cursor: pointer; border-radius: 5px;">
                     <i class="fe fe-x">Close</i> <!-- Icon color set to white -->
                 </button>
-                
+
             </div>
         </div>
     </div>
@@ -777,16 +777,16 @@
                             <label>Title</label>
                             <input
                                 type="text"
-                                value="Get 70% OFF Discount from Shashh"
+                                value="Banner Title"
                                 readonly id="detailsName" />
                         </div>
-                        <div class="campaign-details-input-wrapper">
+                        <!-- <div class="campaign-details-input-wrapper">
                             <label>What is your Objective?</label>
                             <input
                                 type="text"
                                 value="Brand awareness and reach"
-                                readonly />
-                        </div>
+                                readonly  id="detailsObjective"/>
+                        </div> -->
                         <div class="campaign-details-input-wrapper">
                             <label>Total Selected Signage</label>
                             <input
@@ -813,13 +813,14 @@
                         <table class="signage-table">
                             <thead>
                                 <tr>
-
+                                    <th>Image</th>
                                     <th>Signage Name</th>
-                                    <th>Signage ID</th>
+                                    
                                     <th>Signage Location</th>
                                     <th>Signage Type</th>
                                     <th>Price per day</th>
-                                    <th>Rotation Time</th>
+                                    <th>Total Price</th>
+                                    <th>Exposure Time</th>
                                     <th>Total Views</th>
                                 </tr>
                             </thead>
@@ -1041,7 +1042,9 @@
 
 @push('script')
 <!-- Flatpickr JS -->
-
+<script>
+    const assetUrl = "{{ asset('') }}"; // This gives the base URL for your assets.
+</script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="{{asset('js/CitiesAjax.js')}}"></script>
 <!-- for fieltering -->
@@ -1122,12 +1125,20 @@
             startDate: startDate || 'Not Set',
             endDate: endDate || 'Not Set',
             artWork: artWork || 'not set'
+
         };
 
         console.log('Form Data:', formData);
 
         // Store the formData object in localStorage as a JSON string
         localStorage.setItem('formData', JSON.stringify(formData));
+
+        const detailsNameInput = document.getElementById('detailsName');
+        if (detailsNameInput) {
+            detailsNameInput.value = name || 'Default Name'; // Set the value of the input field
+        }
+       
+
     }
 
     // Attach event listeners to the form fields
@@ -1151,6 +1162,7 @@
             let difference = end - start;
             let differenceDays = difference / (1000 * 3600 * 24);
             $("#daterange").val(differenceDays);
+
 
             document.getElementById('difference').value = difference;
         }
@@ -1181,154 +1193,86 @@
 
     });
 
-    // $(document).ready(function() {
-    //     function showDetails(signageId) {
-    //         if (!signageId) return;
 
-    //         $.ajax({
-    //             url: '/get-signage-location/' + signageId,
-    //             type: 'GET',
-    //             success: function(response) {
-    //                 console.log(response);
-    //                 if (response) {
-    //                     var signage = response;
-    //                     var differenceDays = localStorage.getItem('differenceDays');
-    //                     var totalprice = signage.price_per_day * differenceDays;
-    //                     var estimatedViews = signage.avg_daily_views * 1000;
-    //                     var content = `
-    //                                 <h3>Signage Details</h3>
-    //                                 <div class="row">
-    //                                 <div class="col-md-4 pt-2">                                 
-
-    //                                   <p><strong>Price Per Day:</strong> ${signage.price_per_day ||''} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"> </p>
-    //                                     <p><strong>Total Days:</strong> ${differenceDays || '0'}</p>
-    //                                 </div>
-    //                                 <div class="col-md-4 pt-2">
-    //                                 <p><strong>Estimated views:</strong> ${estimatedViews || ''} </p>
-    //                                 <p><strong>Total Price:</strong> ${totalprice || ''} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"></p>
-
-    //                                 </div>
-    //                                 <div class="col-md-4 pt-2">
-    //                                  <p><strong>Sub Total:</strong> ${signage.price_per_day || ''}</p>
-    //                                  </div>
-    //                                 </div>
-
-
-
-    //                     `;
-    //                     var closeButton = `
-    //                         <div class="close-btn-container">
-    //                             <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
-    //                                 <i class="fe fe-x"></i> Close <!-- Feather icon for 'X' -->
-    //                             </button>
-    //                         </div>
-    //                     `;
-
-    //                     $('#details-section').html(content + closeButton);
-    //                     $('#details-section').show();
-    //                 } else {
-
-    //                     $('#details-section').html("<p>Failed to load signage details. Please try again.</p>");
-    //                     $('#details-section').show();
-    //                 }
-    //             },
-    //             error: function(xhr, status, error) {
-
-    //                 $('#details-section').html("<p>There was an error fetching the data. Please try again.</p>");
-    //                 $('#details-section').show();
-    //             }
-
-
-
-    //         });
-
-    //     }
-
-    //     function hideDetails() {
-    //         $('#details-section').hide();
-    //         event.preventDefault();
-    //     }
-    //     window.showDetails = showDetails;
-    //     window.hideDetails = hideDetails;
-    // });
 
 
 
     $(document).ready(function() {
-    // Clear localStorage when page reloads
-    localStorage.clear();  // This will clear all data every time the page is loaded
-    console.log('localStorage data cleared on page reload.');
+        // Clear localStorage when page reloads
+        localStorage.clear(); // This will clear all data every time the page is loaded
+        console.log('localStorage data cleared on page reload.');
 
-    // Initialize the 'selectedSignages' array in localStorage if it doesn't exist
-    if (localStorage.getItem('selectedSignages') === null) {
-        localStorage.setItem('selectedSignages', JSON.stringify([]));  // Empty array
-    }
+        // Initialize the 'selectedSignages' array in localStorage if it doesn't exist
+        if (localStorage.getItem('selectedSignages') === null) {
+            localStorage.setItem('selectedSignages', JSON.stringify([])); // Empty array
+        }
 
-    // Initialize the 'totalSubtotal' in localStorage if it doesn't exist
-    if (localStorage.getItem('totalSubtotal') === null) {
-        localStorage.setItem('totalSubtotal', 0);
-    }
+        // Initialize the 'totalSubtotal' in localStorage if it doesn't exist
+        if (localStorage.getItem('totalSubtotal') === null) {
+            localStorage.setItem('totalSubtotal', 0);
+        }
 
-    function showDetails(signageId) {
-        if (!signageId) return;
+        function showDetails(signageId) {
+            if (!signageId) return;
 
-        // Retrieve the selectedSignages array from localStorage
-        let selectedSignages = JSON.parse(localStorage.getItem('selectedSignages'));
-        let signageIndex = selectedSignages.findIndex(signage => signage.id === signageId);
-        
-        if (signageIndex !== -1) {
-            // If the signage already exists, remove it and subtract its price
-            let removedSignage = selectedSignages.splice(signageIndex, 1)[0]; // Remove and get the signage
-            localStorage.setItem('selectedSignages', JSON.stringify(selectedSignages));
+            // Retrieve the selectedSignages array from localStorage
+            let selectedSignages = JSON.parse(localStorage.getItem('selectedSignages'));
+            let signageIndex = selectedSignages.findIndex(signage => signage.id === signageId);
 
-            // Recalculate the subtotal (subtract the removed signage's total_price)
-            let totalSubtotal = parseFloat(localStorage.getItem('totalSubtotal')) - removedSignage.total_price;
+            if (signageIndex !== -1) {
+                // If the signage already exists, remove it and subtract its price
+                let removedSignage = selectedSignages.splice(signageIndex, 1)[0]; // Remove and get the signage
+                localStorage.setItem('selectedSignages', JSON.stringify(selectedSignages));
 
-            // Update the subtotal in localStorage
-            localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
+                // Recalculate the subtotal (subtract the removed signage's total_price)
+                let totalSubtotal = parseFloat(localStorage.getItem('totalSubtotal')) - removedSignage.total_price;
 
-            console.log("Signage removed. New Subtotal:", totalSubtotal);
+                // Update the subtotal in localStorage
+                localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
 
-            // Update the UI to show the new subtotal
-            updateUI(totalSubtotal);
+                console.log("Signage removed. New Subtotal:", totalSubtotal);
 
-        } else {
-            // If the signage doesn't exist, add it and add its price to the subtotal
-            $.ajax({
-                url: '/get-signage-location/' + signageId,
-                type: 'GET',
-                success: function(response) {
-                    console.log("response:", response);
-                    if (response) {
-                        var signage = response;
-                        var differenceDays = localStorage.getItem('differenceDays');
-                        var totalprice = signage.price_per_day * differenceDays;
-                        var estimatedViews = signage.avg_daily_views * 1000;
+                // Update the UI to show the new subtotal
+                updateUI(totalSubtotal);
 
-                        // Add the current signage details to the array
-                        selectedSignages.push({
-                            id: signageId,
-                            price_per_day: signage.price_per_day,
-                            total_price: totalprice
-                        });
+            } else {
+                // If the signage doesn't exist, add it and add its price to the subtotal
+                $.ajax({
+                    url: '/get-signage-location/' + signageId,
+                    type: 'GET',
+                    success: function(response) {
+                        console.log("response:", response);
+                        if (response) {
+                            var signage = response;
+                            var differenceDays = localStorage.getItem('differenceDays');
+                            var totalprice = signage.price_per_day * differenceDays;
+                            var estimatedViews = signage.avg_daily_views * 1000;
 
-                        // Update the selectedSignages in localStorage
-                        localStorage.setItem('selectedSignages', JSON.stringify(selectedSignages));
 
-                        // Recalculate the subtotal (sum of all total prices)
-                        let totalSubtotal = selectedSignages.reduce((total, signage) => {
-                            return total + signage.total_price;
-                        }, 0);
+                            // Add the current signage details to the array
+                            selectedSignages.push({
+                                id: signageId,
+                                price_per_day: signage.price_per_day,
+                                total_price: totalprice
+                            });
 
-                        // Update the subtotal in localStorage
-                        localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
+                            // Update the selectedSignages in localStorage
+                            localStorage.setItem('selectedSignages', JSON.stringify(selectedSignages));
 
-                        console.log("Updated Subtotal:", totalSubtotal);
+                            // Recalculate the subtotal (sum of all total prices)
+                            let totalSubtotal = selectedSignages.reduce((total, signage) => {
+                                return total + signage.total_price;
+                            }, 0);
 
-                        // Update the UI with the new subtotal
-                        updateUI(totalSubtotal);
+                            // Update the subtotal in localStorage
+                            localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
 
-                        var content = `
+                            console.log("Updated Subtotal:", totalSubtotal);
+
+                            // Update the UI with the new subtotal
+                            updateUI(totalSubtotal);
+
+                            var content = `
                             <h3>Signage Details</h3>
                             <div class="row">
                                 <div class="col-md-4 pt-2">
@@ -1345,7 +1289,7 @@
                             </div>
                         `;
 
-                        var closeButton = `
+                            var closeButton = `
                             <div class="close-btn-container">
                                 <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
                                     <i class="fe fe-x"></i> Close
@@ -1353,59 +1297,59 @@
                             </div>
                         `;
 
-                        $('#details-section').html(content + closeButton);
-                        $('#details-section').show();
+                            $('#details-section').html(content + closeButton);
+                            $('#details-section').show();
 
-                        // Add the double-click event to subtract the price when double-clicked
-                        $('#details-section').on('dblclick', '.signage-item', function() {
-                            var signageId = $(this).data('id'); // Assuming the signage item has data-id attribute
-                            removeSignageFromTotal(signageId);
-                        });
-                    } else {
-                        $('#details-section').html("<p>Failed to load signage details. Please try again.</p>");
+                            // Add the double-click event to subtract the price when double-clicked
+                            $('#details-section').on('dblclick', '.signage-item', function() {
+                                var signageId = $(this).data('id'); // Assuming the signage item has data-id attribute
+                                removeSignageFromTotal(signageId);
+                            });
+                        } else {
+                            $('#details-section').html("<p>Failed to load signage details. Please try again.</p>");
+                            $('#details-section').show();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        $('#details-section').html("<p>There was an error fetching the data. Please try again.</p>");
                         $('#details-section').show();
                     }
-                },
-                error: function(xhr, status, error) {
-                    $('#details-section').html("<p>There was an error fetching the data. Please try again.</p>");
-                    $('#details-section').show();
-                }
-            });
+                });
+            }
         }
-    }
 
-    // Function to remove signage and subtract its price
-    function removeSignageFromTotal(signageId) {
-        let selectedSignages = JSON.parse(localStorage.getItem('selectedSignages'));
-        let signageIndex = selectedSignages.findIndex(signage => signage.id === signageId);
+        // Function to remove signage and subtract its price
+        function removeSignageFromTotal(signageId) {
+            let selectedSignages = JSON.parse(localStorage.getItem('selectedSignages'));
+            let signageIndex = selectedSignages.findIndex(signage => signage.id === signageId);
 
-        if (signageIndex !== -1) {
-            let removedSignage = selectedSignages.splice(signageIndex, 1)[0];
-            localStorage.setItem('selectedSignages', JSON.stringify(selectedSignages));
+            if (signageIndex !== -1) {
+                let removedSignage = selectedSignages.splice(signageIndex, 1)[0];
+                localStorage.setItem('selectedSignages', JSON.stringify(selectedSignages));
 
-            let totalSubtotal = parseFloat(localStorage.getItem('totalSubtotal')) - removedSignage.total_price;
-            localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
+                let totalSubtotal = parseFloat(localStorage.getItem('totalSubtotal')) - removedSignage.total_price;
+                localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
 
-            updateUI(totalSubtotal);
+                updateUI(totalSubtotal);
 
-            console.log("Signage removed on double-click. New Subtotal:", totalSubtotal);
+                console.log("Signage removed on double-click. New Subtotal:", totalSubtotal);
+            }
         }
-    }
 
-    // Function to update the UI with the latest subtotal
-    function updateUI(subtotal) {
-        // Display the updated subtotal in the UI
-        $('#subtotalDisplay').text(`Subtotal: ${subtotal} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;">`);
-    }
+        // Function to update the UI with the latest subtotal
+        function updateUI(subtotal) {
+            // Display the updated subtotal in the UI
+            $('#subtotalDisplay').text(`Subtotal: ${subtotal} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;">`);
+        }
 
-    function hideDetails() {
-        $('#details-section').hide();
-        event.preventDefault();
-    }
+        function hideDetails() {
+            $('#details-section').hide();
+            event.preventDefault();
+        }
 
-    window.showDetails = showDetails;
-    window.hideDetails = hideDetails;
-});
+        window.showDetails = showDetails;
+        window.hideDetails = hideDetails;
+    });
 
 
 
@@ -1413,8 +1357,8 @@
     let uploadedFile = null;
     $('#file-input').change(function(event) {
         $('#uploadContent').html(`<img src="${URL.createObjectURL(event.target.files[0])}" alt="Upload" style="width: 100%;" />`);
-        uploadedFile = event.target.files[0];
-        $('#uploaded-image-preview').val(uploadedFile.name);
+        // uploadedFile = event.target.files[0];
+        // $('#uploaded-image-preview').val(uploadedFile.name);
 
     });
 
@@ -1429,18 +1373,24 @@
             success: function(response) {
                 console.log(response);
 
-                let imageUrl = uploadedFile ? URL.createObjectURL(uploadedFile) : response.image;
+                let imageUrl = uploadedFile ? URL.createObjectURL(uploadedFile) : response.image? assetUrl+response.image : alt='image';
+                
+                let differenceDays = localStorage.getItem('differenceDays');
+                let totalPrice= response.price_per_day * differenceDays;
+                console.log("totalPrice:",totalPrice);
+
 
                 if (idArray.has(signageId)) {
                     let row = `
                     <tr data-id="${signageId}">
-                        
+                        <td><image src="${imageUrl}" alt="Signage Image" style="width: 50px; height: 50px; border-radius: 50%;"></td>
                         <td>${response.name}</td>
-                        <td>#${response.signage_id}</td>
+                        
                         <td>${response.location}</td>
                         <td>${response.category_name}</td>
-                        <td>SR ${response.price_per_day}</td>
-                        <td>${response.rotation_time}</td>
+                        <td> ${response.price_per_day} <img src="{{asset('currency/realcurrency.png')}}" alt="Signage Image" style="width: 10px; height: 10px;"}}></td>
+                        <td>${totalPrice} <img src="{{asset('currency/realcurrency.png')}}" alt="Signage Image" style="width: 10px; height: 10px;"}}> </td>
+                        <td>${response.exposure_time} sec per a minuit</td>
                         <td>${response.avg_daily_views}</td>
                     </tr>
                 `;

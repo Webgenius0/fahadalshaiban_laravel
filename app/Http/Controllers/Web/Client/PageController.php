@@ -211,6 +211,7 @@ class PageController extends Controller
             }
             return response()->json([
                 'name' => $signage->name,
+                'image'=>$signage->image,
                 'signage_id' => $signage->id,
                 'location' => $signage->location,
                 'description' => $signage->description,

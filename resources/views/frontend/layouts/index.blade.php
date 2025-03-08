@@ -343,9 +343,9 @@ $home_hero = $cms->firstWhere('section', SectionEnum::HOME_HERO);
 <section class="banner-home" dir="ltr">
     <div class="my-container">
         <div class="banner-content">
-            <h2 class="banner-title">
-               {{ __('banner.title') }}
-            </h2>
+            <small class="banner-title " style="font-size: 50px; white-space: normal">
+            {!! nl2br(__('banner.title')) !!}
+            </small>
             <div class="banner-details">
                 <div class="banner-line"></div>
                 <div>

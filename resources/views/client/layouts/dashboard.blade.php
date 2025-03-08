@@ -332,7 +332,8 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
                     </div>
 
                     <div class="campaign-bottom d-flex justify-content-center">
-                        <button class="btn btn-success mt-1">Campaign Details</button>
+                        <!-- <button class="btn btn-success mt-1">Campaign Details</button> -->
+                         <a href="{{ route('getBookingDetails' , ['id' => $order->order_id]) }}" class="btn btn-success mt-1" class="btn btn-success mt-1" > Campaign Details</a>
                     </div>
             </article>
             @endforeach
@@ -397,6 +398,6 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
         }
     });
     });
-    });
+    
 </script>
 @endpush

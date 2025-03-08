@@ -14,11 +14,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.17",
         "laravel/tinker": "^2.9",
-<<<<<<< HEAD
-        "pusher/pusher-php-server": "^7.2",
-=======
         "php-flasher/flasher-laravel": "^2.1",
->>>>>>> 114e63520cbbd5f4cd75f17557d07b1dea1bdef6
         "spatie/laravel-permission": "^6.10",
         "stichoza/google-translate-php": "^5.2",
         "tymon/jwt-auth": "^2.1",

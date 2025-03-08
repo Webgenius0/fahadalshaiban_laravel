@@ -14,11 +14,14 @@
                 <thead>
                     <tr>
                         <!-- <th>Image</th> -->
+                         <th>Image</th>
                         <th>Signage Name</th>
-                        <th>Signage ID</th>
+                        
                         <th>Signage Location</th>
                         <th>Signage Type</th>
+                        
                         <th>Price per day</th>
+                        <th>Total Day</th>
                         <th>Rotation Time</th>
                         <th>Total Views</th>
                     </tr>
@@ -40,7 +43,7 @@
             </div>
             <div class="total-row total">
                 <strong >Total</strong>
-                <strong id="total">R</strong>
+                <strong id="total"></strong>
             </div>
         </div>
     <!-- page.billing -->
@@ -85,31 +88,37 @@ $(document).ready(function() {
 $('#checkoutButton').click(function(event) {
     event.preventDefault();
 
-    // console.log(orderData.items);
+    // Retrieve form data from localStorage
     let storedFormData = JSON.parse(localStorage.getItem('formData'));
     let artWorkUrl = storedFormData ? storedFormData.artWork : 'No image uploaded';
-    const  totdoList  = {
+
+    // Calculate the number of days between startDate and endDate
+    const startDate = new Date(storedFormData.startDate);
+    const endDate = new Date(storedFormData.endDate);
+    const timeDifference = endDate - startDate; // Difference in milliseconds
+    const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // Convert to days
+
+    // Prepare the data to be sent
+    const totdoList = {
         addTitle: storedFormData.name,
-        description: storedFormData.campaign_description,   
+        description: storedFormData.campaign_description,
         startDate: storedFormData.startDate,
         endDate: storedFormData.endDate,
         artWork: artWorkUrl,
-        items: orderData.items,  
+        items: orderData.items,
         subtotal: orderData.subtotal,
         dispatchFee: orderData.dispatchFee,
         total: orderData.total,
-        _token: '{{ csrf_token() }}' 
+        _token: '{{ csrf_token() }}'
     };
-   
 
+    // Send AJAX request
     $.ajax({
-        url: '/checkout', 
-        type: 'POST',  
-        data:  totdoList ,
-
+        url: '/checkout',
+        type: 'POST',
+        data: totdoList,
         success: function(response) {
-            
-            window.location.href = "{{ route('page.billing') }}"; 
+            window.location.href = "{{ route('page.billing') }}";
         },
         error: function(xhr, status, error) {
             console.error("AJAX request failed:", error);
@@ -120,16 +129,31 @@ $('#checkoutButton').click(function(event) {
 let totalPrice = 0;
 function fetchDataForSignage(id) {
     $.ajax({
-        url: '/get-signage-location/' + id,  
-        type: 'GET',  
-        success: function(response) {        
+        url: '/get-signage-location/' + id,
+        type: 'GET',
+        success: function(response) {
+            // Retrieve startDate and endDate from localStorage
+            const storedFormData = JSON.parse(localStorage.getItem('formData'));
+            const startDate = new Date(storedFormData.startDate);
+            const endDate = new Date(storedFormData.endDate);
+
+            // Calculate the number of days
+            const timeDifference = endDate - startDate; // Difference in milliseconds
+            const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // Convert to days
+
+            // Calculate subtotal based on daysDifference and price_per_day
+            const perSignageFee = response.price_per_day;
+            const signageSubtotal = perSignageFee * daysDifference;
+            totalPrice += signageSubtotal;
+
+            // Update the UI with the new subtotal
             const despatchFee = "{{ env('DESPATCH_FEE') }}";
             $("#dispatchFee").text("RS " + despatchFee + "%");
-            let perSignageFee = response.price_per_day;
-            totalPrice += perSignageFee;
-            $("#subTotal").text("RS " + totalPrice);
-            let TotalwithDespatchFee = totalPrice + ((despatchFee / 100) * totalPrice);
-            $("#total").text("RS " + TotalwithDespatchFee);  
+            $("#subTotal").html(totalPrice + ' <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;">');
+
+            // Calculate total with dispatch fee
+            const TotalwithDespatchFee = totalPrice + ((despatchFee / 100) * totalPrice);
+            $("#total").html(TotalwithDespatchFee + ' <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;">');
 
             // Add this item to the orderData object
             orderData.items.push({
@@ -137,27 +161,32 @@ function fetchDataForSignage(id) {
                 price_per_day: response.price_per_day,
                 rotation_time: response.rotation_time,
                 avg_daily_views: response.avg_daily_views,
-                total: response.price_per_day * response.rotation_time
+                total: signageSubtotal // Update total for this item
             });
 
+            // Update orderData totals
             orderData.subtotal = totalPrice;
             orderData.dispatchFee = (despatchFee / 100) * totalPrice;
             orderData.total = TotalwithDespatchFee;
 
+            // Add a new row to the table
             let row = `
                 <tr>
+                    <td><img src="{{asset('${response.image}')}}" style="width: 50px; height: 50px; border-radius: 50%;" alt="Signage Image"></td>
                     <td>${response.name}</td>
-                    <td>#${response.signage_id}</td>
                     <td>${response.location}</td>
                     <td>${response.category_name}</td>
-                    <td>SR ${response.price_per_day}</td>
-                    <td>${response.rotation_time}</td>
-                    <td>${response.avg_daily_views}</td>
+                    <td>${response.price_per_day} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"></td>
+                    <td>${daysDifference}</td>
+                    <td>${response.exposure_time} sec per a minuit</td>
+                    <td>${response.avg_daily_views * 1000}</td>
                 </tr>
             `;
             $('.signage-table tbody').append(row);
+
+            // Update the image preview if available
             if (response.image) {
-                $('#uploaded-image-preview').attr('src', response.image); 
+                $('#uploaded-image-preview').attr('src', response.image);
             }
         },
         error: function(xhr, status, error) {
@@ -165,6 +194,8 @@ function fetchDataForSignage(id) {
         }
     });
 }
+
+
 
 
 </script>
