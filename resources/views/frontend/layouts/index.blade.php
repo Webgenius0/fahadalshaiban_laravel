@@ -659,7 +659,7 @@ $home_hero = $cms->firstWhere('section', SectionEnum::HOME_HERO);
             </div>
 
             <div class="grow-business-action-wrapper">
-                <a href="./login.html" class="btn-common">
+                <a href="{{ route('login') }}" class="btn-common">
                     {!! __('menu.startnewcampaign') !!}
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M4 12L20 12M20 12L14 18M20 12L14 6" stroke="white" stroke-width="1.5" stroke-linecap="round"

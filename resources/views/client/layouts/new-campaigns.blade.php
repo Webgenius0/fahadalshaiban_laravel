@@ -108,9 +108,9 @@
     <div
         class="d-flex justify-content-between align-items-start mb-5 gap-4 flex-wrap">
         <div>
-            <h4 class="campaign-header-title">Start New Campaign</h4>
+            <h4 class="campaign-header-title">{{__('userdashboard.startnewcampaign')}}</h4>
             <p class="campaign-subtitle">
-                Follow this steps to launch campaign
+               {{__('userdashboard.followthisstep')}}
             </p>
         </div>
 
@@ -124,22 +124,22 @@
     <section>
         <div class="step-container">
             <div class="step">
-                <div class="step-label">Objective</div>
+                <div class="step-label">{{__('userdashboard.objective')}}</div>
                 <div class="step-circle"></div>
             </div>
             <div class="step-line"></div>
             <div class="step">
-                <div class="step-label">Select Signage</div>
+                <div class="step-label">{{__('userdashboard.selectsignage')}}</div>
                 <div class="step-circle"></div>
             </div>
             <div class="step-line"></div>
             <div class="step">
-                <div class="step-label">Add Design</div>
+                <div class="step-label">{{__('userdashboard.adddesign')}}</div>
                 <div class="step-circle"></div>
             </div>
             <div class="step-line"></div>
             <div class="step">
-                <div class="step-label">Review</div>
+                <div class="step-label">{{__('userdashboard.review')}}</div>
                 <div class="step-circle"></div>
             </div>
         </div>
@@ -147,22 +147,22 @@
         <form class="multi-step-form">
             <div class="describe-campaign-wrapper form-step active">
                 <div class="describe-campaign">
-                    <h5>Describe your campaign bellow</h5>
+                    <h5>{{__('userdashboard.describe')}}</h5>
 
                     <div class="describe-campaign-input-wrapper">
-                        <label>Ad Title <span>*</span></label>
+                        <label>{{__('userdashboard.addtitle')}} <span>*</span></label>
                         <input
                             type="text"
                             placeholder="Enter your campaign name" id="addTitle" name="addTitle" required />
                     </div>
 
                     <div class="describe-campaign-input-wrapper">
-                        <label>Campaign Description <span>*</span></label>
+                        <label>{{__('userdashboard.campaigndetails')}} <span>*</span></label>
                         <textarea name="description" id="description" placeholder="Descrive your campaign to help us better understand your needs" required></textarea>
                     </div>
 
                     <div class="objectives-container">
-                        <h2>What is your Objective?</h2>
+                        <h2>{{__('userdashboard.objective')}}</h2>
                         <div class="objectives-cards-wrapper">
                             <label class="objective-card">
                                 <div
@@ -186,10 +186,9 @@
                                 </div>
 
                                 <div class="objective-content">
-                                    <h3>Brand awareness and reach</h3>
+                                    <h3>{{__('userdashboard.title1')}}</h3>
                                     <p>
-                                        Increase visibility and recognition of your brand or
-                                        product among your target audience.
+                                        {{__('userdashboard.des1')}}
                                     </p>
                                 </div>
                             </label>
@@ -231,10 +230,9 @@
                                     </div>
                                 </div>
                                 <div class="objective-content">
-                                    <h3>Store visitors</h3>
+                                    <h3>{{__('userdashboard.title2')}}</h3>
                                     <p>
-                                        Increase visibility and recognition of your brand or
-                                        product among your target audience.
+                                    {{__('userdashboard.des2')}}
                                     </p>
                                 </div>
                             </label>
@@ -276,10 +274,9 @@
                                     </div>
                                 </div>
                                 <div class="objective-content">
-                                    <h3>Site traffic</h3>
+                                    <h3>{{__('userdashboard.title3')}}</h3>
                                     <p>
-                                        Attract more visitors to your website and improve
-                                        online engagement.
+                                    {{__('userdashboard.des3')}}
                                     </p>
                                 </div>
                             </label>
@@ -315,10 +312,9 @@
                                     </div>
                                 </div>
                                 <div class="objective-content">
-                                    <h3>Phone calls</h3>
+                                    <h3>{{__('userdashboard.title4')}}</h3>
                                     <p>
-                                        Generate more incoming calls from potential
-                                        customers interested in your offerings.
+                                    {{__('userdashboard.des4')}}
                                     </p>
                                 </div>
                             </label>
@@ -328,7 +324,7 @@
 
                 <div class="date-picker-container">
                     <div class="date-picker-wrapper">
-                        <label for="start-date" class="date-label">Start Date <span>*</span></label>
+                        <label for="start-date" class="date-label">{{__('userdashboard.startdate')}}<span>*</span></label>
                         <div class="date-input-container">
                             <input
                                 type="date"
@@ -342,7 +338,7 @@
                     </div>
 
                     <div class="date-picker-wrapper">
-                        <label for="end-date" class="date-label">End Date <span>*</span></label>
+                        <label for="end-date" class="date-label">{{__('userdashboard.enddate')}} <span>*</span></label>
                         <div class="date-input-container">
                             <input
                                 type="date"
@@ -360,7 +356,7 @@
                 <button
                     type="button"
                     class="next-btn m-auto mt-4 change-step next" id="first">
-                    Next
+                   {{__('userdashboard.next')}}
                 </button>
             </div>
 
@@ -428,7 +424,7 @@
                     </select>
 
                     <select class="signage-filter-dropdown" id="category" style="background-color:rgb(244, 245, 247); border: 1px solid #b3b3b3; border-radius: 8px; padding-left: 20px;">
-                        <option value="">Select Category...</option>
+                        <option value="">{{__('userdashboard.category')}}...</option>
                         @foreach ($categories as $category)
                         <option value="{{ $category->name }}">{{ $category->name }}</option>
                         @endforeach
@@ -456,7 +452,7 @@
 
 
                     <select class="signage-filter-dropdown" id="exposure" style="background-color:rgb(244, 245, 247); border: 1px solid #b3b3b3; border-radius: 8px; padding-left: 20px;">
-                        <option data-display="Duration">Expousure Time</option>
+                        <option data-display="Duration">{{__('userdashboard.exposure')}}</option>
                         <option value="5-10">5-10 Seconds</option>
                         <option value="10-20">10-20 Seconds</option>
                         <option value="20-30">20-30 Seconds</option>
@@ -500,7 +496,7 @@
                                             <!-- <p class="billboard-card-id">#{{$data->id}}</p> -->
                                         </div>
                                         <button type="button" class="add-signage" onclick="changeLocation(event, '{{ $data->lat }}', '{{ $data->lan }}')" data-id="{{$data->id}}">
-                                            Add signage
+                                           {{__('userdashboard.addsignage')}}
                                         </button>
                                     </div>
 
@@ -528,7 +524,7 @@
                                                 </svg>
                                             </span>
                                             <p class="billboard-card-info-label">
-                                                Estimated views
+                                               {{__('userdashboard.estimateview')}}
                                             </p>
                                             <p class="billboard-card-info-value">{{$data->avg_daily_views}}</p>
                                         </div>
@@ -537,7 +533,7 @@
                                                 <img src="{{ asset('currency/realcurrency.png') }}" style="width: 20px; height: 20px;" alt="">
                                             </span>
                                             <p class="billboard-card-info-label">
-                                                Price per day
+                                                {{__('userdashboard.priceperday')}}
                                             </p>
                                             <p class="billboard-card-info-value">{{$data->per_day_price}}</p>
                                         </div>
@@ -578,11 +574,11 @@
                         <div
                             class="d-flex align-items-center justify-content-center gap-5 mt-5">
                             <button type="button" class="next-btn change-step prev">
-                                Previous
+                                {{__('userdashboard.previous')}}
                             </button>
 
                             <button type="button" class="next-btn change-step next">
-                                Next
+                                {{__('userdashboard.next')}}
                             </button>
                         </div>
                     </div>
@@ -602,11 +598,11 @@
                                     <button
                                         type="button"
                                         class="next-btn change-step prev">
-                                        Previous
+                                        {{__('userdashboard.previous')}}
                                     </button>
 
                                     <button type="button" class="next-btn change-step next">
-                                        Next
+                                        {{__('userdashboard.next')}}
                                     </button>
                                 </div>
 
@@ -737,7 +733,7 @@
             <div class="upload-signage-file form-step">
                 <div class="input-wrapper-large">
                     <div>
-                        <p class="upload-signage-file-label">Upload Art Work</p>
+                        <p class="upload-signage-file-label">{{__('userdashboard.uploadartwork')}}</p>
                         <p class="upload-signage-file-text">
                             Upload your art work here
                         </p>
@@ -758,23 +754,23 @@
                 <div
                     class="d-flex align-items-center justify-content-center gap-5 mt-5">
                     <button type="button" class="next-btn change-step prev">
-                        Previous
+                        {{__('userdashboard.previous')}}
                     </button>
 
                     <button type="button" class="next-btn change-step next">
-                        Next
+                        {{__('userdashboard.next')}}
                     </button>
                 </div>
             </div>
 
             <div class="describe-campaign-details-wrapper form-step">
                 <div class="describe-campaign">
-                    <h5>Campaign Details</h5>
+                    <h5>{{__('userdashboard.campaigndetails')}}</h5>
 
 
                     <div class="campaign-details-wrapper">
                         <div class="campaign-details-input-wrapper">
-                            <label>Title</label>
+                            <label>{{__('userdashboard.title')}}</label>
                             <input
                                 type="text"
                                 value="Banner Title"
@@ -788,7 +784,7 @@
                                 readonly  id="detailsObjective"/>
                         </div> -->
                         <div class="campaign-details-input-wrapper">
-                            <label>Total Selected Signage</label>
+                            <label>{{__('userdashboard.totalselected')}}</label>
                             <input
                                 type="text"
                                 value="12 signages selected"
@@ -796,13 +792,13 @@
                                 readonly />
                         </div>
                         <div class="campaign-details-input-wrapper">
-                            <label>Design</label>
+                            <label>{{__('userdashboard.design')}}</label>
                             <input type="text" value="Design File.JPEG" readonly id="uploaded-image-preview" />
 
                         </div>
 
                         <div class="campaign-details-input-wrapper">
-                            <label>Date Range</label>
+                            <label>{{__('userdashboard.daterange')}}</label>
                             <input type="text" id="daterange" />
                         </div>
                     </div>
@@ -813,15 +809,15 @@
                         <table class="signage-table">
                             <thead>
                                 <tr>
-                                    <th>Image</th>
-                                    <th>Signage Name</th>
+                                    <th>{{__('userdashboard.image')}}</th>
+                                    <th>{{__('userdashboard.signagename')}}</th>
                                     
-                                    <th>Signage Location</th>
-                                    <th>Signage Type</th>
-                                    <th>Price per day</th>
-                                    <th>Total Price</th>
-                                    <th>Exposure Time</th>
-                                    <th>Total Views</th>
+                                    <th>{{__('userdashboard.signagelocation')}}</th>
+                                    <th>{{__('userdashboard.signagetype')}}</th>
+                                    <th>{{__('userdashboard.priceperday')}}</th>
+                                    <th>{{__('userdashboard.total')}}</th>
+                                    <th>{{__('userdashboard.expouser')}}</th>
+                                    <th>{{__('userdashboard.totalviews')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -834,11 +830,11 @@
                 <div
                     class="d-flex align-items-center justify-content-center gap-5 mt-5">
                     <button type="button" class="next-btn change-step prev">
-                        Previous
+                        {{__('userdashboard.previous')}}
                     </button>
 
-                    <a href="{{ route('page.cart') }}" class="btn-common">
-                        Proceed to checkout
+                    <a href="{{ route('page.cart') }}" class="btn-common" >
+                       {{__('userdashboard.checkout')}}
                     </a>
                 </div>
             </div>

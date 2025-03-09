@@ -27,6 +27,7 @@ return [
     'followus' =>'Follow us on',
     'subscribeus' => 'Subscribe us',
     'subscribe' => 'Subscribe',
-    'copyright' => 'All Rights Reserved © 2024 . Made with ShaShh™'
+    'copyright' => 'All Rights Reserved © 2024 . Made with ShaShh™',
+    'owner_signup' => 'Sign up',
 
 ];

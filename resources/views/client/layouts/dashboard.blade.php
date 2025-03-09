@@ -7,6 +7,16 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
 
 ?>
 @push('style')
+<style>
+    .btn-common {
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .btn-common:hover {
+    color: gray; /* Change text color to gray on hover */
+  }
+</style>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <!-- FullCalendar CSS -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.3.0/dist/fullcalendar.min.css" rel="stylesheet">
@@ -50,7 +60,7 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
 <div class="main-content">
     <section class="overview-cards-wrapper">
         <div class="overview-card">
-            <h3 class="overview-card-title">Active Campaigns</h3>
+            <h3 class="overview-card-title">{{__('userdashboard.activecampaigns')}}</h3>
             <div class="overview-card-content">
                 <p class="overview-card-amount">{{$totalActivesignages}}</p>
 
@@ -69,7 +79,7 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
             </div>
         </div>
         <div class="overview-card">
-            <h3 class="overview-card-title">Total Booked Signage</h3>
+            <h3 class="overview-card-title">{{__('userdashboard.totalbooked')}}</h3>
             <div class="overview-card-content">
                 <p class="overview-card-amount">{{$book}}</p>
                 <div class="overview-card-icon card-icon-purple">
@@ -91,7 +101,7 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
         </div>
 
         <div class="overview-card">
-            <h3 class="overview-card-title">Total Views</h3>
+            <h3 class="overview-card-title">{{__('userdashboard.totalviewe')}}</h3>
             <div class="overview-card-content">
                 <p class="overview-card-amount">18k</p>
                 <div class="overview-card-icon card-icon-orange">
@@ -112,7 +122,7 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
             </div>
         </div>
         <div class="overview-card">
-            <h3 class="overview-card-title">Total Spending</h3>
+            <h3 class="overview-card-title">{{__('userdashboard.totalspending')}}</h3>
             <div class="overview-card-content">
                 <p class="overview-card-amount">SR 2000</p>
                 <div class="overview-card-icon card-icon-pink">
@@ -138,8 +148,8 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
     <section class="campaign-wrapper">
         <div class="campaign-header">
             <div>
-                <h4 class="campaign-header-title">Campaign</h4>
-                <p class="campaign-subtitle">Current Campaign List</p>
+                <h4 class="campaign-header-title">{{__('userdashboard.campaign')}}</h4>
+                <p class="campaign-subtitle">{{__('userdashboard.currentlist')}}</p>
             </div>
 
             <div class="campaign-state">
@@ -152,10 +162,10 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
         <div class="empty-campaign-banner">
             <div class="my-container">
                 <div class="empty-campaign">
-                    <h2>You haven't create a campaign yet</h2>
-                    <p>Let create your first campaign</p>
-                    <a href="{{ route('page.new.campaigns') }}" class="btn-common">
-                        Start New Campaign
+                    <h2>{{__('userdashboard.havenotcampaign')}}</h2>
+                    <p>{{__('userdashboard.createfirst')}}</p>
+                    <a href="{{ route('page.new.campaigns') }}" class="btn-common" style="text-decoration: none; ">
+                        {{__('userdashboard.startnewcampaign')}}
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"

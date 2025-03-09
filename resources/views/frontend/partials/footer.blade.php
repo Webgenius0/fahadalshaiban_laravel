@@ -1,3 +1,7 @@
+@php
+use App\Models\SocialLink;
+$link=SocialLink::where('name','facebook')->first();
+@endphp
 <!-- footer starts -->
 <footer class="footer">
     <div class="my-container">
@@ -12,7 +16,7 @@
 
                     <div>
                         <a href="{{ route('pro.tips') }}" class="btn-common">
-                        {{__('menu.protips')}}
+                            {{__('menu.protips')}}
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
@@ -31,12 +35,12 @@
                 </div>
 
                 <p class="footer-desc">
-                {{__('menu.protipsDescription')}}
+                    {{__('menu.protipsDescription')}}
                 </p>
             </div>
             <div class="footer-item">
-            <h4>{{__('menu.quicklinks')}}</h4>
-            <div class="footer-links-wrapper">
+                <h4>{{__('menu.quicklinks')}}</h4>
+                <div class="footer-links-wrapper">
                     <a href="{{ route('home') }}">{{__('menu.home')}}</a>
                     <a href="{{ route('page.new.campaigns') }}">{{__('menu.findsignage')}}</a>
                     <a href="{{ route('contact.us') }}">{{__('menu.contact')}}</a>
@@ -58,7 +62,7 @@
                 <form class="newsletter-input-wrapper">
                     <input type="text" placeholder="Your Email Goes Here" />
                     <button type="submit" class="btn-common">
-                    {{__('menu.subscribe')}}
+                        {{__('menu.subscribe')}}
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -76,35 +80,39 @@
                 </form>
                 <h4>{{__('menu.followus')}}</h4>
                 <div class="footer-social">
-                    <a href="#">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="34"
-                            height="32"
-                            viewBox="0 0 34 32"
-                            fill="none">
-                            <ellipse
-                                cx="17.2105"
-                                cy="16"
-                                rx="14.2534"
-                                ry="14"
-                                fill="url(#paint0_linear_159_1128)" />
-                            <path
-                                d="M22.5185 20.2816L23.1517 16.3301H19.1909V13.767C19.1909 12.6857 19.7432 11.6311 21.5172 11.6311H23.3191V8.26699C23.3191 8.26699 21.6845 8 20.1225 8C16.8591 8 14.728 9.89294 14.728 13.3184V16.3301H11.1019V20.2816H14.728V29.8345C15.456 29.944 16.2007 30 16.9594 30C17.7181 30 18.4629 29.944 19.1909 29.8345V20.2816H22.5185Z"
-                                fill="white" />
-                            <defs>
-                                <linearGradient
-                                    id="paint0_linear_159_1128"
-                                    x1="17.2105"
-                                    y1="2"
-                                    x2="17.2105"
-                                    y2="29.917"
-                                    gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#18ACFE" />
-                                    <stop offset="1" stop-color="#0163E0" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
+                    @if ($link)
+                    <a href="{{ $link->url ?? '#' }}" target="_blank">
+                    @else
+                    <p>Facebook link not available.</p>
+                    @endif
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="34"
+                        height="32"
+                        viewBox="0 0 34 32"
+                        fill="none">
+                        <ellipse
+                            cx="17.2105"
+                            cy="16"
+                            rx="14.2534"
+                            ry="14"
+                            fill="url(#paint0_linear_159_1128)" />
+                        <path
+                            d="M22.5185 20.2816L23.1517 16.3301H19.1909V13.767C19.1909 12.6857 19.7432 11.6311 21.5172 11.6311H23.3191V8.26699C23.3191 8.26699 21.6845 8 20.1225 8C16.8591 8 14.728 9.89294 14.728 13.3184V16.3301H11.1019V20.2816H14.728V29.8345C15.456 29.944 16.2007 30 16.9594 30C17.7181 30 18.4629 29.944 19.1909 29.8345V20.2816H22.5185Z"
+                            fill="white" />
+                        <defs>
+                            <linearGradient
+                                id="paint0_linear_159_1128"
+                                x1="17.2105"
+                                y1="2"
+                                x2="17.2105"
+                                y2="29.917"
+                                gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#18ACFE" />
+                                <stop offset="1" stop-color="#0163E0" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
                     </a>
                     <a href="#">
                         <svg

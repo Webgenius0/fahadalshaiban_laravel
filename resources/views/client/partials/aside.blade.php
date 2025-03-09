@@ -33,7 +33,7 @@
                         stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg>
-                Overview</a>
+                {{__('userdashboard.overview')}}</a>
             <a href="{{ route('page.new.campaigns') }}" class="menu-item {{ request()->routeIs('page.new.campaigns') ? 'active' : '' }}">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +58,7 @@
                         stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg>
-                Start New Campaign</a>
+                {{__('userdashboard.startnewcampaign')}}</a>
             <a href="{{ route('page.invoice.list') }}" class="menu-item {{ request()->routeIs('page.invoice.list') ? 'active' : '' }}">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -93,13 +93,9 @@
                         stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg>
-                Invoice</a>
+                {{__('userdashboard.invoice')}}</a>
 
-
-
-
-
-                
+    
         </nav>
         <div class="sidebar-footer">
             <a href="{{ route('page.tutorials') }}" class="menu-item {{ request()->routeIs('page.tutorials') ? 'active' : '' }}">
@@ -117,7 +113,7 @@
                     <rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect>
                     <polygon points="10 9 16 12 10 15 10 9"></polygon>
                 </svg>
-                Tutorials
+                {{__('userdashboard.tutorial')}}
             </a>
             <a href="{{ route('client.page.profile') }}" class="menu-item {{ request()->routeIs('page.profile') ? 'active' : '' }}">
                 <svg
@@ -138,7 +134,7 @@
                         stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg>
-                Settings</a>
+                {{__('userdashboard.setting')}}</a>
             <a href="javascript:void(0);" class="menu-item" onclick="document.getElementById('logout-form').submit();">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +159,7 @@
                         stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg>
-                Logout</a>
+                {{__('userdashboard.logout')}}</a>
         </div>
     </div>
 </aside>

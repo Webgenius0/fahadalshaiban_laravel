@@ -3,7 +3,7 @@
         <!-- Toggle Button for Sidebar -->
         <button class="toggle-button" id="toggle-button">☰</button>
 
-        <h1> Hello {{Auth::user()->name ?? 'N/A'}} </h1>
+        <h1> {{__('userdashboard.hellouser')}} {{Auth::user()->name ?? 'N/A'}} </h1>
         <div class="dashboard-top-bar-date">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -25,6 +25,13 @@
                     stroke-linejoin="round" />
             </svg>
             <span>{{ \Carbon\Carbon::now()->format('M d, Y') }}</span>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn tm-new-btn dropdown-toggle text-dark" data-bs-toggle="dropdown" aria-expanded="false">{{session()->get('locale')=='ar'?'العربية':'English'}}</button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ route('lang', ['lang' => 'en']) }}">English</a></li>
+                <li><a class="dropdown-item" href="{{ route('lang', ['lang' => 'ar']) }}">{{__('menu.arabic')}}</a></li>
+            </ul>
         </div>
     </div>
 
@@ -141,7 +148,7 @@
                 <img
                     src="{{ asset(Auth::user()->avatar ?? 'images/profile-img.png') }}"
                     alt="Profile"
-                    width="40" id="profilePreview"  style="border-radius: 50%;"/>
+                    width="40" id="profilePreview" style="border-radius: 50%;" />
             </div>
 
             <h4 class="dashboard-profile-name">{{Auth::user()->name ?? 'N/A'}}</h4>

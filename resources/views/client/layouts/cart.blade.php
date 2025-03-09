@@ -14,16 +14,16 @@
                 <thead>
                     <tr>
                         <!-- <th>Image</th> -->
-                         <th>Image</th>
-                        <th>Signage Name</th>
+                         <th>{{__('userdashboard.image')}}</th>
+                        <th>{{__('userdashboard.signagename')}}</th>
                         
-                        <th>Signage Location</th>
-                        <th>Signage Type</th>
+                        <th>{{__('userdashboard.signagelocation')}}</th>
+                        <th>{{__('userdashboard.signagetype')}}</th>
                         
-                        <th>Price per day</th>
-                        <th>Total Day</th>
-                        <th>Rotation Time</th>
-                        <th>Total Views</th>
+                        <th>{{__('userdashboard.priceperday')}}</th>
+                        <th>{{__('userdashboard.totalday')}}</th>
+                        <th>{{__('userdashboard.expouser')}}</th>
+                        <th>{{__('userdashboard.totalviews')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,22 +34,22 @@
 
         <div class="total-box">
             <div class="total-row">
-                <span>Sub total</span>
+                <span>{{__('userdashboard.subtotal')}}</span>
                 <span id="subTotal"></span>
             </div>
             <div class="total-row">
-                <span>Dispatch Fee</span>
+                <span>{{__('userdashboard.dispatchfee')}}</span>
                 <span id="dispatchFee"></span>
             </div>
             <div class="total-row total">
-                <strong >Total</strong>
+                <strong >{{__('userdashboard.total')}}</strong>
                 <strong id="total"></strong>
             </div>
         </div>
     <!-- page.billing -->
         <div class="d-flex justify-content-center w-100" id="checkoutButtonContainer">
             <a href="{{ route('checkout') }}" class="btn-common" id="checkoutButton">
-                Proceed to checkout
+                {{__('userdashboard.checkout')}}
             </a>
         </div>
     </div>

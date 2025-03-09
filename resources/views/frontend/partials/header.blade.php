@@ -11,7 +11,7 @@
                 <div class="navbar-content">
                     <ul class="nav-items-wrapper">
                         <li><a href="{{ route('home') }}" class="nav-item-active">{{ __('menu.home') }}</a></li>
-                        
+
                     </ul>
                     <div class="action-lang-wrapper">
 
@@ -24,21 +24,18 @@
                         </div>
 
                         <a href="{{ route('login') }}" class="btn-common">
-                        {{ __('menu.startnewcampaign') }}
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none">
-                                <path
-                                    d="M4 12L20 12M20 12L14 18M20 12L14 6"
-                                    stroke="white"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round" />
+                            @if(Route::is('join.signage.owner')) {{-- Check if the current route is 'login' --}}
+                           {{ __('menu.owner_signup') }}
+                            @else
+                            {{ __('menu.startnewcampaign') }} <!-- Show "Start New Campaign" otherwise -->
+                            @endif
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M4 12L20 12M20 12L14 18M20 12L14 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </a>
+
+
+
                     </div>
                 </div>
                 <button class="menu-toggle" aria-label="Open menu">☰</button>
