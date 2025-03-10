@@ -2,7 +2,7 @@
 
 use GPBMetadata\Google\Api\Auth;
 
-$book = App\Models\Order::where('user_id', auth()->user()->id)->where('status', 'booked')->count();
+$book = App\Models\Order::where('user_id', auth()->user()->id)->where('payment_status', 'booked')->count();
 $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
 
 ?>

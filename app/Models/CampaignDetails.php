@@ -21,7 +21,7 @@ class CampaignDetails extends Model
 
     public function order()
     {
-        return $this->belongsTo(Order::class, 'order_id');
+        return $this->belongsTo(Order::class, 'order_id', 'id');
     }
     
     public function signage()
@@ -38,4 +38,6 @@ class CampaignDetails extends Model
     {
         return $this->belongsTo(OrderItem::class, 'order_id', 'order_id');
     }
+
+ 
 }

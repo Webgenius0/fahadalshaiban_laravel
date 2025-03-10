@@ -19,7 +19,7 @@ class OrderController extends Controller
         $order->subtotal = $orderData['subtotal'];
         $order->despatch_fee = $orderData['despatchFee'];
         $order->total = $orderData['total'];
-        $order->status = 'pending';  // Default status
+        $order->payment_status = 'pending';  // Default status
         $order->save();  // Save the order to the database
     
         // Now, create the order items
@@ -48,7 +48,7 @@ class OrderController extends Controller
         // Fetch completed orders along with the order items
         $orders = Order::with('orderItems')  // eager load the order items
             ->where('user_id', $userId)
-            ->where('status', 'completed')
+            ->where('payment_status', 'booked')
             ->get(['id', 'order_date']);  // Select only necessary columns
 
         // Format the orders to be sent to the frontend
@@ -93,7 +93,7 @@ class OrderController extends Controller
         // Fetch the associated order for the campaign detail
         $order = Order::where('id', $campaignDetail->order_id)
                       ->where('user_id', auth('web')->user()->id)
-                      ->where('status', 'booked')
+                      ->where('payment_status', 'booked')
                       ->first();
  
         if (!$order) {

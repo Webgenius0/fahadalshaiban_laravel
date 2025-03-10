@@ -88,6 +88,15 @@ return [
     'subtotal'             => 'Subtotal',
     'dispatchfee'          => 'Dispatch Fee',
     'total'                => 'Total',
-
+    // user profile
+    'allinformation'   => 'Your all information is safe and secure here',
+    'companyname'      => 'Company Name',
+    'companyemail'     => 'Company Email',
+    'userpassword'     => 'Your Password',
+    'confirmpassword'  => 'Confirm Password',
+    'phonenumber'      => 'Phone Number',
+    'address'          => 'Address',
+    'vatnumber'        => 'VAT Number',
+    'avatar'           => 'Avatar',
 
 ];

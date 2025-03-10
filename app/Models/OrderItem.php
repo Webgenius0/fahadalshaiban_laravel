@@ -13,9 +13,9 @@ class OrderItem extends Model
     ];
 
     // Define the relationship with Order
-    public function order()
+    public function orders()
     {
-        return $this->belongsTo(Order::class, 'order_id');
+        return $this->belongsTo(Order::class, 'order_id', 'id');
     }
 
     // Define the relationship with Signage
@@ -26,8 +26,11 @@ class OrderItem extends Model
 
     public function campaignDetails()
     {
-        return $this->hasMany(CampaignDetails::class, 'order_id', 'order_id'); // Link by order_id
+        return $this->hasOne(CampaignDetails::class, 'order_id', 'order_id'); // Link by order_id
     }
-
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class, 'order_id');
+    }
    
 }

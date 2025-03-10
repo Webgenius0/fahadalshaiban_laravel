@@ -19,42 +19,42 @@
             <input type="file" id="profileUpload" class="profile-upload-input" accept="image/*">
         </div>
         <h2 class="profile-user-name">{{ Auth::user()->name ?? 'N/A' }}</h2>
-        <p class="profile-user-info">Your all information is safe and secure here</p>
+        <p class="profile-user-info">{{__('userdashboard.allinformation')}}</p>
         <form class="profile-form" method="POST" action="{{ route('client.page.profile.update') }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="profile-form-group">
-                <label for="companyName" class="profile-form-label">Company Name*</label>
+                <label for="companyName" class="profile-form-label">{{__('userdashboard.companyname')}}*</label>
                 <input type="text" id="companyName" class="profile-form-input" placeholder="Apple Inc" name="name" required value="{{ Auth::user()->name ?? 'N/A' }}">
             </div>
             <div class="profile-form-group">
-                <label for="companyEmail" class="profile-form-label">Company Email*</label>
+                <label for="companyEmail" class="profile-form-label">{{__('userdashboard.companyemail')}}*</label>
                 <input type="email" id="companyEmail" class="profile-form-input" placeholder="admin_company@gmail.com" name="email" required value="{{ Auth::user()->email ?? 'N/A' }}">
             </div>
             <div class="profile-form-group">
-                <label for="password" class="profile-form-label">Your Password*</label>
+                <label for="password" class="profile-form-label">{{__('userdashboard.userpassword')}}*</label>
                 <input type="password" id="password" class="profile-form-input" placeholder="********" name="password" >
             </div>
             <div class="profile-form-group">
-                <label for="confirmPassword" class="profile-form-label">Confirm Password*</label>
+                <label for="confirmPassword" class="profile-form-label">{{__('userdashboard.confirmpassword')}}*</label>
                 <input type="password" id="confirmPassword" class="profile-form-input" placeholder="********" name="confirm_password" >
             </div>
             <div class="profile-form-group">
-                <label for="phoneNumber" class="profile-form-label">Phone Number*</label>
+                <label for="phoneNumber" class="profile-form-label">{{__('userdashboard.phonenumber')}}*</label>
                 <input type="tel" id="phoneNumber" class="profile-form-input" placeholder="+1 999 555 123" name="phone" required value="{{ Auth::user()->phone ?? 'N/A' }}">
             </div>
             <div class="profile-form-group">
-                <label for="address" class="profile-form-label">Address*</label>
+                <label for="address" class="profile-form-label">{{__('userdashboard.address')}}*</label>
                 <input type="text" id="address" class="profile-form-input" placeholder="134 Street, 5th Avenue" name="address" required value="{{ Auth::user()->address ?? 'N/A' }}">
             </div>
             <div class="profile-form-group">
-                <label for="vatNumber" class="profile-form-label">VAT Number*</label>
+                <label for="vatNumber" class="profile-form-label">{{__('userdashboard.vatnumber')}}*</label>
                 <input type="text" id="vatNumber" class="profile-form-input" placeholder="123-456-789-0123" name="vat_no" required value="{{ Auth::user()->vat_no ?? 'N/A' }}">
             </div>
 
             <!-- Updated Avatar with Dropify -->
             <div class="profile-form-group">
-                <label for="avatar" class="profile-form-label">Avatar*</label>
+                <label for="avatar" class="profile-form-label">{{__('userdashboard.avatar')}}*</label>
                 <input type="file" name="avatar" id="avatarDropify" class="dropify" accept="image/*" data-default-file="{{asset (Auth::user()->avatar ?? '' )}}"/>
             </div>
             <button type="submit" class="btn-common w-100">Save</button>

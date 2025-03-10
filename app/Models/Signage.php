@@ -41,13 +41,27 @@ class Signage extends Model
         return $this->hasMany(OrderItem::class,'signage_id');
     }
 
-    public function campaignDetails()
-    {
-        return $this->hasOne(CampaignDetails::class);
-    }
+    // public function campaignDetails()
+    // {
+    //     return $this->hasOne(CampaignDetails::class);
+    // }
 
     public function orders()
     {
         return $this->hasManyThrough(Order::class, OrderItem::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+
+    // Relationship with CampaignDetails through OrderItems
+    public function campaignDetails()
+    {
+        return $this->hasManyThrough(CampaignDetails::class, OrderItem::class, 'signage_id', 'order_id', 'id', 'order_id');
+    }
+
+
 }

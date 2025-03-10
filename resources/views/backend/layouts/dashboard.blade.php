@@ -1,3 +1,8 @@
+@php
+use App\Models\Signage;
+$totalsignage=Signage::all()->count();
+$totalOwner = User::name('owner')->count();
+@endphp
 @extends('backend.app')
 
 @section('content')
@@ -85,6 +90,72 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
+                    <div class="card overflow-hidden">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h3 class="mb-2 fw-semibold">65</h3>
+                                    <p class="text-muted fs-13 mb-0">Today Booking</p>
+                                </div>
+                                <div class="col col-auto top-icn dash">
+                                    <div class="counter-icon bg-warning dash ms-auto box-shadow-warning">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="fill-white" enable-background="new 0 0 24 24" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M6 1h6v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8z" />
+                                            <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+                                            <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+            <div class="col-lg-10 col-sm-12 col-md-10 col-xl-9">
+                    <div class="card overflow-hidden">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                <strong class="text-muted fs-13 mb-0">Total register signage</strong>
+                                    <h3 class="mb-2 fw-semibold">{{$totalsignage}}</h3>
+                                    
+                                </div>
+
+                                <div class="col">
+                                <strong class="text-muted fs-13 mb-0">Total Owner</strong>
+                                    <h3 class="mb-2 fw-semibold">{{$totalOwner}}</h3>
+                                    
+                                </div>
+
+                                <div class="col">
+                                <strong class="text-muted fs-13 mb-0">Total Active Signage</strong>
+                                    <h3 class="mb-2 fw-semibold">{{$totalsignage}}</h3>
+                                    
+                                </div>
+
+                                <div class="col">
+                                <strong class="text-muted fs-13 mb-0">Total Active Owner</strong>
+                                    <h3 class="mb-2 fw-semibold">{{$totalsignage}}</h3>
+                                    
+                                </div>
+                                <div class="col col-auto top-icn dash">
+                                    <div class="counter-icon bg-warning dash ms-auto box-shadow-warning">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="fill-white" enable-background="new 0 0 24 24" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M6 1h6v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8z" />
+                                            <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+                                            <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
                     <div class="card overflow-hidden">
                         <div class="card-body">
@@ -336,7 +407,7 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>  -->
             <!-- ROW-2 END -->
 
             <!-- ROW-3 -->
@@ -571,7 +642,7 @@
             <!-- ROW-3 END -->
 
             <!-- ROW-4 -->
-            <!-- <div class="row">
+            <div class="row">
                 <div class="col-12 col-sm-12">
                     <div class="card product-sales-main">
                         <div class="card-header border-bottom">
@@ -970,7 +1041,7 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div> 
             <!-- ROW-4 END -->
 
 
@@ -982,7 +1053,7 @@
 
 @push('scripts')
 <script>
-   /* document.addEventListener('DOMContentLoaded', function() {
+    /* document.addEventListener('DOMContentLoaded', function() {
 
         Echo.private('chat.1').listen('MessageSent', (e) => {
             console.log('Message Receiver:', e.message);

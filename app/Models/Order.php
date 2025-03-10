@@ -9,20 +9,20 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'uuid','subtotal', 'dispatch_fee', 'total', 'status',
+        'user_id', 'uuid','subtotal', 'dispatch_fee', 'total', 'payment_status',
     ];
 
     // Define the relationship with OrderItems
     public function orderItems()
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->hasMany(OrderItem::class , 'order_id');
     }
 
     public function campaignDetails()
     {
         return $this->hasMany(CampaignDetails::class);
     }
-
+    
     
 
     

@@ -87,4 +87,15 @@ return [
     'subtotal'         => 'الأجمالي',
     'dispatchfee'      => 'عمولة الموقع',
     'total'            => 'الإجمالي النهائي',
+
+    // user profile
+    'allinformation'   => 'جميع معلوناتك آمنه لدينا',
+    'companyname'      => 'إسم الشركة',
+    'companyemail'     => 'البريد الإلكتروني الخالص بالشركة',
+    'userpassword'     => 'الرقم السري',
+    'confirmpassword'  => 'إعاة الرقم السري',
+    'phonenumber'      => 'رقم التواصل',
+    'address'          => 'العنوان',
+    'vatnumber'        => 'الرقم الضريبي ان وجد',
+    'avatar'           => 'الصورة الرمزية',
 ];
