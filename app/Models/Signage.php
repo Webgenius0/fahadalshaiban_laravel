@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Signage extends Model
 {
     protected $fillable = [
+        'user_id',
         'name',
         'category_name',
         'slug',
@@ -46,10 +47,23 @@ class Signage extends Model
     //     return $this->hasOne(CampaignDetails::class);
     // }
 
+    // public function orders()
+    // {
+    //     return $this->hasManyThrough(Order::class, OrderItem::class);
+    // }
+
+
     public function orders()
-    {
-        return $this->hasManyThrough(Order::class, OrderItem::class);
-    }
+{
+    return $this->hasManyThrough(
+        Order::class,
+        OrderItem::class,
+        'signage_id', // Foreign key on OrderItem
+        'id',         // Foreign key on Order
+        'id',         // Local key on Signage
+        'order_id'    // Local key on OrderItem
+    );
+}
 
     public function user()
     {

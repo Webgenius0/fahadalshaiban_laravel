@@ -257,7 +257,7 @@
                                 <div class="col-md-3">
                                     <!-- If there's an image, show it, otherwise show a placeholder -->
                                 
-                                    <img src="${imageUrl}" alt="Signage Image" class="img-fluid" style="max-width: 100%; height: auto;" />  <!-- Display the image -->
+                                    <img src="${imageUrl}" alt="Signage Image" class="img-fluid" style="max-width: 100%; height: auto; border-radius: 10px;" />  <!-- Display the image -->
                                 </div>
                             </div>
                         `;

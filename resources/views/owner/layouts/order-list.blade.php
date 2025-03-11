@@ -53,7 +53,7 @@
                 <div class="col-12 col-sm-12">
                     <div class="card product-sales-main">
                         <div class="card-header border-bottom">
-                            <h3 class="card-title mb-0">Task List</h3>
+                            <h3 class="card-title mb-0">Order List</h3>
                         </div>
                         <div class="card-body">
                             <div class="">
@@ -61,9 +61,13 @@
                                     <thead>
                                         <tr>
                                             <th class="bg-transparent border-bottom-0 wp-15">ID</th>
-                                            <th class="bg-transparent border-bottom-0 wp-15">UUId</th>
-                                            <th class="bg-transparent border-bottom-0 wp-20">Title</th>
-                                            <!-- <th class="bg-transparent border-bottom-0">Image</th> -->
+                                            <th class="bg-transparent border-bottom-0 wp-15">Order Id</th>
+                                            <th class="bg-transparent border-bottom-0 wp-20">Signage Name</th>
+                                            <th class="bg-transparent border-bottom-0">Campaign Name</th>
+                                            <th class="bg-transparent border-bottom-0">Campaign Image</th>
+                                            <th class="bg-transparent border-bottom-0">Start Date</th>
+                                            <th class="bg-transparent border-bottom-0">End Date</th>
+                                            </th>
                                             <th class="bg-transparent border-bottom-0">Status</th>
                                             <th class="bg-transparent border-bottom-0">Action</th>
                                         </tr>
@@ -89,81 +93,121 @@
 
 @push('script')
 <script>
-   $(document).ready(function() {
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        }
-    });
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            }
+        });
 
-    if (!$.fn.DataTable.isDataTable('#datatable')) {
-        let dTable = $('#datatable').DataTable({
-            order: [],
-            lengthMenu: [
-                [10, 25, 50, 100, -1],
-                [10, 25, 50, 100, "All"]
-            ],
-            processing: true,
-            responsive: true,
-            serverSide: true,
+        if (!$.fn.DataTable.isDataTable('#datatable')) {
+            let dTable = $('#datatable').DataTable({
+                order: [],
+                lengthMenu: [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "All"]
+                ],
+                processing: true,
+                responsive: true,
+                serverSide: true,
 
-            language: {
-                processing: `<div class="text-center">
+                language: {
+                    processing: `<div class="text-center">
                     <img src="{{ asset('default/loader.gif') }}" alt="Loader" style="width: 50px;">
                     </div>`
-            },
+                },
 
-            scroller: {
-                loadingIndicator: false
-            },
-            pagingType: "full_numbers",
-            dom: "<'row'<'col-sm-6'l><'col-sm-6'f>>tipr", // Adjusted dom configuration
-            ajax: {
-                url: "{{ route('owner.order.index') }}",
-                type: "GET",
-            },
+                scroller: {
+                    loadingIndicator: false
+                },
+                pagingType: "full_numbers",
+                dom: "<'row'<'col-sm-6'l><'col-sm-6'f>>tipr", // Adjusted dom configuration
+                ajax: {
+                    url: "{{ route('owner.order.index') }}",
+                    type: "GET",
+                },
 
-            columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'uuid',
-                    name: 'uuid',
-                    orderable: true,
-                    searchable: true
-                },
-                {
-                    data: 'name',
-                    name: 'name',
-                    orderable: true,
-                    searchable: true
-                },
-                // {
-                //     data: 'art_work',
-                //     name: 'art_work',
-                //     orderable: true,
-                //     searchable: true
-                // },
-                {
-                    data: 'status',
-                    name: 'status',
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false,
-                    className: 'dt-center text-center'
-                },
-            ],
-        });
-    }
-});
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'uuid',
+                        name: 'uuid',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'name',
+                        name: 'name',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'ad_title',
+                        name: 'ad_title',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'art_work',
+                        name: 'art_work',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'start_date',
+                        name: 'start_date',
+                        orderable: true,
+                        searchable: true,
+                        render: function(data, type, row) {
+                            if (data) {
+                                var date = new Date(data);
+                                return date.toLocaleDateString('en-GB', {
+                                    day: '2-digit',
+                                    month: 'long',
+                                    year: '2-digit'
+                                }); // Formats as "21 March 25"
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        data: 'end_date',
+                        name: 'end_date',
+                        orderable: true,
+                        searchable: true,
+                        render: function(data, type, row) {
+                            if (data) {
+                                var date = new Date(data);
+                                return date.toLocaleDateString('en-GB', {
+                                    day: '2-digit',
+                                    month: 'long',
+                                    year: '2-digit'
+                                }); // Formats as "21 March 25"
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'dt-center text-center'
+                    },
+                ],
+            });
+        }
+    });
     // Status Change Confirm Alert
     function showStatusChangeAlert(id) {
         event.preventDefault();
@@ -239,4 +283,3 @@
     });
 </script>
 @endpush
-

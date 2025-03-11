@@ -15,7 +15,7 @@ class Order extends Model
     // Define the relationship with OrderItems
     public function orderItems()
     {
-        return $this->hasMany(OrderItem::class , 'order_id');
+        return $this->hasMany(OrderItem::class , 'order_id', 'id');
     }
 
     public function campaignDetails()

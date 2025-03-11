@@ -28,9 +28,9 @@ class OrderItem extends Model
     {
         return $this->hasOne(CampaignDetails::class, 'order_id', 'order_id'); // Link by order_id
     }
-    public function orderItems()
-    {
-        return $this->hasMany(OrderItem::class, 'order_id');
-    }
+    // public function orderItems()
+    // {
+    //     return $this->hasMany(OrderItem::class, 'order_id');
+    // }
    
 }

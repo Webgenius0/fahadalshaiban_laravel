@@ -21,7 +21,7 @@ class SignageController extends Controller
                 ->addColumn('image', function ($data) {
                     if ($data->image) {
                         $url = asset($data->image);
-                        return '<img src="' . $url . '" alt="image" width="50px" height="50px" style="margin-left:20px;">';
+                        return '<img src="' . $url . '" alt="image" width="50px" height="50px" style="margin-left:20px; border-radius: 50%;">';
                     } else {
                         return '<img src="' . asset('default/logo.png') . '" alt="image" width="50px" height="50px" style="margin-left:20px;">';
                     }

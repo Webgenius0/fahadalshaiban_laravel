@@ -1,7 +1,18 @@
 @php
 use App\Models\Signage;
+use Spatie\Permission\Models\Role;
 $totalsignage=Signage::all()->count();
-$totalOwner = User::name('owner')->count();
+$totalActivesignage=Signage::where('status','active')->count();
+
+$ownerRole =Role::where('name','owner')->first();
+if($ownerRole){
+    $ownerCount= $ownerRole->users()->count();
+}
+
+if($ownerRole){
+    $activeOwner=$ownerRole->users()->where('status','active')->count();
+}
+
 @endphp
 @extends('backend.app')
 
@@ -116,7 +127,8 @@ $totalOwner = User::name('owner')->count();
             <div class="row">
             <div class="col-lg-10 col-sm-12 col-md-10 col-xl-9">
                     <div class="card overflow-hidden">
-                        <div class="card-body">
+                    <h5 class="pl-5 pt-5">Signage Status</h5>
+                        <div class="card-body">                        
                             <div class="row">
                                 <div class="col">
                                 <strong class="text-muted fs-13 mb-0">Total register signage</strong>
@@ -125,20 +137,20 @@ $totalOwner = User::name('owner')->count();
                                 </div>
 
                                 <div class="col">
-                                <strong class="text-muted fs-13 mb-0">Total Owner</strong>
-                                    <h3 class="mb-2 fw-semibold">{{$totalOwner}}</h3>
+                                <strong class="text-muted fs-13 mb-0">Total Owners</strong>
+                                    <h3 class="mb-2 fw-semibold">{{$ownerCount}}</h3>
                                     
                                 </div>
 
                                 <div class="col">
                                 <strong class="text-muted fs-13 mb-0">Total Active Signage</strong>
-                                    <h3 class="mb-2 fw-semibold">{{$totalsignage}}</h3>
+                                    <h3 class="mb-2 fw-semibold">{{$totalActivesignage}}</h3>
                                     
                                 </div>
 
                                 <div class="col">
                                 <strong class="text-muted fs-13 mb-0">Total Active Owner</strong>
-                                    <h3 class="mb-2 fw-semibold">{{$totalsignage}}</h3>
+                                    <h3 class="mb-2 fw-semibold">{{$activeOwner}}</h3>
                                     
                                 </div>
                                 <div class="col col-auto top-icn dash">
@@ -156,13 +168,14 @@ $totalOwner = User::name('owner')->count();
                 </div>
 
 
-                <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
+                <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3 h-100">
                     <div class="card overflow-hidden">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col">
+                                <div class="col p-6">
+                                <p class="text-muted fs-13 mb-0">Page Visits</p>
                                     <h3 class="mb-2 fw-semibold">65</h3>
-                                    <p class="text-muted fs-13 mb-0">Today Booking</p>
+                                    
                                 </div>
                                 <div class="col col-auto top-icn dash">
                                     <div class="counter-icon bg-warning dash ms-auto box-shadow-warning">
@@ -653,13 +666,13 @@ $totalOwner = User::name('owner')->count();
                                 <table id="data-table" class="table text-nowrap mb-0 table-bordered">
                                     <thead class="table-head">
                                         <tr>
-                                            <th class="bg-transparent border-bottom-0 wp-15">Assigned To
+                                            <th class="bg-transparent border-bottom-0 wp-15">Transections
                                             </th>
-                                            <th class="bg-transparent border-bottom-0">Task</th>
-                                            <th class="bg-transparent border-bottom-0">Project</th>
-                                            <th class="bg-transparent border-bottom-0">Due Date</th>
+                                            <th class="bg-transparent border-bottom-0">Transfer</th>
                                             <th class="bg-transparent border-bottom-0">Status</th>
-                                            <th class="bg-transparent border-bottom-0 no-btn">Action</th>
+                                            
+                                            <th class="bg-transparent border-bottom-0">Profit</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody class="table-body">
@@ -681,360 +694,12 @@ $totalOwner = User::name('owner')->count();
                                                     data-bs-toggle="modal">Sit sed takimata sanctus
                                                     invidunt</a></td>
                                             <td class="text-muted fs-13"><a href="project-details.html"
-                                                    class="text-dark">Noa Dashboard UI</a></td>
-                                            <td class="text-danger fs-14 fw-semibold">31 Oct 21</td>
-                                            <td>
-                                                <div class="form-group mb-0">
-                                                    <ul>
-                                                        <li class="select-status">
-                                                            <select
-                                                                class="form-control select2-status-search"
-                                                                data-placeholder="Select Status">
-                                                                <option value="IP" selected>In
-                                                                    Progress</option>
-                                                                <option value="OH">On Hold</option>
-                                                                <option value="CP">Completed</option>
-                                                            </select>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex align-items-stretch">
-                                                    <a class="btn btn-sm btn-outline-primary border me-2"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-original-title="Mark As Completed">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            enable-background="new 0 0 24 24"
-                                                            height="20" width="16"
-                                                            viewBox="0 0 24 24">
-                                                            <path
-                                                                d="M15.8085327,8.6464844l-5.6464233,5.6464844l-2.4707031-2.4697266c-0.0023804-0.0023804-0.0047607-0.0047607-0.0072021-0.0071411c-0.1972046-0.1932373-0.5137329-0.1900635-0.7069702,0.0071411c-0.1932983,0.1972656-0.1900635,0.5137939,0.0071411,0.7070312l2.8242188,2.8232422C9.9022217,15.4474487,10.02948,15.5001831,10.1621094,15.5c0.1326294,0.0001221,0.2598267-0.0525513,0.3534546-0.1464844l6-6c0.0023804-0.0023804,0.0047607-0.0046997,0.0071411-0.0071411c0.1932373-0.1972046,0.1900635-0.5137329-0.0071411-0.7069702C16.3183594,8.446106,16.0018311,8.4493408,15.8085327,8.6464844z M12,2C6.4771729,2,2,6.4771729,2,12s4.4771729,10,10,10c5.5201416-0.0064697,9.9935303-4.4798584,10-10C22,6.4771729,17.5228271,2,12,2z M12,21c-4.9705811,0-9-4.0294189-9-9s4.0294189-9,9-9c4.9683228,0.0054321,8.9945679,4.0316772,9,9C21,16.9705811,16.9705811,21,12,21z" />
-                                                        </svg>
-                                                    </a>
-                                                    <a class="btn btn-sm btn-outline-secondary border me-2"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-original-title="Delete">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            height="20" viewBox="0 0 24 24"
-                                                            width="16">
-                                                            <path d="M0 0h24v24H0V0z" fill="none" />
-                                                            <path
-                                                                d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z" />
-                                                        </svg>
-                                                    </a>
-                                                    <a href="#"
-                                                        class="border br-5 px-2 py-1 d-flex align-items-center justify-content-center"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false"><i
-                                                            class="fe fe-more-vertical"></i></a>
-                                                    <div class="dropdown-menu dropdown-menu-start">
-                                                        <a class="dropdown-item" href="#"><i
-                                                                class="fe fe-edit-2 me-2"></i> Edit</a>
-                                                        <a class="dropdown-item" href="#"><i
-                                                                class="fe fe-info me-2"></i> Info</a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                                    class="text-success">Success</a></td>
+                                            <td class="text-danger fs-14 fw-semibold">$1,000</td>
+                                            
+                                           
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <span
-                                                        class="data-image avatar avatar-md rounded-circle"
-                                                        style="background-image: url(/backend/images/users/12.jpg)"></span>
-                                                    <div class="user-details ms-2">
-                                                        <h6 class="mb-0">Daniel Obrien</h6>
-                                                        <span
-                                                            class="text-muted fs-12">member@spruko.com</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-muted fs-14 fw-semibold"><a href="#"
-                                                    class="text-dark" data-bs-target="#Vertically"
-                                                    data-bs-toggle="modal">Diam lorem dolor no lorem.</a>
-                                            </td>
-                                            <td class="text-muted fs-13"><a href="project-details.html"
-                                                    class="text-dark">Noa Dashboard UI</a></td>
-                                            <td class="text-danger fs-14 fw-semibold">01 Nov 21</td>
-                                            <td>
-                                                <div class="form-group mb-0">
-                                                    <ul>
-                                                        <li class="select-status">
-                                                            <select
-                                                                class="form-control select2-status-search"
-                                                                data-placeholder="Select Status">
-                                                                <option value="IP">In Progress
-                                                                </option>
-                                                                <option value="OH" selected>On Hold
-                                                                </option>
-                                                                <option value="CP">Completed</option>
-                                                            </select>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex align-items-stretch">
-                                                    <a class="btn btn-sm btn-outline-primary border me-2"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-original-title="Mark As Completed">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            enable-background="new 0 0 24 24"
-                                                            height="20" width="16"
-                                                            viewBox="0 0 24 24">
-                                                            <path
-                                                                d="M15.8085327,8.6464844l-5.6464233,5.6464844l-2.4707031-2.4697266c-0.0023804-0.0023804-0.0047607-0.0047607-0.0072021-0.0071411c-0.1972046-0.1932373-0.5137329-0.1900635-0.7069702,0.0071411c-0.1932983,0.1972656-0.1900635,0.5137939,0.0071411,0.7070312l2.8242188,2.8232422C9.9022217,15.4474487,10.02948,15.5001831,10.1621094,15.5c0.1326294,0.0001221,0.2598267-0.0525513,0.3534546-0.1464844l6-6c0.0023804-0.0023804,0.0047607-0.0046997,0.0071411-0.0071411c0.1932373-0.1972046,0.1900635-0.5137329-0.0071411-0.7069702C16.3183594,8.446106,16.0018311,8.4493408,15.8085327,8.6464844z M12,2C6.4771729,2,2,6.4771729,2,12s4.4771729,10,10,10c5.5201416-0.0064697,9.9935303-4.4798584,10-10C22,6.4771729,17.5228271,2,12,2z M12,21c-4.9705811,0-9-4.0294189-9-9s4.0294189-9,9-9c4.9683228,0.0054321,8.9945679,4.0316772,9,9C21,16.9705811,16.9705811,21,12,21z" />
-                                                        </svg>
-                                                    </a>
-                                                    <a class="btn btn-sm btn-outline-secondary border me-2"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-original-title="Delete">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            height="20" viewBox="0 0 24 24"
-                                                            width="16">
-                                                            <path d="M0 0h24v24H0V0z" fill="none" />
-                                                            <path
-                                                                d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z" />
-                                                        </svg>
-                                                    </a>
-                                                    <a href="#"
-                                                        class="border br-5 px-2 py-1 d-flex align-items-center justify-content-center"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false"><i
-                                                            class="fe fe-more-vertical"></i></a>
-                                                    <div class="dropdown-menu dropdown-menu-start">
-                                                        <a class="dropdown-item" href="#"><i
-                                                                class="fe fe-edit-2 me-2"></i> Edit</a>
-                                                        <a class="dropdown-item" href="#"><i
-                                                                class="fe fe-info me-2"></i> Info</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <span
-                                                        class="data-image avatar avatar-md rounded-circle"
-                                                        style="background-image: url(/backend/images/users/13.jpg)"></span>
-                                                    <div class="user-details ms-2">
-                                                        <h6 class="mb-0">William Turner</h6>
-                                                        <span
-                                                            class="text-muted fs-12">member@spruko.com</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-muted fs-14 fw-semibold"><a href="#"
-                                                    class="text-dark" data-bs-target="#Vertically"
-                                                    data-bs-toggle="modal">Amet clita sea ut dolor
-                                                    consetetur, elitr.</a></td>
-                                            <td class="text-muted fs-13"><a href="project-details.html"
-                                                    class="text-dark">Noa Dashboard UI</a></td>
-                                            <td class="text-danger fs-14 fw-semibold">08 Nov 21</td>
-                                            <td>
-                                                <div class="form-group mb-0">
-                                                    <ul>
-                                                        <li class="select-status">
-                                                            <select
-                                                                class="form-control select2-status-search"
-                                                                data-placeholder="Select Status">
-                                                                <option value="IP">In Progress
-                                                                </option>
-                                                                <option value="OH" selected>On Hold
-                                                                </option>
-                                                                <option value="CP">Completed</option>
-                                                            </select>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex align-items-stretch">
-                                                    <a class="btn btn-sm btn-outline-primary border me-2"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-original-title="Mark As Completed">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            enable-background="new 0 0 24 24"
-                                                            height="20" width="16"
-                                                            viewBox="0 0 24 24">
-                                                            <path
-                                                                d="M15.8085327,8.6464844l-5.6464233,5.6464844l-2.4707031-2.4697266c-0.0023804-0.0023804-0.0047607-0.0047607-0.0072021-0.0071411c-0.1972046-0.1932373-0.5137329-0.1900635-0.7069702,0.0071411c-0.1932983,0.1972656-0.1900635,0.5137939,0.0071411,0.7070312l2.8242188,2.8232422C9.9022217,15.4474487,10.02948,15.5001831,10.1621094,15.5c0.1326294,0.0001221,0.2598267-0.0525513,0.3534546-0.1464844l6-6c0.0023804-0.0023804,0.0047607-0.0046997,0.0071411-0.0071411c0.1932373-0.1972046,0.1900635-0.5137329-0.0071411-0.7069702C16.3183594,8.446106,16.0018311,8.4493408,15.8085327,8.6464844z M12,2C6.4771729,2,2,6.4771729,2,12s4.4771729,10,10,10c5.5201416-0.0064697,9.9935303-4.4798584,10-10C22,6.4771729,17.5228271,2,12,2z M12,21c-4.9705811,0-9-4.0294189-9-9s4.0294189-9,9-9c4.9683228,0.0054321,8.9945679,4.0316772,9,9C21,16.9705811,16.9705811,21,12,21z" />
-                                                        </svg>
-                                                    </a>
-                                                    <a class="btn btn-sm btn-outline-secondary border me-2"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-original-title="Delete">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            height="20" viewBox="0 0 24 24"
-                                                            width="16">
-                                                            <path d="M0 0h24v24H0V0z" fill="none" />
-                                                            <path
-                                                                d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z" />
-                                                        </svg>
-                                                    </a>
-                                                    <a href="#"
-                                                        class="border br-5 px-2 py-1 d-flex align-items-center justify-content-center"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false"><i
-                                                            class="fe fe-more-vertical"></i></a>
-                                                    <div class="dropdown-menu dropdown-menu-start">
-                                                        <a class="dropdown-item" href="#"><i
-                                                                class="fe fe-edit-2 me-2"></i> Edit</a>
-                                                        <a class="dropdown-item" href="#"><i
-                                                                class="fe fe-info me-2"></i> Info</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <span
-                                                        class="data-image avatar avatar-md rounded-circle"
-                                                        style="background-image: url(/backend/images/users/4.jpg)"></span>
-                                                    <div class="user-details ms-2">
-                                                        <h6 class="mb-0">Olena Tyrell</h6>
-                                                        <span
-                                                            class="text-muted fs-12">member@spruko.com</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-muted fs-14 fw-semibold"><a href="#"
-                                                    class="text-dark" data-bs-target="#Vertically"
-                                                    data-bs-toggle="modal">Est sea erat at kasd.</a></td>
-                                            <td class="text-muted fs-13"><a href="project-details.html"
-                                                    class="text-dark">Noa Dashboard UI</a></td>
-                                            <td class="text-danger fs-14 fw-semibold">04 Nov 21</td>
-                                            <td>
-                                                <div class="form-group mb-0">
-                                                    <ul>
-                                                        <li class="select-status">
-                                                            <select
-                                                                class="form-control select2-status-search"
-                                                                data-placeholder="Select Status">
-                                                                <option value="IP" selected>In
-                                                                    Progress</option>
-                                                                <option value="OH">On Hold</option>
-                                                                <option value="CP">Completed</option>
-                                                            </select>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex align-items-stretch">
-                                                    <a class="btn btn-sm btn-outline-primary border me-2"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-original-title="Mark As Completed">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            enable-background="new 0 0 24 24"
-                                                            height="20" width="16"
-                                                            viewBox="0 0 24 24">
-                                                            <path
-                                                                d="M15.8085327,8.6464844l-5.6464233,5.6464844l-2.4707031-2.4697266c-0.0023804-0.0023804-0.0047607-0.0047607-0.0072021-0.0071411c-0.1972046-0.1932373-0.5137329-0.1900635-0.7069702,0.0071411c-0.1932983,0.1972656-0.1900635,0.5137939,0.0071411,0.7070312l2.8242188,2.8232422C9.9022217,15.4474487,10.02948,15.5001831,10.1621094,15.5c0.1326294,0.0001221,0.2598267-0.0525513,0.3534546-0.1464844l6-6c0.0023804-0.0023804,0.0047607-0.0046997,0.0071411-0.0071411c0.1932373-0.1972046,0.1900635-0.5137329-0.0071411-0.7069702C16.3183594,8.446106,16.0018311,8.4493408,15.8085327,8.6464844z M12,2C6.4771729,2,2,6.4771729,2,12s4.4771729,10,10,10c5.5201416-0.0064697,9.9935303-4.4798584,10-10C22,6.4771729,17.5228271,2,12,2z M12,21c-4.9705811,0-9-4.0294189-9-9s4.0294189-9,9-9c4.9683228,0.0054321,8.9945679,4.0316772,9,9C21,16.9705811,16.9705811,21,12,21z" />
-                                                        </svg>
-                                                    </a>
-                                                    <a class="btn btn-sm btn-outline-secondary border me-2"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-original-title="Delete">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            height="20" viewBox="0 0 24 24"
-                                                            width="16">
-                                                            <path d="M0 0h24v24H0V0z" fill="none" />
-                                                            <path
-                                                                d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z" />
-                                                        </svg>
-                                                    </a>
-                                                    <a href="#"
-                                                        class="border br-5 px-2 py-1 d-flex align-items-center justify-content-center"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false"><i
-                                                            class="fe fe-more-vertical"></i></a>
-                                                    <div class="dropdown-menu dropdown-menu-start">
-                                                        <a class="dropdown-item" href="#"><i
-                                                                class="fe fe-edit-2 me-2"></i> Edit</a>
-                                                        <a class="dropdown-item" href="#"><i
-                                                                class="fe fe-info me-2"></i> Info</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <span
-                                                        class="data-image avatar avatar-md rounded-circle"
-                                                        style="background-image: url(/backend/images/users/5.jpg)"></span>
-                                                    <div class="user-details ms-2">
-                                                        <h6 class="mb-0">Emilie Benett</h6>
-                                                        <span
-                                                            class="text-muted fs-12">member@spruko.com</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-muted fs-14 fw-semibold"><a href="#"
-                                                    class="text-dark" data-bs-target="#Vertically"
-                                                    data-bs-toggle="modal">Rebum gubergren at kasd
-                                                    takimata clita.</a></td>
-                                            <td class="text-muted fs-13"><a href="project-details.html"
-                                                    class="text-dark">Noa Dashboard UI</a></td>
-                                            <td class="text-danger fs-14 fw-semibold">29 Oct 21</td>
-                                            <td>
-                                                <div class="form-group mb-0">
-                                                    <ul>
-                                                        <li class="select-status">
-                                                            <select
-                                                                class="form-control select2-status-search"
-                                                                data-placeholder="Select Status">
-                                                                <option value="IP">In Progress
-                                                                </option>
-                                                                <option value="OH">On Hold</option>
-                                                                <option value="CP" selected>Completed
-                                                                </option>
-                                                            </select>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex align-items-stretch">
-                                                    <a class="btn btn-sm btn-outline-primary border me-2"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-original-title="Mark As Completed">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            enable-background="new 0 0 24 24"
-                                                            height="20" width="16"
-                                                            viewBox="0 0 24 24">
-                                                            <path
-                                                                d="M15.8085327,8.6464844l-5.6464233,5.6464844l-2.4707031-2.4697266c-0.0023804-0.0023804-0.0047607-0.0047607-0.0072021-0.0071411c-0.1972046-0.1932373-0.5137329-0.1900635-0.7069702,0.0071411c-0.1932983,0.1972656-0.1900635,0.5137939,0.0071411,0.7070312l2.8242188,2.8232422C9.9022217,15.4474487,10.02948,15.5001831,10.1621094,15.5c0.1326294,0.0001221,0.2598267-0.0525513,0.3534546-0.1464844l6-6c0.0023804-0.0023804,0.0047607-0.0046997,0.0071411-0.0071411c0.1932373-0.1972046,0.1900635-0.5137329-0.0071411-0.7069702C16.3183594,8.446106,16.0018311,8.4493408,15.8085327,8.6464844z M12,2C6.4771729,2,2,6.4771729,2,12s4.4771729,10,10,10c5.5201416-0.0064697,9.9935303-4.4798584,10-10C22,6.4771729,17.5228271,2,12,2z M12,21c-4.9705811,0-9-4.0294189-9-9s4.0294189-9,9-9c4.9683228,0.0054321,8.9945679,4.0316772,9,9C21,16.9705811,16.9705811,21,12,21z" />
-                                                        </svg>
-                                                    </a>
-                                                    <a class="btn btn-sm btn-outline-secondary border me-2"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-original-title="Delete">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            height="20" viewBox="0 0 24 24"
-                                                            width="16">
-                                                            <path d="M0 0h24v24H0V0z" fill="none" />
-                                                            <path
-                                                                d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4h-3.5z" />
-                                                        </svg>
-                                                    </a>
-                                                    <a href="#"
-                                                        class="border br-5 px-2 py-1 d-flex align-items-center justify-content-center"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false"><i
-                                                            class="fe fe-more-vertical"></i></a>
-                                                    <div class="dropdown-menu dropdown-menu-start">
-                                                        <a class="dropdown-item" href="#"><i
-                                                                class="fe fe-edit-2 me-2"></i> Edit</a>
-                                                        <a class="dropdown-item" href="#"><i
-                                                                class="fe fe-info me-2"></i> Info</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                       
                                     </tbody>
                                 </table>
                             </div>
