@@ -94,7 +94,8 @@ use App\Enums\SectionEnum;
 
             <div class="send-message">
                 <h2 class="send-message__title">Send Message</h2>
-                <form class="send-message__form">
+                <form action="{{ route('contactus.store') }}" method="POST" enctype="multipart/form-data" class="send-message__form" >
+                @csrf
                     <div class="send-message-input-wrapper">
                         <label for="name">Full Name <span>*</span></label>
                         <input
@@ -102,7 +103,8 @@ use App\Enums\SectionEnum;
                             id="name"
                             name="name"
                             placeholder="Adam Smith"
-                            required />
+                            required
+                            value="{{ old('name') }}"/>
                     </div>
                     <div class="send-message-input-wrapper">
                         <label for="email">Email <span>*</span></label>
@@ -111,7 +113,8 @@ use App\Enums\SectionEnum;
                             id="email"
                             name="email"
                             placeholder="adam_smith@Email.com"
-                            required />
+                            required
+                            value="{{ old('email') }}"/>
                     </div>
                     <div class="send-message-input-wrapper">
                         <label for="phone">Phone Number <span>*</span></label>
@@ -120,7 +123,8 @@ use App\Enums\SectionEnum;
                             id="phone"
                             name="phone"
                             placeholder="+988-2786223"
-                            required />
+                            required
+                            value="{{ old('phone') }}"/>
                     </div>
                     <div class="send-message-input-wrapper">
                         <label for="message">Message</label>
@@ -128,7 +132,7 @@ use App\Enums\SectionEnum;
                             id="message"
                             name="message"
                             rows="4"
-                            placeholder="Your message"></textarea>
+                            placeholder="Your message">{{ old('message') }}</textarea>
                     </div>
                     <button type="submit" class="btn-common">Send</button>
                 </form>

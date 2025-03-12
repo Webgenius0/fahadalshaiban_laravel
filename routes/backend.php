@@ -32,6 +32,9 @@ use App\Http\Controllers\Web\Backend\Feedback\FeedbackController;
 use App\Http\Controllers\Web\Backend\Settings\DispatchFeeController;
 use App\Http\Controllers\Web\Backend\SignageRequest\SignageRequestController;
 use App\Http\Controllers\Web\Backend\userRequest\UserRequestController;
+use App\Http\Controllers\Web\Backend\Contact\ContactusController;
+
+use App\Models\Contactus;
 
 Route::controller(DashboardController::class)->group(function () {
     Route::get('dashboard', 'index')->name('dashboard');
@@ -66,6 +69,15 @@ Route::controller(FeedbackController::class)->prefix('feedback')->name('feedback
     Route::delete('/delete/{id}', 'destroy')->name('destroy');
     Route::get('/status/{id}', 'status')->name('status');
 });
+
+
+Route::controller(ContactusController::class)->prefix('contactus')->name('contactus.')->group(function () {  
+    Route::get('/contact/list', 'index')->name('index');
+    Route::delete('/delete/{id}', 'destroy')->name('destroy');
+    Route::post('/store', 'store')->name('store');
+    
+});
+
 
 Route::controller(SignageController::class)->prefix('signage')->name('signage.')->group(function () {
     Route::get('/', 'index')->name('index');

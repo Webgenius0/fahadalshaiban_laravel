@@ -33,6 +33,7 @@ Route::get('lang/{lang}', [LocalizationController::class, 'set'])->name('lang')-
 
 
 Route::get('contact/us',[ContactUsController::class, 'index'])->name('contact.us');
+Route::post('/store',[ContactUsController::class, 'store'])->name('contactus.store');
 
 
 
