@@ -2,6 +2,8 @@
 
 
 @push('style')
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 <style>
     #closeDetailsBtn i {
         font-size: 20px;
@@ -181,12 +183,25 @@
                         searchable: true,
                         render: function(data, type, row) {
                             if (data) {
-                                var date = new Date(data);
-                                return date.toLocaleDateString('en-GB', {
-                                    day: '2-digit',
-                                    month: 'long',
-                                    year: '2-digit'
-                                }); // Formats as "21 March 25"
+                                var endDate = new Date(data);
+                                var currentDate = new Date();
+
+                                // If today's date is greater than the end date, show "Booking time expired" on the date
+                                if (currentDate > endDate) {
+                                    // Return a span with the badge-danger class to highlight the expired booking
+                                    return '<span class="badge badge-danger">Booking time expired on ' + endDate.toLocaleDateString('en-GB', {
+                                        day: '2-digit',
+                                        month: 'long',
+                                        year: '2-digit'
+                                    }) + '</span>';
+                                } else {
+                                    // Otherwise, return the formatted end date
+                                    return endDate.toLocaleDateString('en-GB', {
+                                        day: '2-digit',
+                                        month: 'long',
+                                        year: '2-digit'
+                                    }); // Formats as "21 March 25"
+                                }
                             }
                             return data;
                         }

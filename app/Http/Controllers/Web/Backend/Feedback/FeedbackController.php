@@ -1,24 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Web\Backend;
+namespace App\Http\Controllers\Web\Backend\Feedback;
 
 use App\Helpers\Helper;
-use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
-
-class CategoryController extends Controller
+use App\Models\Feedback;
+class FeedbackController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Category::all();
+            $data = Feedback::all();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('image', function ($data) {
@@ -57,7 +53,7 @@ class CategoryController extends Controller
                 ->rawColumns([ 'image' ,'status', 'action'])
                 ->make();
         }
-        return view("backend.layouts.category.index");
+        return view("backend.layouts.feedback.index");
     }
 
     /**
@@ -65,7 +61,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('backend.layouts.category.create');
+        return view('backend.layouts.feedback.create');
     }
 
     /**
@@ -73,44 +69,42 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+     
         $validate = $request->validate([
-            'name' => 'required|unique:categories,name',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'title' => 'required',
+            'description' => 'nullable',
         ]);
 
         try {
-            if ($request->hasFile('image')) {
-                $validate['image'] = Helper::fileUpload($request->file('image'), 'category', time() . '_' . getFileName($request->file('image')));
-            }
-            $validate['slug'] = Helper::makeSlug(Category::class, $validate['name']);
+            
 
-            Category::create($validate);
+            Feedback::create($validate);
 
-            session()->put('t-success', 'Category created successfully');
+            session()->put('t-success', 'feedback created successfully');
            
         } catch (Exception $e) {
             session()->put('t-error', $e->getMessage());
         }
 
-        return redirect()->route('admin.category.index')->with('success', 'Category created successfully');
+        return redirect()->route('admin.feedback.index')->with('success', 'feedback created successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Category $category, $id)
+    public function show(feedback $feedback, $id)
     {
-        $category = Category::findOrFail($id);
-        return view('backend.layouts.category.edit', compact('category'));
+        $feedback = Feedback::findOrFail($id);
+        return view('backend.layouts.feedback.edit', compact('feedback'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category, $id)
+    public function edit(feedback $feedback, $id)
     {
-        $category = Category::findOrFail($id);
-        return view('backend.layouts.category.edit', compact('category'));
+        $feedback = Feedback::findOrFail($id);
+        return view('backend.layouts.feedback.edit', compact('feedback'));
     }
 
     /**
@@ -119,27 +113,22 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $validate = $request->validate([
-            'name' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'title' => 'required',
+            'description' => 'nullable',
         ]);
 
         try {
-            $category = Category::findOrFail($id);
+            $feedback = Feedback::findOrFail($id);
 
-            if ($request->hasFile('image')) {
-                if ($category->image && file_exists(public_path($category->image))) {
-                    Helper::fileDelete(public_path($category->image));
-                }
-                $validate['image'] = Helper::fileUpload($request->file('image'), 'category', time() . '_' . getFileName($request->file('image')));
-            }
+           
 
-            $category->update($validate);
-            session()->put('t-success', 'Category updated successfully');
+            $feedback->update($validate);
+            session()->put('t-success', 'feedback updated successfully');
         } catch (Exception $e) {
             session()->put('t-error', $e->getMessage());
         }
 
-        return redirect()->route('admin.category.index');
+        return redirect()->route('admin.feedback.index');
     }
 
     /**
@@ -148,10 +137,8 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         try {
-            $data = Category::findOrFail($id);
-            if ($data->image && file_exists(public_path($data->image))) {
-                Helper::fileDelete(public_path($data->image));
-            }
+            $data = Feedback::findOrFail($id);
+           
             $data->delete();
             return response()->json([
                 'status' => 'success',
@@ -168,7 +155,7 @@ class CategoryController extends Controller
 
     public function status(int $id): JsonResponse
     {
-        $data = Category::findOrFail($id);
+        $data = feedback::findOrFail($id);
         if (!$data) {
             return response()->json([
                 'status' => 'error',

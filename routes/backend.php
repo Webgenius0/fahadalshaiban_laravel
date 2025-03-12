@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\CMS\Tutorial\HomeTutorialController;
 use App\Http\Controllers\Web\Backend\CMS\Tutorial\IncomeStatementController;
 use App\Http\Controllers\Web\Backend\CMS\Tutorial\LoginTutorialController;
+use App\Http\Controllers\Web\Backend\Feedback\FeedbackController;
 use App\Http\Controllers\Web\Backend\Settings\DispatchFeeController;
 use App\Http\Controllers\Web\Backend\SignageRequest\SignageRequestController;
 use App\Http\Controllers\Web\Backend\userRequest\UserRequestController;
@@ -47,6 +48,16 @@ Route::controller(SocialLinkController::class)->prefix('social')->name('social.'
 });
 
 Route::controller(CategoryController::class)->prefix('category')->name('category.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/edit/{id}', 'edit')->name('edit');
+    Route::post('/update/{id}', 'update')->name('update');
+    Route::delete('/delete/{id}', 'destroy')->name('destroy');
+    Route::get('/status/{id}', 'status')->name('status');
+});
+
+Route::controller(FeedbackController::class)->prefix('feedback')->name('feedback.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
