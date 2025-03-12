@@ -563,7 +563,7 @@ $feedback=App\Models\Feedback::all();
                         <div class="swiper-slide">
                             <div class="review-card">
                                 <div class="review-header">
-                                    <h5>{{ $feed->title }}</h5>
+                                    <h5>{{ $feed->title ?? '' }}</h5>
                                     <!-- Display human-readable time difference -->
                                     
                                 </div>
@@ -571,7 +571,7 @@ $feedback=App\Models\Feedback::all();
                                 <div class="review-rating"></div>
                                 <p class="review-date"></p>
                                 <p class="review-text">
-                                    {{ $feed->description }}
+                                    {{ $feed->description ?? '' }}
                                 </p>
                             </div>
                         </div>
