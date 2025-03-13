@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\LocalizationController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
+
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
 
@@ -34,7 +35,10 @@ Route::get('lang/{lang}', [LocalizationController::class, 'set'])->name('lang')-
 
 Route::get('contact/us',[ContactUsController::class, 'index'])->name('contact.us');
 Route::post('/store',[ContactUsController::class, 'store'])->name('contactus.store');
+// for notification
 
+Route::get('/notifications', [ContactUsController::class, 'notifications'])->name('notifications.fetch');
+Route::post('/notifications/{notificationId}/mark-as-read', [ContactUsController::class, 'markNotificationAsRead']);
 
 
 

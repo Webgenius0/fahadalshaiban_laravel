@@ -15,7 +15,7 @@ class ContactusController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Contactus::all();
+            $data = Contactus::all()->sortByDesc('created_at');
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('image', function ($data) {
