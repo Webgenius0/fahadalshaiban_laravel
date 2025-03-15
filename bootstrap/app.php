@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
         then: function () {
-            Route::middleware(['api'])->group(base_path('routes/tap.php'));
+            Route::middleware(['web'])->group(base_path('routes/tap.php'));
             Route::middleware(['web', 'otp', 'auth', 'admin'])->prefix('admin')->name('admin.')->group(base_path('routes/backend.php'));
             Route::middleware(['web', 'otp', 'owner'])->prefix('owner')->name('owner.')->group(base_path('routes/owner.php'));
             Route::middleware(['web', 'otp', 'client'])->group(base_path('routes/client.php'));
