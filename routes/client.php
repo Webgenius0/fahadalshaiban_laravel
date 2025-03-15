@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Web\Client\BillingAddress;
+use App\Http\Controllers\Web\Client\BillingAddressController;
 use App\Http\Controllers\Web\Client\CampaignDetailsController;
 use App\Http\Controllers\Web\Client\DashboardController;
 use App\Http\Controllers\Web\Client\PageController;
@@ -49,3 +51,9 @@ Route::controller(OrderController::class)->group(function () {
 });
 Route::get('/get-booked-dates/{campaignDetailId}', [OrderController::class, 'getBookedDates'])->name('getBookedDates');
 Route::get('/get-booking-details/{id}', [CampaignDetailsController::class, 'getBookingDetails'])->name('getBookingDetails');
+
+Route::post('/billing-address', [BillingAddressController::class, 'store'])->name('storeBillingAddress');
+Route::get('/page/billing/{orderId}', [BillingAddressController::class, 'showForm']);
+
+
+Route::get('/redirect', [BillingAddressController::class, 'Redirect'])->name('billing.redirect');

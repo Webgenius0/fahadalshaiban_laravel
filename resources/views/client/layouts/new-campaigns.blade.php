@@ -79,7 +79,7 @@
 @endpush
 @section('content')
 <div class="main-content">
-    <div id="details-section" class="card-body" style="display:none; position: fixed; top: 50%; left: 30%; z-index: 1000; width:700px; height:200px; background-color: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <!-- <div id="details-section" class="card-body" style="display:none; position: fixed; top: 50%; left: 30%; z-index: 1000; width:700px; height:200px; background-color: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
         <div class="close-btn-container">
             <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
                 <i class="fe fe-x"></i>
@@ -89,7 +89,29 @@
                 <i class="fe fe-x"></i>
             </button>
         </div>
+    </div> -->
+
+
+    <!-- Signage Details Modal -->
+    <div class="modal fade" id="signageDetailsModal" tabindex="-1" aria-labelledby="signageDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signageDetailsModalLabel">Signage Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalContent">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+
     <div id="fullWidthImageContainer" style="display: none; position: fixed; top: 30%; left: 35%; width: 50%; height: 50%; z-index: 1000;">
         <div style="display: flex; justify-content: center; align-items: flex-start; width: 100%; height: 100%; background-size: cover; background-position: center;">
             <!-- Image and Close Button Container -->
@@ -110,7 +132,7 @@
         <div>
             <h4 class="campaign-header-title">{{__('userdashboard.startnewcampaign')}}</h4>
             <p class="campaign-subtitle">
-               {{__('userdashboard.followthisstep')}}
+                {{__('userdashboard.followthisstep')}}
             </p>
         </div>
 
@@ -232,7 +254,7 @@
                                 <div class="objective-content">
                                     <h3>{{__('userdashboard.title2')}}</h3>
                                     <p>
-                                    {{__('userdashboard.des2')}}
+                                        {{__('userdashboard.des2')}}
                                     </p>
                                 </div>
                             </label>
@@ -276,7 +298,7 @@
                                 <div class="objective-content">
                                     <h3>{{__('userdashboard.title3')}}</h3>
                                     <p>
-                                    {{__('userdashboard.des3')}}
+                                        {{__('userdashboard.des3')}}
                                     </p>
                                 </div>
                             </label>
@@ -314,7 +336,7 @@
                                 <div class="objective-content">
                                     <h3>{{__('userdashboard.title4')}}</h3>
                                     <p>
-                                    {{__('userdashboard.des4')}}
+                                        {{__('userdashboard.des4')}}
                                     </p>
                                 </div>
                             </label>
@@ -356,7 +378,7 @@
                 <button
                     type="button"
                     class="next-btn m-auto mt-4 change-step next" id="first">
-                   {{__('userdashboard.next')}}
+                    {{__('userdashboard.next')}}
                 </button>
             </div>
 
@@ -490,13 +512,13 @@
                                 <img src="{{ asset($data->image ?? 'default/banner.png') }}" alt="Billboard" class="billboard-card-image" onclick="showFullWidthImage('{{ asset($data->image ?? 'default/banner.png') }}')" />
                                 <div class="billboard-card-content">
                                     <div
-                                        class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+                                        class="d-flex align-items-center justify-content-between gap-2 flex-wrap ">
                                         <div>
                                             <h3>Billboard Location</h3>
                                             <!-- <p class="billboard-card-id">#{{$data->id}}</p> -->
                                         </div>
                                         <button type="button" class="add-signage" onclick="changeLocation(event, '{{ $data->lat }}', '{{ $data->lan }}')" data-id="{{$data->id}}">
-                                           {{__('userdashboard.addsignage')}}
+                                            {{__('userdashboard.addsignage')}}
                                         </button>
                                     </div>
 
@@ -524,7 +546,7 @@
                                                 </svg>
                                             </span>
                                             <p class="billboard-card-info-label">
-                                               {{__('userdashboard.estimateview')}}
+                                                {{__('userdashboard.estimateview')}}
                                             </p>
                                             <p class="billboard-card-info-value">{{$data->avg_daily_views}}</p>
                                         </div>
@@ -589,9 +611,125 @@
                         aria-labelledby="nav-profile-tab"
                         tabindex="0">
                         <div class="billboard-map-container">
-                            <div class="billboard-map">
+                            <div class="billboard-map col-md-12">
                                 <!-- Create a div element to display the map -->
                                 <div id="mapDiv" style="height: 400px; width: 100%;"></div>
+
+                                <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                                        <div class="billboard-card-container">
+                                            @foreach($signages as $data)
+                                            <div
+                                                class="billboard-card"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">
+                                                <img src="{{ asset($data->image ??'default/banner.png') }}" alt="Billboard" class="billboard-card-image" />
+                                                <div class="billboard-card-content">
+                                                    <div
+                                                        class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+                                                        <div>
+                                                            <h3>Billboard Location</h3>
+                                                            <p class="billboard-card-id">#{{$data->id}}</p>
+                                                        </div>
+
+                                                        <button type="button" class=" add-signage" onclick="changeLocation(event, '{{ $data->lat }}', '{{ $data->lan }}')">
+                                                            <span>Add signage</span>
+                                                        </button>
+
+                                                    </div>
+
+                                                    <div class="billboard-card-info">
+                                                        <div>
+                                                            <span class="billboard-card-info-icon">
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    width="24"
+                                                                    height="24"
+                                                                    viewBox="0 0 24 24"
+                                                                    fill="none">
+                                                                    <path
+                                                                        d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z"
+                                                                        stroke="#4D4D4D"
+                                                                        stroke-width="2"
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round" />
+                                                                    <path
+                                                                        d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                                                                        stroke="#4D4D4D"
+                                                                        stroke-width="2"
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round" />
+                                                                </svg>
+                                                            </span>
+                                                            <p class="billboard-card-info-label">
+                                                                Estimated views
+                                                            </p>
+                                                            <p class="billboard-card-info-value">{{$data->avg_daily_views}}</p>
+                                                        </div>
+                                                        <div>
+                                                            <span class="billboard-card-info-icon">
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    width="24"
+                                                                    height="24"
+                                                                    viewBox="0 0 24 24"
+                                                                    fill="none">
+                                                                    <path
+                                                                        d="M12 1V23"
+                                                                        stroke="#4D4D4D"
+                                                                        stroke-width="2"
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round" />
+                                                                    <path
+                                                                        d="M17 5H9.5C8.57174 5 7.6815 5.36875 7.02513 6.02513C6.36875 6.6815 6 7.57174 6 8.5C6 9.42826 6.36875 10.3185 7.02513 10.9749C7.6815 11.6313 8.57174 12 9.5 12H14.5C15.4283 12 16.3185 12.3687 16.9749 13.0251C17.6313 13.6815 18 14.5717 18 15.5C18 16.4283 17.6313 17.3185 16.9749 17.9749C16.3185 18.6313 15.4283 19 14.5 19H6"
+                                                                        stroke="#4D4D4D"
+                                                                        stroke-width="2"
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round" />
+                                                                </svg>
+                                                            </span>
+                                                            <p class="billboard-card-info-label">
+                                                                Price per day
+                                                            </p>
+                                                            <p class="billboard-card-info-value">5SR 5</p>
+                                                        </div>
+                                                        <div>
+                                                            <span class="billboard-card-info-icon">
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    width="24"
+                                                                    height="24"
+                                                                    viewBox="0 0 24 24"
+                                                                    fill="none">
+                                                                    <path
+                                                                        d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                                                        stroke="#4D4D4D"
+                                                                        stroke-width="2"
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round" />
+                                                                    <path
+                                                                        d="M12 6V12L16 14"
+                                                                        stroke="#4D4D4D"
+                                                                        stroke-width="2"
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round" />
+                                                                </svg>
+                                                            </span>
+                                                            <p class="billboard-card-info-label">
+                                                                Rotations
+                                                            </p>
+                                                            <p class="billboard-card-info-value">
+                                                                10 seconds
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <div
                                     class="d-flex align-items-center justify-content-center gap-5 mt-5">
@@ -611,120 +749,7 @@
 
                             <input type="hidden" id="selected-signage-id" />
 
-                            <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                                    <div class="billboard-card-container">
-                                        @foreach($signages as $data)
-                                        <div
-                                            class="billboard-card"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal">
-                                            <img src="{{ asset($data->image ??'default/banner.png') }}" alt="Billboard" class="billboard-card-image" />
-                                            <div class="billboard-card-content">
-                                                <div
-                                                    class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
-                                                    <div>
-                                                        <h3>Billboard Location</h3>
-                                                        <p class="billboard-card-id">#{{$data->id}}</p>
-                                                    </div>
 
-                                                    <button type="button" class=" add-signage" onclick="changeLocation(event, '{{ $data->lat }}', '{{ $data->lan }}')">
-                                                        <span>Add signage</span>
-                                                    </button>
-
-                                                </div>
-
-                                                <div class="billboard-card-info">
-                                                    <div>
-                                                        <span class="billboard-card-info-icon">
-                                                            <svg
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                width="24"
-                                                                height="24"
-                                                                viewBox="0 0 24 24"
-                                                                fill="none">
-                                                                <path
-                                                                    d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z"
-                                                                    stroke="#4D4D4D"
-                                                                    stroke-width="2"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round" />
-                                                                <path
-                                                                    d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
-                                                                    stroke="#4D4D4D"
-                                                                    stroke-width="2"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round" />
-                                                            </svg>
-                                                        </span>
-                                                        <p class="billboard-card-info-label">
-                                                            Estimated views
-                                                        </p>
-                                                        <p class="billboard-card-info-value">{{$data->avg_daily_views}}</p>
-                                                    </div>
-                                                    <div>
-                                                        <span class="billboard-card-info-icon">
-                                                            <svg
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                width="24"
-                                                                height="24"
-                                                                viewBox="0 0 24 24"
-                                                                fill="none">
-                                                                <path
-                                                                    d="M12 1V23"
-                                                                    stroke="#4D4D4D"
-                                                                    stroke-width="2"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round" />
-                                                                <path
-                                                                    d="M17 5H9.5C8.57174 5 7.6815 5.36875 7.02513 6.02513C6.36875 6.6815 6 7.57174 6 8.5C6 9.42826 6.36875 10.3185 7.02513 10.9749C7.6815 11.6313 8.57174 12 9.5 12H14.5C15.4283 12 16.3185 12.3687 16.9749 13.0251C17.6313 13.6815 18 14.5717 18 15.5C18 16.4283 17.6313 17.3185 16.9749 17.9749C16.3185 18.6313 15.4283 19 14.5 19H6"
-                                                                    stroke="#4D4D4D"
-                                                                    stroke-width="2"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round" />
-                                                            </svg>
-                                                        </span>
-                                                        <p class="billboard-card-info-label">
-                                                            Price per day
-                                                        </p>
-                                                        <p class="billboard-card-info-value">5SR 5</p>
-                                                    </div>
-                                                    <div>
-                                                        <span class="billboard-card-info-icon">
-                                                            <svg
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                width="24"
-                                                                height="24"
-                                                                viewBox="0 0 24 24"
-                                                                fill="none">
-                                                                <path
-                                                                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                                                                    stroke="#4D4D4D"
-                                                                    stroke-width="2"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round" />
-                                                                <path
-                                                                    d="M12 6V12L16 14"
-                                                                    stroke="#4D4D4D"
-                                                                    stroke-width="2"
-                                                                    stroke-linecap="round"
-                                                                    stroke-linejoin="round" />
-                                                            </svg>
-                                                        </span>
-                                                        <p class="billboard-card-info-label">
-                                                            Rotations
-                                                        </p>
-                                                        <p class="billboard-card-info-value">
-                                                            10 seconds
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -811,7 +836,7 @@
                                 <tr>
                                     <th>{{__('userdashboard.image')}}</th>
                                     <th>{{__('userdashboard.signagename')}}</th>
-                                    
+
                                     <th>{{__('userdashboard.signagelocation')}}</th>
                                     <th>{{__('userdashboard.signagetype')}}</th>
                                     <th>{{__('userdashboard.priceperday')}}</th>
@@ -833,8 +858,8 @@
                         {{__('userdashboard.previous')}}
                     </button>
 
-                    <a href="{{ route('page.cart') }}" class="btn-common" >
-                       {{__('userdashboard.checkout')}}
+                    <a href="{{ route('page.cart') }}" class="btn-common">
+                        {{__('userdashboard.checkout')}}
                     </a>
                 </div>
             </div>
@@ -1133,7 +1158,7 @@
         if (detailsNameInput) {
             detailsNameInput.value = name || 'Default Name'; // Set the value of the input field
         }
-       
+
 
     }
 
@@ -1242,7 +1267,7 @@
                             var signage = response;
                             var differenceDays = localStorage.getItem('differenceDays');
                             var totalprice = signage.price_per_day * differenceDays;
-                            var estimatedViews = signage.avg_daily_views * 1000;
+                            var estimatedViews = signage.avg_daily_views;
 
 
                             // Add the current signage details to the array
@@ -1264,34 +1289,85 @@
                             localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
 
                             console.log("Updated Subtotal:", totalSubtotal);
-
+                            let imageUrl = "{{ asset('') }}" + signage.image;
                             // Update the UI with the new subtotal
                             updateUI(totalSubtotal);
 
                             var content = `
-                            <h3>Signage Details</h3>
-                            <div class="row">
-                                <div class="col-md-4 pt-2">
-                                    <p><strong>Price Per Day:</strong> ${signage.price_per_day || ''} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"></p>
-                                    <p><strong>Total Days:</strong> ${differenceDays || '0'}</p>
-                                </div>
-                                <div class="col-md-4 pt-2">
-                                    <p><strong>Estimated Views:</strong> ${estimatedViews || ''}</p>
-                                    <p><strong>Sub Total:</strong> ${totalprice || ''} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"></p>
-                                </div>
-                                <div class="col-md-4 pt-2">
-                                    <p><strong> Total:</strong> ${totalSubtotal} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"></p>
-                                </div>
-                            </div>
-                        `;
+                                    <div class="row">
+                                     <div class="col-md-3 pt-2">
+                                        <p><strong>Price Per Day:</strong> ${signage.price_per_day} 
+                                            <img src="{{ asset('currency/realcurrency.png') }}" style="width:15px;height:15px;">
+                                        </p>
+                                        
+                                    </div>
+                                     <div class="col-md-2 pt-2">
+                                        
+                                        <p><strong>Total Days:</strong> ${differenceDays || '0'}</p>
+                                    </div>
+                                    <div class="col-md-4 pt-2">
+                                        <p><strong>Estimated Views:</strong> ${estimatedViews}</p>
+                                        <!-- Removed Sub Total -->
+                                    </div>
+                                    <div class="col-md-3 pt-2">
+                                        <p><strong>Total:</strong> ${totalSubtotal} 
+                                            <img src="{{ asset('currency/realcurrency.png') }}" style="width:15px;height:15px;">
+                                        </p>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-12 pt-2 ml-1" align="center" border-radius="10px">
+                                    <img src="${imageUrl}" alt="Signage Image" class="img-fluid" style="border-radius: 10px;">
+                                    </div>
 
-                            var closeButton = `
-                            <div class="close-btn-container">
-                                <button id="closeDetailsBtn" class="btn btn-danger" onclick="hideDetails()">
-                                    <i class="fe fe-x"></i> Close
-                                </button>
-                            </div>
-                        `;
+                                    
+                                       <div class="row">
+                                     <div class="col-md-12 pt-2">
+                                        <p><strong>Description:</strong> ${signage.description} 
+                                           
+                                        </p>
+                                        
+                                    </div>
+                                    <h6 class="text-center">Art Work Dimensions</h6>
+                                     <div class="col-md-3 pt-2">
+                                        
+                                        <p><strong>Location:</strong> ${signage.location || ''} </p>
+                                    </div>
+                                    
+                                    <div class="col-md-4 pt-2">
+                                        <p><strong>Height:</strong> ${signage.height || ''} Pixels</p>
+                                        <!-- Removed Sub Total -->
+                                    </div>
+                                    <div class="col-md-3 pt-2">
+                                        <p><strong>Width:</strong> ${signage.width} Pixels
+                                           
+                                        </p>
+                                    </div>
+
+
+
+                                    <h6 class="text-center">Actual Dimensions</h6>
+                                     <div class="col-md-3 pt-2">
+                                        
+                                        <p><strong>Exposure Time:</strong> ${signage.exposure_time || ''} <small>per a minuit</small></p>
+                                    </div>
+                                    
+                                    <div class="col-md-4 pt-2">
+                                        <p><strong>Height:</strong> ${signage.height || ''} Pixels</p>
+                                        <!-- Removed Sub Total -->
+                                    </div>
+                                    <div class="col-md-3 pt-2">
+                                        <p><strong>Width:</strong> ${signage.width} Pixels
+                                           
+                                        </p>
+                                    </div>
+                                    </div>
+                                    
+                                    `;
+
+                            // Insert content into modal and show it
+                            $('#modalContent').html(content);
+                            $('#signageDetailsModal').modal('show');
+
 
                             $('#details-section').html(content + closeButton);
                             $('#details-section').show();
@@ -1369,11 +1445,11 @@
             success: function(response) {
                 console.log(response);
 
-                let imageUrl = uploadedFile ? URL.createObjectURL(uploadedFile) : response.image? assetUrl+response.image : alt='image';
-                
+                let imageUrl = uploadedFile ? URL.createObjectURL(uploadedFile) : response.image ? assetUrl + response.image : alt = 'image';
+
                 let differenceDays = localStorage.getItem('differenceDays');
-                let totalPrice= response.price_per_day * differenceDays;
-                console.log("totalPrice:",totalPrice);
+                let totalPrice = response.price_per_day * differenceDays;
+                console.log("totalPrice:", totalPrice);
 
 
                 if (idArray.has(signageId)) {
@@ -1415,7 +1491,8 @@
             callback();
         } else {
             const script = document.createElement('script');
-            let api = '{{ env('GOOGLE_MAPS_API_KEY') }}';
+            let api = '{{ env('
+            GOOGLE_MAPS_API_KEY ') }}';
             script.src = `https://maps.googleapis.com/maps/api/js?key=${api}&callback=initMap`;
             script.async = true;
             script.defer = true;

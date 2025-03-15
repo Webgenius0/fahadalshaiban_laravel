@@ -10,6 +10,7 @@ $systemSetting = App\Models\Setting::first();
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>{{ $title ?? '' }} | {{$systemSetting->system_name ?? env('APP_NAME')}}</title>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   @include('client.partials.style')
 </head>
