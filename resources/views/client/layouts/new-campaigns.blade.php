@@ -93,7 +93,7 @@
 
 
     <!-- Signage Details Modal -->
-    <div class="modal fade" id="signageDetailsModal" tabindex="-1" aria-labelledby="signageDetailsModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="signageDetailsModal" tabindex="-1" aria-labelledby="signageDetailsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -101,15 +101,62 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalContent">
-                    <!-- Dynamic content will be inserted here -->
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
+    <div
+    class="modal fade"
+    id="signageDetailsModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button
+                    type="button"
+                    class="billboard-card-details-modal-close-btn"
+                    data-bs-dismiss="modal"
+                    aria-label="Close">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none">
+                        <path
+                            d="M7.86 2H16.14L22 7.86V16.14L16.14 22H7.86L2 16.14V7.86L7.86 2Z"
+                            stroke="#4D4D4D"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path
+                            d="M15 9L9 15"
+                            stroke="#4D4D4D"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path
+                            d="M9 9L15 15"
+                            stroke="#4D4D4D"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body" id="modalContent">
+              
+            </div>
+        </div>
+    </div>
+</div>
 
 
     <div id="fullWidthImageContainer" style="display: none; position: fixed; top: 30%; left: 35%; width: 50%; height: 50%; z-index: 1000;">
@@ -1297,7 +1344,7 @@
                                     <div class="row">
                                      <div class="col-md-3 pt-2">
                                         <p><strong>Price Per Day:</strong> ${signage.price_per_day} 
-                                            <img src="{{ asset('currency/realcurrency.png') }}" style="width:15px;height:15px;">
+                                            <img src="{{ asset('currency/realcurrency.png') }}" style="width:10px;height:10px;">
                                         </p>
                                         
                                     </div>
@@ -1311,7 +1358,7 @@
                                     </div>
                                     <div class="col-md-3 pt-2">
                                         <p><strong>Total:</strong> ${totalSubtotal} 
-                                            <img src="{{ asset('currency/realcurrency.png') }}" style="width:15px;height:15px;">
+                                            <img src="{{ asset('currency/realcurrency.png') }}" style="width:10px;height:10px;">
                                         </p>
                                     </div>
                                     </div>
@@ -1327,36 +1374,36 @@
                                         </p>
                                         
                                     </div>
-                                    <h6 class="text-center">Art Work Dimensions</h6>
-                                     <div class="col-md-3 pt-2">
+                                    <p class="text-center">Art Work Dimensions</p>
+                                     <div class="col-md-5 pt-2">
                                         
                                         <p><strong>Location:</strong> ${signage.location || ''} </p>
                                     </div>
                                     
                                     <div class="col-md-4 pt-2">
-                                        <p><strong>Height:</strong> ${signage.height || ''} Pixels</p>
+                                        <p><strong>Height:</strong> ${signage.height || ''} PX</p>
                                         <!-- Removed Sub Total -->
                                     </div>
                                     <div class="col-md-3 pt-2">
-                                        <p><strong>Width:</strong> ${signage.width} Pixels
+                                        <p><strong>Width:</strong> ${signage.width} PX
                                            
                                         </p>
                                     </div>
 
 
 
-                                    <h6 class="text-center">Actual Dimensions</h6>
-                                     <div class="col-md-3 pt-2">
+                                    <p class="text-center">Actual Dimensions</p>
+                                     <div class="col-md-5 pt-2">
                                         
                                         <p><strong>Exposure Time:</strong> ${signage.exposure_time || ''} <small>per a minuit</small></p>
                                     </div>
                                     
                                     <div class="col-md-4 pt-2">
-                                        <p><strong>Height:</strong> ${signage.height || ''} Pixels</p>
+                                        <p><strong>Height:</strong> ${signage.height || ''} CM</p>
                                         <!-- Removed Sub Total -->
                                     </div>
                                     <div class="col-md-3 pt-2">
-                                        <p><strong>Width:</strong> ${signage.width} Pixels
+                                        <p><strong>Width:</strong> ${signage.width} CM
                                            
                                         </p>
                                     </div>
@@ -1491,8 +1538,7 @@
             callback();
         } else {
             const script = document.createElement('script');
-            let api = '{{ env('
-            GOOGLE_MAPS_API_KEY ') }}';
+            let api = '{{ env('GOOGLE_MAPS_API_KEY') }}';
             script.src = `https://maps.googleapis.com/maps/api/js?key=${api}&callback=initMap`;
             script.async = true;
             script.defer = true;

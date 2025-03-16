@@ -59,6 +59,6 @@ class BillingAddressController extends Controller
     // redirect pyament 
     public function Redirect(Request $request)
     {
-        return view ('client.layouts.payment');
+        return view ('tap');
     }
 }

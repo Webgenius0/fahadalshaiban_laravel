@@ -20,4 +20,9 @@ class BillingAddress extends Model
         'country',
         'postal_code',
     ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

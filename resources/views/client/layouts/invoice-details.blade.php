@@ -142,56 +142,59 @@
 @section('content')
 <div class="invoice-container">
     @php
-        $subtotal = 0; // Initialize subtotal
-        $firstOrder = $orders->first(); 
+    $subtotal = 0;
+    $firstOrder = $orders->first();
+    $isBillingInfoDisplayed = false; // Flag to track if billing info has been displayed
     @endphp
 
-    <!-- Header -->
 
-    <!-- Common Fields (Start Date and End Date) -->
-    <div class="card">
-    <div class="row justify-content-between p-3">
-        <div class="col-6 d-flex flex-column">
-            <label class=""><strong class="text-success">Start Date</strong></label>
-            <p class="mb-0">
-                {{ $firstOrder->start_date ? \Carbon\Carbon::parse($firstOrder->start_date)->format('j F, y') : 'N/A' }}
-            </p>
-        </div>
-        <div class="col-6 d-flex flex-column align-items-end">
-            <label class=""><strong class="text-danger">End Date</strong></label>
-            <p class="mb-0">
-                {{ $firstOrder->end_date ? \Carbon\Carbon::parse($firstOrder->end_date)->format('j F, y') : 'N/A' }}
-            </p>
+    <a href="{{ route('orders.download', $order->id) }}" 
+   class="btn btn-success">
+   <i class="fas fa-download"></i> Download PDF
+</a>
+
+    <div class="row">
+        <div class="d-flex justify-content-between align-items-center w-100">
+            <div>
+                <h1 class="invoice-title">Invoice</h1>
+                <p>Invoice Number: <span id="invoice-number"></span></p>
+            </div>
+
+            <img src="{{ asset('frontend') }}/images/favicon.png" alt="logo" />
         </div>
     </div>
-</div>
 
-    <!-- Campaign Details and Image for each order -->
     @foreach($orders as $order)
-    <div class="invoice-header">
-        <div>
-            <h1 class="invoice-title">Campaign Details</h1>
+        @if (!$isBillingInfoDisplayed)
+            <div class="invoice-info">
+                <div class="invoice-info-box">
+                    <p class="info-text"><strong>Billed to</strong></p>
+                    <p class="info-text">{{ $order->name }}<br />{{ $order->email }}</p>
+                </div>
+                <div class="invoice-info-box due-date">
+                    <p class="info-text"><strong>Due Date</strong></p>
+                    <p class="info-text">{{ $order->end_date ? \Carbon\Carbon::parse($order->end_date)->format('j F, y') : 'N/A' }}</p>
+                </div>
+                <div class="invoice-info-box" style="flex-basis: 100%">
+                    <p class="info-text"><strong>Address</strong></p>
+                    <p class="info-text">
+                        {{ $order->city . ', ' . $order->state . ', ' . $order->country }}
+                    </p>
+                </div>
+            </div>
+            @php
+                $isBillingInfoDisplayed = true; // Set flag to true after displaying billing info
+            @endphp
+        @endif
+
+        <div class="invoice-header">
+            <!-- Invoice order specific info can be added here -->
         </div>
-        <div class="logo" style="width: 20%; height: 20%; ">
-            <!-- Use $order->image instead of $firstOrder->image -->
-            <img src="{{ asset($order->image) }}" style="width: 50%; height: 20%;"   alt="logo" />
-        </div>
-    </div>
-    <div class="invoice-info">
-        <div class="invoice-info-box">
-            <p class="info-text"><strong>Campaign Information</strong></p>
-            <p class="info-text"><strong>Campaign Name:</strong> {{ $order->name ?? '' }}</p>
-            <p class="info-text"><strong>Category Name:</strong> {{ $order->category_name ?? '' }}</p>
-            <p class="info-text"><strong>Description:</strong> {{ $order->description ?? '' }}</p>
-        </div>
-        <div class="invoice-info-box" style="flex-basis: 100%">
-            <p class="info-text"><strong>Address</strong></p>
-            <p class="info-text">
-                {{ $order->location }}
-            </p>
-        </div>
-    </div>
+
+        <!-- Your other sections here (e.g., item details) -->
     @endforeach
+
+
 
     <!-- Table for all orders -->
     <div class="table-container">
@@ -211,14 +214,14 @@
                     <td class="table-cell">{{ $order->uuid ?? '' }}</td>
                     <td class="table-cell">{{ $order->location ?? '' }}</td>
                     @php
-                        $startDate = \Carbon\Carbon::parse($order->start_date);
-                        $endDate = \Carbon\Carbon::parse($order->end_date);
-                        $totalDays = $startDate->diffInDays($endDate);
+                    $startDate = \Carbon\Carbon::parse($order->start_date);
+                    $endDate = \Carbon\Carbon::parse($order->end_date);
+                    $totalDays = $startDate->diffInDays($endDate);
 
-                        $pricePerDay = $order->price_per_day;
-                        $totalPrice = $pricePerDay * $totalDays;
+                    $pricePerDay = $order->price_per_day;
+                    $totalPrice = $pricePerDay * $totalDays;
 
-                        $subtotal += $totalPrice; // Add to subtotal
+                    $subtotal += $totalPrice; // Add to subtotal
                     @endphp
                     <td class="table-cell">{{ $totalDays > 0 ? $totalDays : 1 }}</td>
                     <td class="table-cell">{{ $order->price_per_day }} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"></td>
@@ -230,8 +233,8 @@
     </div>
 
     <!-- Totals -->
-    <div class="totals">
-        <table class="totals-table">
+    <div class="totals " >
+        <table class="totals-table border">
             <tr>
                 <th class="totals-header">Subtotal</th>
                 <td class="totals-cell totals-cell-amount">{{ $subtotal }} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"></td>
@@ -252,3 +255,25 @@
     </div>
 </div>
 @endsection
+@push('script')
+<script>
+    // Generate a random invoice number
+    function generateInvoiceNumber() {
+        return '#' + Math.floor(Math.random() * 1000000);
+    }
+
+    // Display the generated invoice number in the span element
+    document.getElementById('invoice-number').textContent = generateInvoiceNumber();
+
+
+    // for download
+    function captureHTML() {
+        // Capture the invoice container HTML
+        const content = document.querySelector('.invoice-container').outerHTML;
+        document.getElementById('htmlContent').value = content;
+    }
+
+    // Remove the random invoice number generation and use server-side value instead
+    // document.getElementById('invoice-number').textContent = "{{ $order->invoice_number ?? 'N/A' }}";
+</script>
+@endpush

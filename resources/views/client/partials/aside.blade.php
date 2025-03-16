@@ -59,7 +59,7 @@
                         stroke-linejoin="round" />
                 </svg>
                 {{__('userdashboard.startnewcampaign')}}</a>
-            <a href="{{ route('page.invoice.list') }}" class="menu-item {{ request()->routeIs('page.invoice.list') ? 'active' : '' }}">
+            <a href="{{ route('invoice.index') }}" class="menu-item {{ request()->routeIs('invoice.index') ? 'active' : '' }}">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

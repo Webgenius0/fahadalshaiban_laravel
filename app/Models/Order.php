@@ -23,7 +23,10 @@ class Order extends Model
         return $this->hasMany(CampaignDetails::class);
     }
     
-    
+    public function billingAddress()
+    {
+        return $this->hasOne(BillingAddress::class);
+    }
 
     
 }

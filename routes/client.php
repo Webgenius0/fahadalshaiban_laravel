@@ -1,9 +1,10 @@
 <?php
-
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Http\Controllers\Web\Client\BillingAddress;
 use App\Http\Controllers\Web\Client\BillingAddressController;
 use App\Http\Controllers\Web\Client\CampaignDetailsController;
 use App\Http\Controllers\Web\Client\DashboardController;
+use App\Http\Controllers\Web\Client\InvoiceController;
 use App\Http\Controllers\Web\Client\PageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Client\OrderController;
@@ -16,8 +17,8 @@ Route::controller(DashboardController::class)->group(function () {
 
 Route::controller(PageController::class)->group(function () {
     Route::get('page/tutorials', 'tutorials')->name('page.tutorials');
-    Route::get('page/invoice-list', 'invoiceList')->name('page.invoice.list');
-    Route::get('page/invoice', 'invoice')->name('page.invoice');
+    // Route::get('page/invoice-lists', 'invoiceList')->name('page.invoice.list');
+    // Route::get('page/invoice', 'invoice')->name('page.invoice');
     Route::get('page/new/campaigns', 'newCampaigns')->name('page.new.campaigns');
     Route::get('page/billing', 'billing')->name('page.billing');
     Route::get('page/cart', 'cart')->name('page.cart');
@@ -57,3 +58,13 @@ Route::get('/page/billing/{orderId}', [BillingAddressController::class, 'showFor
 
 
 Route::get('/redirect', [BillingAddressController::class, 'Redirect'])->name('billing.redirect');
+Route::get('/invoice-list',[InvoiceController::class, 'index'])->name('invoice.index');
+
+
+Route::get('/invoices/{id}', [InvoiceController::class, 'show'])->name('invoices-details.show');
+Route::post('/invoices/download', [InvoiceController::class, 'download'])->name('invoices.download');
+// Route::get('/invoices/{id}/download', [InvoiceController::class, 'download'])
+//      ->name('invoices.download');
+
+Route::get('/orders/{order}/download', [InvoiceController::class, 'download'])
+     ->name('orders.download');

@@ -204,8 +204,8 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
             @foreach($orders as $order)
             <article class="campaign-item ">
                 @php
-                $endDate = $order->end_date; // Replace with the actual variable you're using
-                $today = \Carbon\Carbon::today(); // Get today's date
+                $endDate = $order->end_date; 
+                $today = \Carbon\Carbon::today(); 
                 @endphp
 
                 <div class="d-flex justify-content-end">
