@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Client;
 use App\Http\Controllers\Controller;
 use Exception;
+use App\Models\Order;
+use Illuminate\Support\Str;
+
 
 class TapPaymentController extends Controller
 {
@@ -138,16 +141,34 @@ class TapPaymentController extends Controller
     }
 
     public function paymentSuccess($data)
-    {
-        /* Transaction::create([
-            'user_id' => auth('web')->user()->id,
-            'amount' => $data['amount'],
-            'charge_id' => $data['id'],
-            'booking_id'        => $data['metadata']['booking_id'],
-            'status' => 'success'
-        ]); */
-        return "success";
+{
+    if (!auth('web')->check()) {
+        return response()->json(['message' => 'Unauthorized'], 401);
     }
+    $order = Order::where('user_id', auth('web')->user()->id)
+                  ->latest()  
+                  ->first(); 
+
+    // Check if the order exists
+    if (!$order) {
+        return response()->json(['message' => 'Order not found'], 404);
+    }
+
+    // Update the order with the payment data
+    $order->update([
+        'status' => 'booked',  
+        // 'uuid' => Str::random(5), 
+        'subtotal' => $data['subtotal'] ?? $order->subtotal,  
+        'dispatch_fee' => $data['dispatch_fee'] ?? $order->dispatch_fee,  
+        'total' => $data['total'] ?? $order->total,  
+        'payment_status' => 'booked',  
+    ]);
+
+    // Return a success response
+    return response()->json(['message' => 'Order updated successfully', 'order' => $order], 200);
+}
+
+
 
     public function paymentFailed($data)
     {
