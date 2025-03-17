@@ -27,6 +27,7 @@ class User extends Authenticatable
         'vat_no',
         'avatar',
         'password',
+        'tap_marcent_id',
     ];
 
     /**

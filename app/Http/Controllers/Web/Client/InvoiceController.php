@@ -22,6 +22,7 @@ class InvoiceController extends Controller
                 ->join('signages', 'signages.id', '=', 'order_items.signage_id')
                 ->join('campaign_details', 'orders.id', '=', 'campaign_details.order_id')
                 ->where('orders.user_id', auth()->id())
+                ->where('orders.payment_status', 'booked')
                 ->select('order_items.*', 'campaign_details.*', 'signages.*', 'orders.*')
                 ->get();
             return DataTables::of($data)
@@ -71,6 +72,7 @@ class InvoiceController extends Controller
             ->join('billing_addresses', 'orders.id', '=', 'billing_addresses.order_id')
             ->where('orders.id', $id)
             ->where('orders.user_id', auth()->id())
+            ->where('orders.status', 'active')
 
             ->select('orders.*', 'order_items.*', 'campaign_details.*', 'signages.*', 'billing_addresses.*')
             ->get();

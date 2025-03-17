@@ -34,6 +34,7 @@ use App\Http\Controllers\Web\Backend\SignageRequest\SignageRequestController;
 use App\Http\Controllers\Web\Backend\userRequest\UserRequestController;
 use App\Http\Controllers\Web\Backend\Contact\ContactusController;
 use App\Http\Controllers\Web\Backend\Order\OrderListController;
+use App\Http\Controllers\Web\Backend\Settings\TapPaymentController;
 use App\Models\Contactus;
 
 Route::controller(DashboardController::class)->group(function () {
@@ -84,6 +85,7 @@ Route::controller(SignageController::class)->prefix('signage')->name('signage.')
     //Route::get('show/{id}', 'show')->name('show');
     Route::get('/status/{id}', 'status')->name('status');
     Route::get('/signage/view/{id}', 'showSignage')->name('view');
+    Route::delete('/delete/{id}', 'destroy')->name('destroy');
 });
 
 Route::controller(PageController::class)->prefix('page')->name('page.')->group(function () {
@@ -269,3 +271,13 @@ Route::controller(IncomeStatementController::class)->prefix('income')->name('inc
 });
 
 Route::get('/order-list',[OrderListController::class,'index'])->name('order.list');
+
+Route::controller(TapPaymentController::class)->group(function () {
+    Route::get('/index', 'index')->name('tap.payment');
+    Route::get('/create', 'create')->name('tap.create');
+    Route::post('/store', 'store')->name('tap.store');
+    Route::get('/edit/{id}', 'edit')->name('tap.edit');
+    Route::post('/update/{id}', 'update')->name('tap.update');
+    Route::delete('/delete/{id}', 'destroy')->name('tap.destroy');
+    Route::get('/status/{id}', 'status')->name('tap.status');
+});

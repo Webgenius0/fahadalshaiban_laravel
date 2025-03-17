@@ -28,16 +28,15 @@
                         <div class="tab-pane active show" id="editProfile">
                             <div class="card">
                                 <div class="card-body border-0">
-                                    <form class="form-horizontal" method="post" action="{{ route('your.update.route', $user->id) }}" enctype="multipart/form-data">
+                                    <form class="form-horizontal" method="post" action="{{route('admin.tap.update', $user->id)}}" enctype="multipart/form-data">
                                         @csrf
-                                        @method('PUT') <!-- Use PUT because we are updating the data -->
+
                                         <div class="row mb-4">
                                             <div class="form-group">
-                                                <label for="name" class="form-label">Marcent Id:</label>
-                                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Marcent Id" id="name" value="{{ old('name', $user->tap_marcent_id) }}">
-                                                
-                                                @error('name')
-                                                    <span class="text-danger">{{ $message }}</span>
+                                                <label for="name">Marcent Id:</label>
+                                                <input type="text" class="form-control @error('tap_marcent_id') is-invalid @enderror" name="tap_marcent_id" id="tap_marcent_id" value="{{ old('tap_marcent_id', $user->tap_marcent_id ?? '') }}">
+                                                @error('tap_marcent_id')
+                                                <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
 

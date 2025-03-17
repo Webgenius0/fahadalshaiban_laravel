@@ -71,7 +71,7 @@
                                             <th class="bg-transparent border-bottom-0">End Date</th>
                                             </th>
                                             <th class="bg-transparent border-bottom-0">Status</th>
-                                            <th class="bg-transparent border-bottom-0">Action</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -212,13 +212,7 @@
                         orderable: false,
                         searchable: false
                     },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false,
-                        className: 'dt-center text-center'
-                    },
+                   
                 ],
             });
         }

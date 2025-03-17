@@ -1,28 +1,24 @@
 <?php
-
-namespace App\Http\Controllers\Web\Backend;
-
+namespace App\Http\Controllers\Web\Backend\Settings;
 use App\Http\Controllers\Controller;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\Order;
-use App\Models\Signage;
-class DashboardController extends Controller
+use App\Models\User;
+class TapPaymentController extends Controller
 {
-    public function index(Request $request)
+    public function index( Request $request)
     {
         if ($request->ajax()) {
-            $data = Order::all();
+            $data = User::where('name', 'owner')
+            ->where('status', 'active');
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('image', function ($data) {
-                    if ($data->image) {
-                        $url = asset($data->image);
-                        return '<img src="' . $url . '" alt="image" width="50px" height="50px" style="margin-left:20px; border-radius: 50%;">';
+                ->addColumn('icon', function ($data) {
+                    if ($data->icon) {
+                        $url = asset($data->icon);
+                        return '<img src="' . $url . '" alt="icon" width="50px" height="50px" style="margin-left:20px;">';
                     } else {
-                        return '<img src="' . asset('default/logo.png') . '" alt="image" width="50px" height="50px" style="margin-left:20px;">';
+                        return '<img src="' . asset('default/logo.png') . '" alt="icon" width="50px" height="50px" style="margin-left:20px;">';
                     }
                 })
                 ->addColumn('status', function ($data) {
@@ -41,7 +37,7 @@ class DashboardController extends Controller
                 ->addColumn('action', function ($data) {
                     return '<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
 
-                                <a href="#" type="button" onclick="goToEdit(' . $data->id . ')" class="btn btn-primary fs-14 text-white delete-icn" title="Delete">
+                                <a href="#" type="button" onclick="goToEdit(' . $data->id . ')" class="btn btn-primary fs-14 text-white delete-icn" >
                                     <i class="fe fe-edit"></i>
                                 </a>
 
@@ -50,9 +46,48 @@ class DashboardController extends Controller
                                 </a>
                             </div>';
                 })
-                ->rawColumns([ 'image' ,'status', 'action'])
+                ->rawColumns([ 'icon' ,'status', 'action'])
                 ->make();
         }
-        return view('backend.layouts.dashboard');
+        return view('backend.layouts.tappayment.index');
     }
+
+  
+
+ 
+     public function edit(User $user, $id)
+     {
+         $user = User::findOrFail($id);  
+         
+         return view('backend.layouts.tappayment.edit', compact('user'));
+     }
+     
+
+     public function update(Request $request, $id = null)
+     {
+         $request->validate([
+             'tap_marcent_id' => 'required|string|max:255',
+         ]);
+         if ($id) {
+             // Update the existing user
+             $user = User::findOrFail($id);
+             $user->update([
+                 'tap_marcent_id' => $request->tap_marcent_id
+             ]);
+             return redirect()->route('admin.tap.payment')
+                              ->with('success', 'Marcent Id updated successfully!');
+         } else {
+             // Create a new user if no ID is provided
+             User::create([
+                 'tap_marcent_id' => $request->tap_marcent_id
+             ]);
+             return redirect()->route('admin.tap.payment')
+                              ->with('success', 'Marcent Id created successfully!');
+         }
+     }
+     
+
+    
+    
+
 }

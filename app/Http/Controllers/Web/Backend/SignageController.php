@@ -44,6 +44,10 @@ class SignageController extends Controller
                                 <a href="#" type="button" onclick="showView(' . $data->id . ')" class="btn btn-success fs-14 text-white " title="View">
                                    <i class="fe fe-eye"></i>
                                 </a>
+
+                                 <a href="#" type="button" onclick="showDeleteConfirm(' . $data->id . ')" class="btn btn-danger fs-14 text-white delete-icn" title="Delete">
+                                    <i class="fe fe-trash"></i>
+                                </a>
                             </div>';
                 })
                 ->rawColumns([ 'image' ,'status', 'action'])
@@ -95,6 +99,26 @@ class SignageController extends Controller
             return response()->json(['message' => 'Record not found'], 404);
         }
     }
-
+// delete signage
+public function destroy(string $id)
+    {
+        try {
+            $data = Signage::findOrFail($id);
+            if ($data->image && file_exists(public_path($data->image))) {
+                Helper::fileDelete(public_path($data->image));
+            }
+            $data->delete();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Your action was successful!'
+            ]);
+            
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Your action was successful!'
+            ]);
+        }
+    }
 
 }

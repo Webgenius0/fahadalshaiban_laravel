@@ -102,6 +102,17 @@
                         <span class="side-menu__label">Social Link</span>
                     </a>
                 </li>
+
+                <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.tap.payment') ? 'has-link' : '' }}" href="{{ route('admin.tap.payment') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="side-menu__icon" viewBox="0 0 16 16">
+                            <path d="M15 14l-5-5-5 5v-3l10 -10z" />
+                        </svg>
+                        <span class="side-menu__label">Tap Payment</span>
+                    </a>
+                </li>
+
+
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32">
@@ -125,6 +136,7 @@
                         <span class="side-menu__label">Settings</span><i class="angle fa fa-angle-right"></i>
                     </a>
                     <ul class="slide-menu">
+                        
                         <li><a href="{{ route('admin.setting.general.index') }}" class="slide-item">General Settings</a></li>
                         <li><a href="{{ route('admin.setting.profile.index') }}" class="slide-item">Profile Settings</a></li>
                         <li><a href="{{ route('admin.setting.mail.index') }}" class="slide-item">Mail Settings</a></li>
