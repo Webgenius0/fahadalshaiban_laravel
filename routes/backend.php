@@ -33,7 +33,7 @@ use App\Http\Controllers\Web\Backend\Settings\DispatchFeeController;
 use App\Http\Controllers\Web\Backend\SignageRequest\SignageRequestController;
 use App\Http\Controllers\Web\Backend\userRequest\UserRequestController;
 use App\Http\Controllers\Web\Backend\Contact\ContactusController;
-
+use App\Http\Controllers\Web\Backend\Order\OrderListController;
 use App\Models\Contactus;
 
 Route::controller(DashboardController::class)->group(function () {
@@ -267,3 +267,5 @@ Route::controller(IncomeStatementController::class)->prefix('income')->name('inc
     Route::get('/edit/{id}', 'edit')->name('edit');
     Route::patch('/update/{id}', 'update')->name('update');
 });
+
+Route::get('/order-list',[OrderListController::class,'index'])->name('order.list');

@@ -15,6 +15,7 @@ class DashboardController extends Controller
         $signages = Signage::where('user_id', auth('web')
         ->user()->id)
         ->orderBy('created_at', 'desc')
+        ->where('status', 'active')
         ->paginate(9);
         return view('owner.layouts.dashboard', compact('signages'));
     }

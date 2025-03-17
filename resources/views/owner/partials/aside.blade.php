@@ -126,7 +126,10 @@
                             stroke-linejoin="round" />
                     </svg>
                     Add New Signage</a>
-                <a href="{{ route('owner.page.income.statement') }}" class="menu-item {{ request()->routeIs('owner.page.income.statement') ? 'active' : '' }}">
+                <!-- <a href="{{ route('owner.page.income.statement') }}" class="menu-item {{ request()->routeIs('owner.page.income.statement') ? 'active' : '' }}">
+                <img src="{{ asset('currency/owner_sidebar_currency.png') }}" alt="" style="width: 25px; height: 25px; color:white">
+                    Old Statement</a> -->
+                    <a href="{{ route('owner.income-statement-list') }}" class="menu-item {{ request()->routeIs('owner.income-statement-list') ? 'active' : '' }}">
                 <img src="{{ asset('currency/owner_sidebar_currency.png') }}" alt="" style="width: 25px; height: 25px; color:white">
                     Income Statement</a>
 

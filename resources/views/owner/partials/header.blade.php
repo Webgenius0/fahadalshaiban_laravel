@@ -30,7 +30,7 @@
     </div>
 
     <div class="dashboard-profile">
-        <div class="notification-container">
+        <!-- <div class="notification-container">
             <span class="dashboard-notification">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +133,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <a
             href="{{route('owner.page.profile')}}"

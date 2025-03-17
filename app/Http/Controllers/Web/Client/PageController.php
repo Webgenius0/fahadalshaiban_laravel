@@ -179,7 +179,7 @@ class PageController extends Controller
         }
     
         // Normal page load
-        $signages = Signage::take(20)->get(); // You can limit the number of results for better performance
+        $signages = Signage::take(20)->where('status', 'active')->get(); // You can limit the number of results for better performance
         $categories = Category::all();
         $cities = Signage::select('location')->distinct()->get(); // Get unique cities
     
