@@ -29,7 +29,7 @@ class BillingAddressController extends Controller
 
         try {
             // Create a new BillingAddress entry
-            $billingAddress = BillingAddress::create([
+            $billingAddress = BillingAddress::updateOrCreate([
                 'order_id' => $request->order_id,
                 'name' => $request->name,
                 'email' => $request->email,

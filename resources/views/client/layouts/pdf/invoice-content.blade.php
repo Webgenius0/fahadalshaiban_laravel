@@ -8,8 +8,9 @@
             <div>
             <img src="{{ public_path('/frontend/images/favicon.png') ?? 'No Image' }}" alt="Logo" style="width: 80px; height: auto; float: right;">
                 <h1 class="invoice-title">Invoice</h1>
-                <p>Invoice Number: <span id="invoice-number"></span></p>
-                
+                @if ($orders->count() > 0)
+                    <p>Invoice Number: <span id="invoice-number">#{{$orders->first()->uuid}}</span></p>
+                @endif
             </div>
 
             
@@ -18,15 +19,15 @@
 
 <div class="invoice-info">
     <div class="invoice-info-box">
-        <p><strong>Billed to</strong></p>
+        <p><strong style="font-size: 14px">Billed to</strong></p>
         <p>{{ $firstOrder->name?? '' }}<br>{{ $firstOrder->email?? '' }}</p>
     </div>
     <div class="invoice-info-box">
-        <p><strong>Due Date</strong></p>
-        <p>{{\Carbon\Carbon::parse($firstOrder->end_date)->format('j F, y') ?? '' }}</p>
+        <p><strong style="font-size: 14px">Due Date</strong></p>
+        <p >{{\Carbon\Carbon::parse($firstOrder->end_date)->format('j F, y') ?? '' }}</p>
     </div>
     <div class="invoice-info-box">
-        <p><strong>Address</strong></p>
+        <p><strong style="font-size: 14px">Address</strong></p>
         <p>{{ $firstOrder->city ?? '' }}, {{ $firstOrder->state ?? '' }}, {{ $firstOrder->country ?? '' }}</p>
     </div>
 </div>
@@ -48,6 +49,7 @@
             $end = \Carbon\Carbon::parse($order->end_date ?? '');
             $days = $start->diffInDays($end ?? '');
             $total = $order->price_per_day * $days;
+            $totalwithtax =$total * (env('DESPATCH_FEE')/100)+$total;
             $subtotal += $total;
         @endphp
         <tr>
@@ -61,8 +63,8 @@
     </tbody>
 </table>
 
-<div style="margin-top: 30px; margin-top: 20px;">
-    <table style="width: 300px; float: right; margin-top: 20px;">
+<div style="margin-top: 30px; margin-top: 15px;">
+    <table style="width: 300px; float: right; margin-top: 15px; border-radius: 5px;">
         <tr>
             <th>Subtotal:</th>
             <td>{{ number_format($subtotal, 2) }} <img src="{{ public_path('currency/realcurrency.png') }}" class="currency-img"></td>
@@ -73,11 +75,12 @@
         </tr>
         <tr>
             <th>Tax:</th>
-            <td>0.00</td>
+            <td>{{env('DESPATCH_FEE')}}%</td>
         </tr>
+        
         <tr>
             <th>Total:</th>
-            <td>{{ number_format($subtotal, 2) }} <img src="{{ public_path('currency/realcurrency.png') }}" class="currency-img"></td>
+            <td>{{ number_format($totalwithtax, 2) }} <img src="{{ public_path('currency/realcurrency.png') }}" class="currency-img"></td>
         </tr>
     </table>
 </div>

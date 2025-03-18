@@ -215,7 +215,13 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
 
                         <strong style="color: red;">Campaign End</strong>
                         <i class="fa fa-circle" style="color: red; font-size: 18px; margin-left: 5px;"></i>
+                        @elseif($order->payment_status == 'pending')
+                        <!-- Orange round icon for Pending Campaign -->
+
+                        <strong style="color:#FFA500;">Pending Campaign</strong>
+                        <i class="fa fa-circle" style="color: #FFA500; font-size: 18px; margin-left: 5px;"></i>
                         @else
+
                         <!-- Green round icon for Live Campaign -->
 
                         <strong style="color: #34b26f;">Live Campaign</strong>

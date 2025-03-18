@@ -68,10 +68,11 @@
                                             <th class="bg-transparent border-bottom-0 wp-15">Order Id</th>
                                             <th class="bg-transparent border-bottom-0 wp-15">User Id</th>
                                             <th class="bg-transparent border-bottom-0 wp-15">Signage Name</th>
+                                            <th class="bg-transparent border-bottom-0">Status</th>
                                             <th class="bg-transparent border-bottom-0 wp-15">Signage Image</th>
                                             <th class="bg-transparent border-bottom-0 wp-15">Total Amount</th>
-                                            <th class="bg-transparent border-bottom-0">Status</th>
-                                            <th class="bg-transparent border-bottom-0">Action</th>
+                                            
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -160,6 +161,12 @@
                         searchable: true
                     },
                     {
+                        data: 'status',
+                        name: 'status',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
                         data: 'image',
                         name: 'image',
                         orderable: false,
@@ -171,20 +178,9 @@
                         orderable: false,
                         searchable: false
                     },
-                    {
-                        data: 'status',
-                        name: 'status',
-                        orderable: false,
-                        searchable: false
-                    },
                     
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false,
-                        className: 'dt-center text-center'
-                    },
+                    
+                    
                 ],
             });
         }
