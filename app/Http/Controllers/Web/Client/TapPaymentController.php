@@ -8,6 +8,8 @@ use GuzzleHttp\Client;
 use App\Http\Controllers\Controller;
 use Exception;
 use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Signage;
 
 class TapPaymentController extends Controller
 {
@@ -50,31 +52,32 @@ class TapPaymentController extends Controller
         }
     }
 
-    public function createCharge(Request $request)
+    public function createCharge($order_id)
     {
-        $request->validate([
-            'charge'                => 'required|numeric',
-            'name'                  => 'required|string',
-            'email'                 => 'required|email',
-            'phone_country_code'    => 'required|string',
-            'phone_number'          => 'required|string',
-        ]);
 
+        $order = Order::find($order_id);
+        $order_itmes = OrderItem::where('order_id', $order_id)->get();
+        foreach ($order_itmes as $item) {
+            $signage = Signage::with('user')->where('id', $item->signage_id)->first();
+            $marcent_id = $signage->user->tap_marcent_id;
+        }
+
+    
         $client = new Client();
         $url = "https://api.tap.company/v2/charges/";
 
         $data = [
-            "amount" => $request->charge,
+            "amount" => 200,
             "currency" => "USD",
             "metadata" => [
                 'title' => 'payment'
             ],
             "customer" => [
-                "first_name" => $request->name,
-                "email" => $request->email,
+                "first_name" => "kamal",
+                "email" => "kamal@gmail.com",
                 "phone" => [
-                    "country_code" => $request->phone_country_code,
-                    "number" => $request->phone_number
+                    "country_code" => "+11",
+                    "number" => "0124567897"
                 ]
             ],
             "source" => [

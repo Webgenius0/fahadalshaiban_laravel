@@ -43,8 +43,7 @@ class BillingAddressController extends Controller
             // Return success response
             return response()->json([
                 'message' => 'Billing Address created successfully!',
-                'redirect_url'=> route('billing.redirect'),
-               
+                'redirect_url'=> route('create.charge', ['order_id' => $request->order_id]),
             ], 201);
         } catch (\Exception $e) {
             // Log any errors
