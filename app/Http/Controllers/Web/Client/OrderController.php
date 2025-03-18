@@ -8,19 +8,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Order;
 
+use function Laravel\Prompts\alert;
+
 class OrderController extends Controller
 {
     public function submitOrder(Request $request)
     {
+      
         $orderData = $request->input('orderData');
-        
+       
         // Create a new order instance
         $order = new Order();
+      
         $order->subtotal = $orderData['subtotal'];
         $order->despatch_fee = $orderData['despatchFee'];
         $order->total = $orderData['total'];
+        $order->total_days = $orderData['total_days'];
+
         $order->payment_status = 'pending';  // Default status
-        $order->save();  // Save the order to the database
+        $order->save();  
+        alert($order);
     
         // Now, create the order items
         foreach ($orderData['items'] as $item) {

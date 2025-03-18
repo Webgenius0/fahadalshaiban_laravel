@@ -61,6 +61,7 @@ class TapPaymentController extends Controller
         $service_charge = 0; 
         $destinations = collect();
         $billingaddress=BillingAddress::where('order_id',$order_id)->first();
+        
         $order = Order::find($order_id);
         $order_itmes = OrderItem::where('order_id', $order_id)->get();
         foreach ($order_itmes as $item) {

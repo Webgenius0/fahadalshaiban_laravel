@@ -233,6 +233,7 @@ class PageController extends Controller
 
     public function checkout(Request $request)
     {
+      
         $request->validate([
             'items' => 'required|array',
             'subtotal' => 'required|numeric',
@@ -244,6 +245,7 @@ class PageController extends Controller
             'startDate' => 'nullable|date',
             'endDate' => 'nullable|date',
             'artWork' => 'nullable|string',
+            'total_days' => 'nullable|string'
         ]);
 
         // Start transaction to ensure atomicity
@@ -260,6 +262,7 @@ class PageController extends Controller
                 'dispatch_fee' => $request->dispatchFee,
                 'total' => $request->total,
                 'status' => 'pending',
+                'total_days' => $request->total_days,
             ]);
 
             // Handle Base64 image (artWork)

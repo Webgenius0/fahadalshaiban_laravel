@@ -9,7 +9,7 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'uuid','subtotal', 'dispatch_fee', 'total', 'payment_status',
+        'user_id', 'uuid','subtotal', 'dispatch_fee', 'total', 'payment_status','total_days'
     ];
 
     // Define the relationship with OrderItems
