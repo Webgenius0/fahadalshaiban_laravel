@@ -57,7 +57,7 @@ class TapPaymentController extends Controller
     public function createCharge($order_id)
     {
         $billingaddress=BillingAddress::where('order_id',$order_id)->first();
-        dd($billingaddress);
+        
         $order = Order::find($order_id);
         $order_itmes = OrderItem::where('order_id', $order_id)->get();
         foreach ($order_itmes as $item) {

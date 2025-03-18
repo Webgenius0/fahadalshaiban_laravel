@@ -64,12 +64,14 @@ let orderData = {
     subtotal: 0,
     dispatchFee: 0,
     total: 0,
+    total_days:0,
     ad_title: '',
     campaign_description: '',
     art_work:'',
     start_date: '',
     end_date: '',
     differenceDays:'',
+    
 };
 
 // On your other route/page (when the page loads):
@@ -109,15 +111,19 @@ $('#checkoutButton').click(function(event) {
         subtotal: orderData.subtotal,
         dispatchFee: orderData.dispatchFee,
         total: orderData.total,
+        total_days: orderData.total_days,
         _token: '{{ csrf_token() }}'
     };
 
+   
     // Send AJAX request
     $.ajax({
         url: '/checkout',
         type: 'POST',
         data: totdoList,
+        
         success: function(response) {
+            
             window.location.href = "{{ route('page.billing') }}";
         },
         error: function(xhr, status, error) {
@@ -161,13 +167,16 @@ function fetchDataForSignage(id) {
                 price_per_day: response.price_per_day,
                 rotation_time: response.rotation_time,
                 avg_daily_views: response.avg_daily_views,
-                total: signageSubtotal // Update total for this item
+                total: signageSubtotal ,
+                
             });
 
             // Update orderData totals
             orderData.subtotal = totalPrice;
             orderData.dispatchFee = (despatchFee / 100) * totalPrice;
             orderData.total = TotalwithDespatchFee;
+            orderData.total_days = daysDifference;
+           
 
             // Add a new row to the table
             let row = `

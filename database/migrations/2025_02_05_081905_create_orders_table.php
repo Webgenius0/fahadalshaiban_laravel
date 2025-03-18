@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('total', 10, 2);
             // $table->string('status')->default('pending');
            $table->enum('payment_status', ['pending', 'booked', 'cancelled'])->default('pending');
-
+            
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); 
             $table->timestamps();
         });
