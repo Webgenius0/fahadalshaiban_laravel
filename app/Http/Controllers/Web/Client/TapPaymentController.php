@@ -56,16 +56,23 @@ class TapPaymentController extends Controller
 
     public function createCharge($order_id)
     {
-        $billingaddress=BillingAddress::where('order_id',$order_id)->first();
         
+        
+        $service_charge = 0; 
+        $destinations = collect();
+        $billingaddress=BillingAddress::where('order_id',$order_id)->first();
         $order = Order::find($order_id);
         $order_itmes = OrderItem::where('order_id', $order_id)->get();
         foreach ($order_itmes as $item) {
             $signage = Signage::with('user')->where('id', $item->signage_id)->first();
-            $marcent_id = $signage->user->tap_marcent_id;
+            $signageprice = $signage->per_day_price * $order->total_days;
+            $ownerprice = $signageprice * 90 / 100;
+            $service_charge += $signageprice - $ownerprice;
+            $destinations->push(['id' => $signage->user->tap_marcent_id, 'amount' => $ownerprice, 'currency' => 'KWD']);
         }
+        $destinations->push(['id' => env('TAP_MERCHANT_ID'), 'amount' => $service_charge, 'currency' => 'KWD']);
 
-    
+
         $client = new Client();
         $url = "https://api.tap.company/v2/charges/";
 
@@ -86,18 +93,7 @@ class TapPaymentController extends Controller
             "source" => [
                 "id" => "src_all"
             ],
-            "destinations" => [
-                [
-                    'id' => env('TAP_MERCHANT_ID'),
-                    'amount' => 60,
-                    'currency' => 'KWD',
-                ],
-                [
-                    'id' => env('TAP_MERCHANT_ID'),
-                    'amount' => 40,
-                    'currency' => 'KWD',
-                ],
-            ],
+            "destinations" => $destinations,
             "redirect" => [
                 "url" => route('payment.callback')
             ]
