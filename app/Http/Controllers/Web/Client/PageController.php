@@ -234,10 +234,8 @@ class PageController extends Controller
 
     public function checkout(Request $request)
     {
-<<<<<<< HEAD
-=======
          
->>>>>>> sagor
+
       
         $request->validate([
             'items' => 'required|array',
@@ -250,16 +248,12 @@ class PageController extends Controller
             'startDate' => 'nullable|date',
             'endDate' => 'nullable|date',
             'artWork' => 'nullable|string',
-<<<<<<< HEAD
-            'total_days' => 'nullable|string'
-=======
             'total_days' => 'nullable|string',
 
             // 'owner_id'=>'required',
             'admin_profit'=>'nullable',
             'owner_profit'=>'nullable',
             'total_charge'=>'nullable',
->>>>>>> sagor
         ]);
 
         // Start transaction to ensure atomicity
