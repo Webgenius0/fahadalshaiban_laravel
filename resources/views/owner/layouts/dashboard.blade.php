@@ -1,5 +1,12 @@
 <?php
 $total_signage = App\Models\Signage::where('user_id', auth()->user()->id)->count();
+$total_revenue = App\Models\OrderItem::where('owner_id', auth()->user()->id)
+    ->join('orders', 'order_items.order_id', '=', 'orders.id')
+    ->where('orders.payment_status', 'booked')
+    ->sum('order_items.owner_profit');
+$count_client = App\Models\User::role('client')->count();
+
+
 
 ?>
 @push('style')
@@ -57,7 +64,7 @@ $total_signage = App\Models\Signage::where('user_id', auth()->user()->id)->count
         <div class="overview-card">
             <h3 class="overview-card-title">Total Revenue</h3>
             <div class="overview-card-content">
-                <p class="overview-card-amount">SR 2000</p>
+                <p class="overview-card-amount">{{$total_revenue}}</p>
                 <div class="overview-card-icon card-icon-pink">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +84,7 @@ $total_signage = App\Models\Signage::where('user_id', auth()->user()->id)->count
         <div class="overview-card">
             <h3 class="overview-card-title">Total Clients</h3>
             <div class="overview-card-content">
-                <p class="overview-card-amount">30</p>
+                <p class="overview-card-amount">{{$count_client}}</p>
 
                 <div class="overview-card-icon card-icon-green">
                     <svg

@@ -223,11 +223,12 @@ $toatalCategory=App\Models\Category::all()->count();
                                     <thead>
                                         <tr>
                                             <th class="bg-transparent border-bottom-0 wp-15">ID</th>
+                                            <th class="bg-transparent border-bottom-0 wp-15">Order Id</th>
                                             <th class="bg-transparent border-bottom-0 wp-15">Name</th>
                                             <th class="bg-transparent border-bottom-0 wp-15">Email</th>
-                                            <th class="bg-transparent border-bottom-0">Tap Marcent Id</th>
+                                            <th class="bg-transparent border-bottom-0">Owner Transection</th>
                                             <th class="bg-transparent border-bottom-0">Status</th>
-                                            
+                                            <th class="bg-transparent border-bottom-0 wp-15">Profit</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -296,24 +297,36 @@ $toatalCategory=App\Models\Category::all()->count();
                         searchable: true
                     },
                     {
-                        data: 'subtotal',
-                        name: 'subtotal',
+                        data: 'name',
+                        name: 'name',
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: 'dispatch_fee',
-                        name: 'dispatch_fee',
-                        orderable: false,
-                        searchable: false
+                        data: 'email',
+                        name: 'email',
+                        orderable: true,
+                        searchable: true
                     },
+                    {
+                        data: 'owner_profit',
+                        name: 'owner_profit',
+                        orderable: true,
+                        searchable: true
+                    },
+                   
                     {
                         data: 'status',
                         name: 'status',
                         orderable: false,
                         searchable: false
                     },
-                    
+                    {
+                        data: 'admin_profit',
+                        name: 'admin_profit',
+                        orderable: false,
+                        searchable: false
+                    },
                 ],
             });
         }

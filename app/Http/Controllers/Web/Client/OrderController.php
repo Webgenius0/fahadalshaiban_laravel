@@ -34,6 +34,9 @@ class OrderController extends Controller
             $order->items()->create([
                 'signage_id' => $item['signage_id'],
                 'name' => $item['name'],
+                'owner_id' => $item['owner_id'],
+                'admin_profit' => $item['admin_profit'],
+                'owner_profit' => $item['owner_profit'],
                 'location' => $item['location'],
                 'category_name' => $item['category_name'],
                 'price_per_day' => $item['price_per_day'],

@@ -48,9 +48,9 @@
             $start = \Carbon\Carbon::parse($order->start_date ?? '') ;
             $end = \Carbon\Carbon::parse($order->end_date ?? '');
             $days = $start->diffInDays($end ?? '');
-            $total = $order->price_per_day * $days;
-            $totalwithtax =$total * (env('DESPATCH_FEE')/100)+$total;
+            $total = $order->price_per_day * $days;           
             $subtotal += $total;
+            $totalwithtax =$total * (env('DESPATCH_FEE')/100)+$subtotal;
         @endphp
         <tr>
             <td>{{ $order->uuid }}</td>
