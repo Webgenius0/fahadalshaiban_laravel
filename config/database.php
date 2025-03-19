@@ -44,6 +44,8 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
             'url' => env('DB_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
