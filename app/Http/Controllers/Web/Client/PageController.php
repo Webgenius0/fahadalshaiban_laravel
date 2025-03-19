@@ -213,6 +213,7 @@ class PageController extends Controller
                 'name' => $signage->name,
                 'image'=>$signage->image,
                 'signage_id' => $signage->id,
+                'user_id' => $signage->user_id,
                 'location' => $signage->location,
                 'description' => $signage->description,
                 'type' => $signage->type,
@@ -233,6 +234,7 @@ class PageController extends Controller
 
     public function checkout(Request $request)
     {
+         
       
         $request->validate([
             'items' => 'required|array',
@@ -245,7 +247,12 @@ class PageController extends Controller
             'startDate' => 'nullable|date',
             'endDate' => 'nullable|date',
             'artWork' => 'nullable|string',
-            'total_days' => 'nullable|string'
+            'total_days' => 'nullable|string',
+
+            // 'owner_id'=>'required',
+            'admin_profit'=>'nullable',
+            'owner_profit'=>'nullable',
+            'total_charge'=>'nullable',
         ]);
 
         // Start transaction to ensure atomicity
@@ -290,6 +297,10 @@ class PageController extends Controller
                     'rotation_time' => $item['rotation_time'],
                     'avg_daily_views' => $item['avg_daily_views'],
                     'total' => $item['total'],
+                    'owner_id' =>$item['owner_id'],
+                    'admin_profit'=>$item['admin_profit'],
+                    'owner_profit'=>$item['owner_profit'],
+                    
                 ]);
             }
 

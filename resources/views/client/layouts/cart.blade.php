@@ -71,6 +71,10 @@ let orderData = {
     start_date: '',
     end_date: '',
     differenceDays:'',
+    owner_id:'',
+    admin_profit:'',
+    owner_profit:'',
+    
     
 };
 
@@ -112,6 +116,7 @@ $('#checkoutButton').click(function(event) {
         dispatchFee: orderData.dispatchFee,
         total: orderData.total,
         total_days: orderData.total_days,
+        
         _token: '{{ csrf_token() }}'
     };
 
@@ -151,9 +156,15 @@ function fetchDataForSignage(id) {
             const perSignageFee = response.price_per_day;
             const signageSubtotal = perSignageFee * daysDifference;
             totalPrice += signageSubtotal;
+            const despatchFee = "{{ env('DESPATCH_FEE') }}";
+
+            // profit calculation for owner and admin
+            const persignagefee = perSignageFee * daysDifference*(despatchFee/100);
+            const adminprofit =perSignageFee * daysDifference*(despatchFee/100);
+            const ownerprofit =perSignageFee*daysDifference-adminprofit + persignagefee;
 
             // Update the UI with the new subtotal
-            const despatchFee = "{{ env('DESPATCH_FEE') }}";
+            
             $("#dispatchFee").text("RS " + despatchFee + "%");
             $("#subTotal").html(totalPrice + ' <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;">');
 
@@ -164,6 +175,9 @@ function fetchDataForSignage(id) {
             // Add this item to the orderData object
             orderData.items.push({
                 signage_id: response.signage_id,
+                owner_id: response.user_id,
+                admin_profit:adminprofit,
+                owner_profit:ownerprofit,
                 price_per_day: response.price_per_day,
                 rotation_time: response.rotation_time,
                 avg_daily_views: response.avg_daily_views,

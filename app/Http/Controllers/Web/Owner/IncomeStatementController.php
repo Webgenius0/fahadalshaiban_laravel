@@ -22,6 +22,7 @@ class IncomeStatementController extends Controller
             ->join('campaign_details', 'orders.id', '=', 'campaign_details.order_id')
             ->where('signages.user_id', auth()->user()->id) // Filter by signages table's user_id
             ->select('order_items.*', 'campaign_details.*', 'signages.*', 'orders.*')
+            ->where('orders.payment_status', 'booked')
             ->get();
 
             return DataTables::of($data)

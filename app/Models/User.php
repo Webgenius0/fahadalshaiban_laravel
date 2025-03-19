@@ -61,4 +61,8 @@ class User extends Authenticatable
         return $this->belongsTo(Signage::class);
     }
     
+    public function orderItems(){
+        return $this->hasMany(OrderItem::class);
+    }
+
 }

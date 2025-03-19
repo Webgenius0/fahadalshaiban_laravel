@@ -103,7 +103,7 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
         <div class="overview-card">
             <h3 class="overview-card-title">{{__('userdashboard.totalviewe')}}</h3>
             <div class="overview-card-content">
-                <p class="overview-card-amount">18k</p>
+                <p class="overview-card-amount">1800000</p>
                 <div class="overview-card-icon card-icon-orange">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +121,7 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
                 </div>
             </div>
         </div>
-        <div class="overview-card">
+        <!-- <div class="overview-card">
             <h3 class="overview-card-title">{{__('userdashboard.totalspending')}}</h3>
             <div class="overview-card-content">
                 <p class="overview-card-amount">SR 2000</p>
@@ -140,7 +140,7 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
                     </svg>
                 </div>
             </div>
-        </div>
+        </div> -->
     </section>
 
     <!-- <div id="calendar"></div> -->

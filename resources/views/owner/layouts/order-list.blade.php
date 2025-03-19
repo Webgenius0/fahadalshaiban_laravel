@@ -189,7 +189,7 @@
                                 // If today's date is greater than the end date, show "Booking time expired" on the date
                                 if (currentDate > endDate) {
                                     // Return a span with the badge-danger class to highlight the expired booking
-                                    return '<span class="badge badge-danger">Booking time expired on ' + endDate.toLocaleDateString('en-GB', {
+                                    return '<span class="badge badge-danger">Expired on ' + endDate.toLocaleDateString('en-GB', {
                                         day: '2-digit',
                                         month: 'long',
                                         year: '2-digit'

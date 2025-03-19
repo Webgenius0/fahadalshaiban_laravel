@@ -11,7 +11,8 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Signage;
 use App\Models\BillingAddress;
-use GPBMetadata\Google\Api\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TapPaymentController extends Controller
 {
@@ -56,21 +57,21 @@ class TapPaymentController extends Controller
 
     public function createCharge($order_id)
     {
-        
-        
+   
         $service_charge = 0; 
+        $total_price = 0;
         $destinations = collect();
         $billingaddress=BillingAddress::where('order_id',$order_id)->first();
-        
-        $order = Order::find($order_id);
         $order_itmes = OrderItem::where('order_id', $order_id)->get();
+
         foreach ($order_itmes as $item) {
-            $signage = Signage::with('user')->where('id', $item->signage_id)->first();
-            $signageprice = $signage->per_day_price * $order->total_days;
-            $ownerprice = $signageprice * 90 / 100;
-            $service_charge += $signageprice - $ownerprice;
-            $destinations->push(['id' => $signage->user->tap_marcent_id, 'amount' => $ownerprice, 'currency' => 'KWD']);
+            $user = User::find($item->owner_id);
+            $ownerprice = $item->owner_profit; 
+            $service_charge += $item->admin_profit;
+            $total_price += $item->owner_profit + $item->admin_profit;
+            $destinations->push(['id' => $user->tap_marcent_id, 'amount' => $ownerprice, 'currency' => 'KWD']);
         }
+        
         $destinations->push(['id' => env('TAP_MERCHANT_ID'), 'amount' => $service_charge, 'currency' => 'KWD']);
 
 
@@ -78,7 +79,7 @@ class TapPaymentController extends Controller
         $url = "https://api.tap.company/v2/charges/";
 
         $data = [
-            "amount" => 200,
+            "amount" => $total_price,
             "currency" => "USD",
             "metadata" => [
                 'title' => 'payment'
