@@ -333,7 +333,6 @@ class PageController extends Controller
 
         return $randomString;
     }
-
     //show details after click 
     public function showsignageDetails($id)
     {
