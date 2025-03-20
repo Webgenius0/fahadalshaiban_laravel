@@ -166,11 +166,11 @@ function fetchDataForSignage(id) {
             // Update the UI with the new subtotal
             
             $("#dispatchFee").text("RS " + despatchFee + "%");
-            $("#subTotal").html(totalPrice + ' <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;">');
+            $("#subTotal").html(totalPrice.toLocaleString('en-IN') + ' <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;">');
 
             // Calculate total with dispatch fee
             const TotalwithDespatchFee = totalPrice + ((despatchFee / 100) * totalPrice);
-            $("#total").html(TotalwithDespatchFee + ' <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;">');
+            $("#total").html(TotalwithDespatchFee.toLocaleString('en-IN') + ' <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;">');
 
             // Add this item to the orderData object
             orderData.items.push({
