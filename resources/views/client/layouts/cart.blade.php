@@ -71,13 +71,10 @@ let orderData = {
     start_date: '',
     end_date: '',
     differenceDays:'',
-<<<<<<< HEAD
-=======
     owner_id:'',
     admin_profit:'',
     owner_profit:'',
     
->>>>>>> sagor
     
 };
 
