@@ -119,10 +119,7 @@ $('#checkoutButton').click(function(event) {
         dispatchFee: orderData.dispatchFee,
         total: orderData.total,
         total_days: orderData.total_days,
-<<<<<<< HEAD
-=======
         
->>>>>>> sagor
         _token: '{{ csrf_token() }}'
     };
 
