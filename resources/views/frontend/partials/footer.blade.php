@@ -15,7 +15,7 @@ $link=SocialLink::where('name','facebook')->first();
                     </div>
 
                     <div>
-                        <a href="{{ route('pro.tips') }}" class="btn-common">
+                        <a href="{{ route('pro.tips') }}" class="btn-common google-font-arabic">
                             {{__('menu.protips')}}
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -34,11 +34,11 @@ $link=SocialLink::where('name','facebook')->first();
                     </div>
                 </div>
 
-                <p class="footer-desc">
+                <p class="footer-desc google-font-arabic">
                     {{__('menu.protipsDescription')}}
                 </p>
             </div>
-            <div class="footer-item">
+            <div class="footer-item google-font-arabic">
                 <h4>{{__('menu.quicklinks')}}</h4>
                 <div class="footer-links-wrapper">
                     <a href="{{ route('home') }}">{{__('menu.home')}}</a>

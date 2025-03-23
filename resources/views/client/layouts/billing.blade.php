@@ -9,47 +9,60 @@ $orderId = App\Models\Order::latest('id')->first()->id;
 <div class="main-content">
     <form id="billingAddressForm" class="billing-sections-wrapper">
         
-        <div class="billings-wrapper">
-            <div class="billings-wrapper-header">
-                <h2>Billing Details</h2>
+    <div class="billings-wrapper">
+    <div class="billings-wrapper-header">
+        <h2>Billing Details</h2>
+    </div>
+
+    <div class="billing-details-input-wrapper">
+        <input type="hidden" name="order_id" value="{{ $orderId }}" />
+        
+        <div class="row col-md-12">
+            <div class="input-wrapper-large col-md-6">
+                <label>Full Name<span>*</span></label>
+                <input type="text" name="name" id="name" placeholder="Adam Smith" required />
             </div>
-
-            <div class="billing-details-input-wrapper">
-                <input type="hidden" name="order_id" value="{{ $orderId }}" />
-                <div class="input-wrapper-large">
-                    <label>Full Name<span>*</span></label>
-                    <input type="text" name="name" id="name" placeholder="Adam Smith" required />
-                </div>
-                <div class="input-wrapper-large">
-                    <label>Email<span>*</span></label>
-                    <input type="email" name="email" id="email" placeholder="adam_smith@Email.com" required />
-                </div>
-                <div class="input-wrapper-large">
-                    <label>Phone Number<span>*</span></label>
-                    <input type="tel" name="phone" id="phone" placeholder="+898-2786223" required />
-                </div>
-                <div class="input-wrapper-large">
-                    <label>City<span>*</span></label>
-                    <input type="text" name="city" id="city" placeholder="Riyadh" required />
-                </div>
-                <div class="input-wrapper-large">
-                    <label>State/Province<span>*</span></label>
-                    <input type="text" name="state" id="state" placeholder="Riyadh" required />
-                </div>
-                <div class="input-wrapper-large">
-                    <label>Country<span>*</span></label>
-                    <input type="text" name="country" id="country" placeholder="Saudi Arabia" required />
-                </div>
-                <div class="input-wrapper-large">
-                    <label>Postal Code<span>*</span></label>
-                    <input type="text" name="postal_code" id="postal_code" placeholder="232874" required />
-                </div>
-
-                <div class="input-wrapper-large">
-                   <button class="auth-submit-btn">Checkout</button>
-                </div>
+            <div class="input-wrapper-large col-md-6">
+                <label>Email<span>*</span></label>
+                <input type="email" name="email" id="email" placeholder="adam_smith@Email.com" required />
             </div>
         </div>
+
+        <div class="row col-md-12">
+            <div class="input-wrapper-large col-md-6">
+                <label>Phone Number<span>*</span></label>
+                <input type="tel" name="phone" id="phone" placeholder="+898-2786223" required />
+            </div>
+            <div class="input-wrapper-large col-md-6">
+                <label>City<span>*</span></label>
+                <input type="text" name="city" id="city" placeholder="Riyadh" required />
+            </div>
+        </div>
+
+        <div class="row col-md-12">
+            <div class="input-wrapper-large col-md-6">
+                <label>State/Province<span>*</span></label>
+                <input type="text" name="state" id="state" placeholder="Riyadh" required />
+            </div>
+            <div class="input-wrapper-large col-md-6">
+                <label>Country<span>*</span></label>
+                <input type="text" name="country" id="country" placeholder="Saudi Arabia" required />
+            </div>
+        </div>
+
+        <div class="input-row">
+            <div class="input-wrapper-large">
+                <label>Postal Code<span>*</span></label>
+                <input type="text" name="postal_code" id="postal_code" placeholder="232874" required />
+            </div>
+        </div>
+
+        <div class="input-wrapper-large">
+            <button class="auth-submit-btn">Checkout</button>
+        </div>
+    </div>
+</div>
+
     </form>
 </div>
 @endsection

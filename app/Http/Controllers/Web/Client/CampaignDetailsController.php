@@ -27,5 +27,6 @@ class CampaignDetailsController extends Controller
 
         // return view('client.campaign-details.booking-details', compact('campaignDetail', 'orders'));
         return view('client.layouts.campaign_details', compact('orders'));
+        // return response()->json($orders)
     }
 }

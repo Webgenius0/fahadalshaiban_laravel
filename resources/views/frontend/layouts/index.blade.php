@@ -342,16 +342,16 @@ $home_hero = $cms->firstWhere('section', SectionEnum::HOME_HERO);
 <section class="banner-home" dir="ltr">
     <div class="my-container">
         <div class="banner-content">
-            <small class="banner-title " style="font-size: 50px; white-space: normal">
+            <small class="banner-title google-font-arabic" style="font-size: 50px; white-space: normal">
                 {!! nl2br(__('banner.title')) !!}
             </small>
             <div class="banner-details">
                 <div class="banner-line"></div>
                 <div>
-                    <p class="banner-desc">
+                    <p class="banner-desc google-font-arabic">
                         {{ __('banner.description') }}
                     </p>
-                    <a href="{{ route('login') }}" class="btn-common banner-home-btn">
+                    <a href="{{ route('login') }}" class="btn-common banner-home-btn google-font-arabic">
                         {{ __('menu.signup') }}
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -367,7 +367,7 @@ $home_hero = $cms->firstWhere('section', SectionEnum::HOME_HERO);
 <!-- banner ends -->
 
 <!-- marquee starts -->
-<section class="marquee">
+<section class="marquee google-font-arabic">
     <h1> {{__('banner.marquee') }}</h1>
 </section>
 <!-- marquee ends -->
@@ -420,10 +420,9 @@ $home_hero = $cms->firstWhere('section', SectionEnum::HOME_HERO);
                         </defs>
                     </svg>
                 </div>
-                <h3 class="service-item-title">Locate</h3>
-                <p class="service-item-desc">
-                    Find the optimal location for your signage to meet your business
-                    needs.
+                <h3 class="service-item-title google-font-arabic">{{__('banner.title1')}}</h3>
+                <p class="service-item-desc google-font-arabic">
+                {{__('banner.card1') }}
                 </p>
             </div>
             <div class="service-item">
@@ -445,10 +444,9 @@ $home_hero = $cms->firstWhere('section', SectionEnum::HOME_HERO);
                             fill="#34B26F" />
                     </svg>
                 </div>
-                <h3 class="service-item-title">Book</h3>
-                <p class="service-item-desc">
-                    Plan and schedule your content to align with your campaign
-                    timeline.
+                <h3 class="service-item-title google-font-arabic">{{__('banner.title2')}}</h3>
+                <p class="service-item-desc google-font-arabic">
+                    {{__('banner.card2') }}
                 </p>
             </div>
             <div class="service-item">
@@ -487,9 +485,9 @@ $home_hero = $cms->firstWhere('section', SectionEnum::HOME_HERO);
                         </defs>
                     </svg>
                 </div>
-                <h3 class="service-item-title">Pay</h3>
-                <p class="service-item-desc">
-                    Complete your final payment securely online.
+                <h3 class="service-item-title google-font-arabic">{{__('banner.title3')}}</h3>
+                <p class="service-item-desc google-font-arabic">
+                    {{__('banner.card3') }}
                 </p>
             </div>
             <div class="service-item">
@@ -508,10 +506,9 @@ $home_hero = $cms->firstWhere('section', SectionEnum::HOME_HERO);
                             fill="#34B26F" />
                     </svg>
                 </div>
-                <h3 class="service-item-title">Display</h3>
-                <p class="service-item-desc">
-                    Your content will be displayed on all chosen signages within 24
-                    hours.
+                <h3 class="service-item-title google-font-arabic">{{__('banner.title4')}}</h3>
+                <p class="service-item-desc google-font-arabic">
+                    {{__('banner.card4') }}
                 </p>
             </div>
             @endif
@@ -526,13 +523,13 @@ $home_hero = $cms->firstWhere('section', SectionEnum::HOME_HERO);
     <div class="my-container">
         <div class="about-us-content-wrapper">
             <div class="about-us-left">
-                <h2 class="section-title">{{ __('about.title') }}</h2>
+                <h2 class="section-title google-font-arabic">{{ __('about.title') }}</h2>
                 <div class="about-us-content">
                     <div class="about-us-line"></div>
-                    <p class="about-us-desc">
+                    <p class="about-us-desc google-font-arabic">
                         {!! __('about.shortdescription') !!}
                     </p>
-                    <p class="about-us-desc">
+                    <p class="about-us-desc google-font-arabic">
                         {!! __('about.description') !!}
                     </p>
                 </div>
@@ -595,13 +592,13 @@ $feedback=App\Models\Feedback::all();
 <section class="grow-business">
     <div class="my-container">
         <div class="grow-business-wrapper">
-            <div class="grow-business-content">
+            <div class="grow-business-content google-font-arabic">
                 <h3>{{__('herobanner.title')}}</h3>
                 <p>{{__('herobanner.shorttitle')}}</p>
             </div>
 
             <div class="grow-business-action-wrapper">
-                <a href="{{ route('login') }}" class="btn-common">
+                <a href="{{ route('login') }}" class="btn-common google-font-arabic">
                     {!! __('menu.startnewcampaign') !!}
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M4 12L20 12M20 12L14 18M20 12L14 6" stroke="white" stroke-width="1.5" stroke-linecap="round"

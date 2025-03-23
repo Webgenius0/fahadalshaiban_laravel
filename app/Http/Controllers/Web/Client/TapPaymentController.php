@@ -80,7 +80,7 @@ class TapPaymentController extends Controller
 
         $data = [
             "amount" => $total_price,
-            "currency" => "USD",
+            "currency" => "SAR",
             "metadata" => [
                 'title' => 'payment'
             ],

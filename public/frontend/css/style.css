@@ -2,7 +2,7 @@
 
 
 /* Apply the Noto Sans Arabic font to specific class or globally */
-.banner-home {
+.google-font-arabic {
   font-family: "Noto Sans Arabic", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
