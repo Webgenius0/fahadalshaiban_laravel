@@ -24,6 +24,7 @@ class InvoiceController extends Controller
                 ->where('orders.user_id', auth()->id())
                 ->where('orders.payment_status', 'booked')
                 ->select('order_items.*', 'campaign_details.*', 'signages.*', 'orders.*')
+                ->orderBy('orders.created_at', 'desc')
                 ->get();
             return DataTables::of($data)
                 ->addIndexColumn()

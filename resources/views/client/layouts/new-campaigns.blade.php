@@ -110,70 +110,50 @@
         </div>
     </div> -->
 
-    <div
-    class="modal fade"
-    id="signageDetailsModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button
-                    type="button"
-                    class="billboard-card-details-modal-close-btn"
-                    data-bs-dismiss="modal"
-                    aria-label="Close">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none">
-                        <path
-                            d="M7.86 2H16.14L22 7.86V16.14L16.14 22H7.86L2 16.14V7.86L7.86 2Z"
-                            stroke="#4D4D4D"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path
-                            d="M15 9L9 15"
-                            stroke="#4D4D4D"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path
-                            d="M9 9L15 15"
-                            stroke="#4D4D4D"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </button>
-            </div>
-            <div class="modal-body" id="modalContent">
-              
+    <!-- <div
+        class="modal fade"
+        id=""
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"> -->
+    <!-- Modal for showing signage details -->
+    <div class="modal fade" id="signageDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="billboard-card-details-modal-close-btn" data-bs-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M7.86 2H16.14L22 7.86V16.14L16.14 22H7.86L2 16.14V7.86L7.86 2Z" stroke="#4D4D4D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M15 9L9 15" stroke="#4D4D4D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M9 9L15 15" stroke="#4D4D4D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalContent">
+                    <!-- Dynamic content will be injected here -->
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- </div> -->
 
 
-    <div id="fullWidthImageContainer" style="display: none; position: fixed; top: 30%; left: 35%; width: 50%; height: 50%; z-index: 1000;">
+    <!-- <div id="fullWidthImageContainer" style="display: none; position: fixed; top: 30%; left: 35%; width: 50%; height: 50%; z-index: 1000;">
         <div style="display: flex; justify-content: center; align-items: flex-start; width: 100%; height: 100%; background-size: cover; background-position: center;">
-            <!-- Image and Close Button Container -->
+           
             <div style="border-radius: 10px; margin-top: 20px; border-radius: 10px; overflow: hidden;">
                 <img id="fullWidthImage" src="" alt="Full Width Image" style="max-width: 90%; max-height: 90%;">
 
-                <!-- Close Button with Black Color -->
+                
                 <button id="closeFullWidthImage"
                     style="position: absolute; top: 10px; right: 60px;  color: white; border: none; padding: 10px; cursor: pointer; border-radius: 5px;">
-                    <i class="fe fe-x">Close</i> <!-- Icon color set to white -->
+                    <i class="fe fe-x">Close</i> 
                 </button>
 
             </div>
         </div>
-    </div>
+    </div> -->
     <div
         class="d-flex justify-content-between align-items-start mb-5 gap-4 flex-wrap">
         <div>
@@ -189,6 +169,43 @@
             <p>Total Price: <span>0.00</span> SR</p>
         </div> -->
     </div>
+    <!-- show selected signage price days and total -->
+    <div class="card col-md-3 mr-5 " style="background-color: #e9ecef;">
+        <!-- First Row -->
+        <div class="row">
+            <div class="col-md-6 ">
+                <div class="d-flex justify-content-between ">
+                    <label for="pricePerDay">Price Per Day:</label>
+                    <strong id="pricePerDay"></strong>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex justify-content-between">
+                    <label for="totalDays">Total Days:</label>
+                    <strong id="totalDays"></strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Row -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="d-flex justify-content-between">
+                    <label for="estimatedViews">Estimated Views:</label>
+                    <strong id="estimatedViews"></strong>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex justify-content-between">
+                    <label for="totalSubtotal">Total:</label>
+                    <strong id="totalSubtotal"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
     <section>
         <div class="step-container">
@@ -556,7 +573,14 @@
                                 class="billboard-card"
                                 data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">
-                                <img src="{{ asset($data->image ?? 'default/banner.png') }}" alt="Billboard" class="billboard-card-image" onclick="showFullWidthImage('{{ asset($data->image ?? 'default/banner.png') }}')" />
+                                <!-- <img src="{{ asset($data->image ?? 'default/banner.png') }}" alt="Billboard" class="billboard-card-image" onclick="showFullWidthImage('{{ asset($data->image ?? 'default/banner.png') }}')" /> -->
+                                <img
+                                    src="{{ asset($data->image ?? 'default/banner.png') }}"
+                                    alt="Billboard"
+                                    class="billboard-card-image"
+                                    data-id="{{ $data->id }}"
+                                    onclick="showSignageDetails(this)" />
+
                                 <div class="billboard-card-content">
                                     <div
                                         class="d-flex align-items-center justify-content-between gap-2 flex-wrap ">
@@ -1304,7 +1328,7 @@
                 updateUI(totalSubtotal);
 
             } else {
-                // If the signage doesn't exist, add it and add its price to the subtotal
+                // If the signage doesn't exist, add it and add its price to the subtotal show it card in top
                 $.ajax({
                     url: '/get-signage-location/' + signageId,
                     type: 'GET',
@@ -1316,7 +1340,6 @@
                             var totalprice = signage.price_per_day * differenceDays;
                             var estimatedViews = signage.avg_daily_views;
 
-
                             // Add the current signage details to the array
                             selectedSignages.push({
                                 id: signageId,
@@ -1324,106 +1347,25 @@
                                 total_price: totalprice
                             });
 
-                            // Update the selectedSignages in localStorage
+
                             localStorage.setItem('selectedSignages', JSON.stringify(selectedSignages));
 
-                            // Recalculate the subtotal (sum of all total prices)
+
                             let totalSubtotal = selectedSignages.reduce((total, signage) => {
                                 return total + signage.total_price;
                             }, 0);
 
-                            // Update the subtotal in localStorage
+
                             localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
 
                             console.log("Updated Subtotal:", totalSubtotal);
-                            let imageUrl = "{{ asset('') }}" + signage.image;
-                            // Update the UI with the new subtotal
-                            updateUI(totalSubtotal);
 
-                            var content = `
-                                    <div class="row">
-                                     <div class="col-md-3 pt-2">
-                                        <p><strong>Price Per Day:</strong> ${signage.price_per_day} 
-                                            <img src="{{ asset('currency/realcurrency.png') }}" style="width:10px;height:10px;">
-                                        </p>
-                                        
-                                    </div>
-                                     <div class="col-md-2 pt-2">
-                                        
-                                        <p><strong>Total Days:</strong> ${differenceDays || '0'}</p>
-                                    </div>
-                                    <div class="col-md-4 pt-2">
-                                        <p><strong>Estimated Views:</strong> ${estimatedViews}</p>
-                                        <!-- Removed Sub Total -->
-                                    </div>
-                                    <div class="col-md-3 pt-2">
-                                        <p><strong>Total:</strong> ${totalSubtotal} 
-                                            <img src="{{ asset('currency/realcurrency.png') }}" style="width:10px;height:10px;">
-                                        </p>
-                                    </div>
-                                    </div>
-                                    <div class="col-md-12 pt-2 ml-1" align="center" border-radius="10px">
-                                    <img src="${imageUrl}" alt="Signage Image" class="img-fluid" style="border-radius: 10px;">
-                                    </div>
+                            // Populate the card with the retrieved data
+                            $('#pricePerDay').html(`${signage.price_per_day} <img src="{{ asset('currency/realcurrency.png') }}" style="width:10px;height:10px;">`);
 
-                                    
-                                       <div class="row">
-                                     <div class="col-md-12 pt-2">
-                                        <p><strong>Description:</strong> ${signage.description} 
-                                           
-                                        </p>
-                                        
-                                    </div>
-                                    <p class="text-center">Art Work Dimensions</p>
-                                     <div class="col-md-5 pt-2">
-                                        
-                                        <p><strong>Location:</strong> ${signage.location || ''} </p>
-                                    </div>
-                                    
-                                    <div class="col-md-4 pt-2">
-                                        <p><strong>Height:</strong> ${signage.height || ''} PX</p>
-                                        <!-- Removed Sub Total -->
-                                    </div>
-                                    <div class="col-md-3 pt-2">
-                                        <p><strong>Width:</strong> ${signage.width} PX
-                                           
-                                        </p>
-                                    </div>
-
-
-
-                                    <p class="text-center">Actual Dimensions</p>
-                                     <div class="col-md-5 pt-2">
-                                        
-                                        <p><strong>Exposure Time:</strong> ${signage.exposure_time || ''} <small>per a minuit</small></p>
-                                    </div>
-                                    
-                                    <div class="col-md-4 pt-2">
-                                        <p><strong>Height:</strong> ${signage.height || ''} CM</p>
-                                        <!-- Removed Sub Total -->
-                                    </div>
-                                    <div class="col-md-3 pt-2">
-                                        <p><strong>Width:</strong> ${signage.width} CM
-                                           
-                                        </p>
-                                    </div>
-                                    </div>
-                                    
-                                    `;
-
-                            // Insert content into modal and show it
-                            $('#modalContent').html(content);
-                            $('#signageDetailsModal').modal('show');
-
-
-                            $('#details-section').html(content + closeButton);
-                            $('#details-section').show();
-
-                            // Add the double-click event to subtract the price when double-clicked
-                            $('#details-section').on('dblclick', '.signage-item', function() {
-                                var signageId = $(this).data('id'); // Assuming the signage item has data-id attribute
-                                removeSignageFromTotal(signageId);
-                            });
+                            $('#totalDays').text(differenceDays || '0');
+                            $('#estimatedViews').text(estimatedViews);
+                            $('#totalSubtotal').html(`${totalSubtotal.toFixed(2)} <img src="{{ asset('currency/realcurrency.png') }}" style="width:10px;height:10px;">`);
                         } else {
                             $('#details-section').html("<p>Failed to load signage details. Please try again.</p>");
                             $('#details-section').show();
@@ -1434,6 +1376,7 @@
                         $('#details-section').show();
                     }
                 });
+
             }
         }
 
@@ -1538,7 +1481,8 @@
             callback();
         } else {
             const script = document.createElement('script');
-            let api = '{{ env('GOOGLE_MAPS_API_KEY') }}';
+            let api = '{{ env('
+            GOOGLE_MAPS_API_KEY ') }}';
             script.src = `https://maps.googleapis.com/maps/api/js?key=${api}&callback=initMap`;
             script.async = true;
             script.defer = true;
@@ -1622,21 +1566,105 @@
     // });
 
 
-    //show image
+    // //show image
 
-    function showFullWidthImage(imageSrc) {
-        document.getElementById('fullWidthImage').src = imageSrc;
-        document.getElementById('fullWidthImageContainer').style.display = 'flex';
-    }
-    document.getElementById('closeFullWidthImage').addEventListener('click', function() {
-        event.preventDefault();
-        document.getElementById('fullWidthImageContainer').style.display = 'none';
-    });
+    // function showFullWidthImage(imageSrc) {
+    //     document.getElementById('fullWidthImage').src = imageSrc;
+    //     document.getElementById('fullWidthImageContainer').style.display = 'flex';
+    // }
+    // document.getElementById('closeFullWidthImage').addEventListener('click', function() {
+    //     event.preventDefault();
+    //     document.getElementById('fullWidthImageContainer').style.display = 'none';
+    // });
 
 
 
 
     // clear localstorage
+
+    function showSignageDetails(imageElement) {
+        const signageId = imageElement.getAttribute('data-id');
+
+        // Send an AJAX request to fetch the signage details using the new URL
+        $.ajax({
+            url: '/get-signage-location/' + signageId, // Update the URL to the new endpoint
+            type: 'GET',
+            success: function(response) {
+                if (response) {
+                    const signage = response;
+                    const imageUrl = "{{ asset('') }}" + signage.image;
+                    const content = `
+                    <div class="row">
+                        <div class="col-md-12">
+                            <img src="${imageUrl}" alt="Signage Image" class="img-fluid" />
+                        </div>
+                        <div class="col-md-12">
+                              
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p><strong>Signage Name:</strong> ${signage.name}</p>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <p><strong>Signage Description:</strong> ${signage.description}</p>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p><strong>Estimated Views:</strong> ${signage.avg_daily_views}</p>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <p><strong>Exposure Time:</strong> ${signage.exposure_time} sec per a minutes</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                       <p><strong>Location:</strong> ${signage.location}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <p class="d-flex justify-content-center">Art work Dimensinon</p>
+                                    
+                                    <div class="col-md-6">
+                                        <p><strong>Height:</strong> ${signage.height} cm</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Width:</strong> ${signage.width} cm</p>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <p class="d-flex justify-content-center">Actual Dimensinon</p>
+                                    
+                                    <div class="col-md-6">
+                                        <p><strong>Height:</strong> ${signage.actual_height} cm</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Width:</strong> ${signage.actual_width} cm</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+                `;
+
+                    // Update the modal content with the signage details
+                    $('#modalContent').html(content);
+
+                    // Show the modal
+                    $('#signageDetailsModal').modal('show');
+                } else {
+                    $('#modalContent').html("<p>Failed to load signage details. Please try again.</p>");
+                    $('#signageDetailsModal').modal('show');
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#modalContent').html("<p>There was an error fetching the data. Please try again.</p>");
+                $('#signageDetailsModal').modal('show');
+            }
+        });
+    }
 </script>
 
 

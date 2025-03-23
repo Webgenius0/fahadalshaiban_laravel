@@ -50,7 +50,7 @@
             $days = $start->diffInDays($end ?? '');
             $total = $order->price_per_day * $days;           
             $subtotal += $total;
-            $totalwithtax =$total * (env('DESPATCH_FEE')/100)+$subtotal;
+            $totalwithtax =$total * (env('DESPATCH_FEE')/100)+$subtotalc;
         @endphp
         <tr>
             <td>{{ $order->uuid }}</td>

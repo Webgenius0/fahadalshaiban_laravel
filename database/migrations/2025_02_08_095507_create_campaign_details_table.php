@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained()->onDelete('cascade');  // Foreign key referencing orders table
             $table->string('ad_title');
-            $table->string('campaign_description');
+            $table->longText('campaign_description');
             $table->date('start_date');
             $table->date('end_date');
             $table->boolean('terms_and_conditions')->nullable();
