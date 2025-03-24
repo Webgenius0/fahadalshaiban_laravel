@@ -1481,8 +1481,7 @@
             callback();
         } else {
             const script = document.createElement('script');
-            let api = '{{ env('
-            GOOGLE_MAPS_API_KEY ') }}';
+            let api = "{{ env('GOOGLE_MAPS_API_KEY') }}";
             script.src = `https://maps.googleapis.com/maps/api/js?key=${api}&callback=initMap`;
             script.async = true;
             script.defer = true;
