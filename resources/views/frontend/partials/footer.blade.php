@@ -48,7 +48,7 @@ $link=SocialLink::where('name','facebook')->first();
                     <a href="{{ route('join.signage.owner') }}" class="text-hightlight">{{__('menu.joinusowner')}}</a>
                 </div>
             </div>
-            <div class="footer-item">
+            <div class="footer-item google-font-arabic">
                 <h4>{{__('menu.policies')}}</h4>
                 <div class="footer-links-wrapper">
                     <a href="{{ route('terms.conditions') }}">{{__('menu.terms&condition')}}</a>
@@ -60,7 +60,7 @@ $link=SocialLink::where('name','facebook')->first();
             <div class="footer-item">
                 <h4>{{__('menu.subscribeus')}}</h4>
                 <form class="newsletter-input-wrapper">
-                    <input type="text" placeholder="Your Email Goes Here" />
+                    <input type="text" placeholder="{{__('menu.youremail_goes_here')}}" />
                     <button type="submit" class="btn-common">
                         {{__('menu.subscribe')}}
                         <svg
@@ -78,7 +78,7 @@ $link=SocialLink::where('name','facebook')->first();
                         </svg>
                     </button>
                 </form>
-                <h4>{{__('menu.followus')}}</h4>
+                <h4 class="google-font-arabic">{{__('menu.followus')}}</h4>
                 <div class="footer-social">
                     @if ($link)
                     <a href="{{ $link->url ?? '#' }}" target="_blank">
