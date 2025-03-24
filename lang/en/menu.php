@@ -29,5 +29,6 @@ return [
     'subscribe' => 'Subscribe',
     'copyright' => 'All Rights Reserved © 2024 . Made with ShaShh™',
     'owner_signup' => 'Sign up',
+    'youremail_goes_here' => 'Your email goes here',
 
 ];

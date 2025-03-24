@@ -23,9 +23,10 @@ return [
     'quicklinks'=> 'الرئيسية',
     'policies' => 'دعنا نساعدك',
     'followus' =>'تابعونا',
-    'subscribeus' =>'اعرف المزيد عنا',
+    'subscribeus' =>'إرسال',
     'subscribe' => 'إرسال',
     'copyright' => 'جميع الحقوق محفوظة © ٢٠٢٤ . مصنوع من شاش™',
     'owner_signup' => 'انشاء حساب صاحب لافتة',
+    'youremail_goes_here' =>'سجل ايميلك',
 
 ];
