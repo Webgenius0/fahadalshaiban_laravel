@@ -7,13 +7,13 @@ use App\Enums\SectionEnum;
 @section('content')
 <section class="banner-common">
     <div class="my-container">
-        <div class="banner-common-header-title">
+        <div class="banner-common-header-title google-font-arabic">
             <h2>{{__('privacy.herotitle')}}</h2>
         </div>
     </div>
 </section>
 
-<section class="policy">
+<section class="policy google-font-arabic">
     <div class="my-container">
         <h3 class="policy-title">{{__('privacy.herotitle')}}</h3>
         <div class="policy-wrapper">

@@ -5,7 +5,7 @@ use App\Enums\SectionEnum;
 
 @extends('frontend.app', ['title' => 'Terms & Conditions'])
 @section('content')
-<main>
+<main class="google-font-arabic">
     <section class="banner-common">
         <div class="my-container">
             <div class="banner-common-header-title">
