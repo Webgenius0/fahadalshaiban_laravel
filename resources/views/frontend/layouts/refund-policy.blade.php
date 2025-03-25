@@ -5,7 +5,7 @@ use App\Enums\SectionEnum;
 
 @extends('frontend.app', ['title' => 'Refund Policy'])
 @section('content')
-<section class="banner-common">
+<section class="banner-common google-font-arabic">
     <div class="my-container">
         <div class="banner-common-header-title">
             <h2>{{__('refund.title')}}</h2>
@@ -13,7 +13,7 @@ use App\Enums\SectionEnum;
     </div>
 </section>
 
-<section class="policy">
+<section class="policy google-font-arabic">
     <div class="my-container">
         <h3 class="policy-title">{{__('refund.title')}}</h3>
         <div class="policy-wrapper">

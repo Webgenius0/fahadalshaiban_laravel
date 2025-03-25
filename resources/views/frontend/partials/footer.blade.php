@@ -210,7 +210,7 @@ $link=SocialLink::where('name','facebook')->first();
                 </div>
             </div>
         </div>
-        <div class="copyright">
+        <div class="copyright google-font-arabic">
             <p>{{__('menu.copyright')}}</p>
         </div>
     </div>
