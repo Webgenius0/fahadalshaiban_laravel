@@ -167,7 +167,9 @@ class TapPaymentController extends Controller
         ]);
     
         // Return a success response
-        return response()->json(['message' => 'Order Plased successfully', 'order' => $order], 200);
+        // return response()->json(['message' => 'Order Plased successfully', 'order' => $order], 200);
+        return view('client.layouts.success');
+
         
     }
 
