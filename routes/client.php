@@ -68,3 +68,5 @@ Route::post('/invoices/download', [InvoiceController::class, 'download'])->name(
 
 Route::get('/orders/{order}/download', [InvoiceController::class, 'download'])
      ->name('orders.download');
+
+     Route::get('/get-all-signages', [DashboardController::class, 'getsignages'])->name('getsignages');
