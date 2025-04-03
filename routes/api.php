@@ -48,3 +48,4 @@ Route::controller(NotificationController::class)->prefix('notify')->group(functi
     Route::get('status/read/all', 'readAll');
     Route::get('status/read/{id}', 'readSingle');
 }); */
+// routes/api.php

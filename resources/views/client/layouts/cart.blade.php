@@ -165,7 +165,7 @@ function fetchDataForSignage(id) {
 
             // Update the UI with the new subtotal
             
-            $("#dispatchFee").text("RS " + despatchFee + "%");
+            $("#dispatchFee").text( despatchFee + "%");
             $("#subTotal").html(totalPrice.toLocaleString('en-IN') + ' <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;">');
 
             // Calculate total with dispatch fee
@@ -217,9 +217,6 @@ function fetchDataForSignage(id) {
         }
     });
 }
-
-
-
 
 </script>
 @endpush

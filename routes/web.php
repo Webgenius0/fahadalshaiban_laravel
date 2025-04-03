@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\Frontend\PageController;
 use App\Http\Controllers\Web\LocalizationController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use App\Models\Signage;
 
 
 use Stichoza\GoogleTranslate\GoogleTranslate;
@@ -40,6 +41,9 @@ Route::post('/store',[ContactUsController::class, 'store'])->name('contactus.sto
 Route::get('/notifications', [ContactUsController::class, 'notifications'])->name('notifications.fetch');
 Route::post('/notifications/{notificationId}/mark-as-read', [ContactUsController::class, 'markNotificationAsRead']);
 
+Route::get('/get-signages', function () {
+    return response()->json(Signage::select('id', 'lat', 'lan', 'name')->get());
+});
 
 
 

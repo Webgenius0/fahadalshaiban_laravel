@@ -163,7 +163,7 @@
                         <li><a href="{{ route('admin.cms.page.auth.section.bg.index') }}" class="slide-item">Auth Page</a></li>
                     </ul>
                 </li>
-                <li class="slide">
+                <!-- <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="side-menu__icon" viewBox="0 0 16 16">
                             <path d="M7.5 5.5a.5.5 0 0 0-1 0v.634l-.549-.317a.5.5 0 1 0-.5.866L6 7l-.549.317a.5.5 0 1 0 .5.866l.549-.317V8.5a.5.5 0 1 0 1 0v-.634l.549.317a.5.5 0 1 0 .5-.866L8 7l.549-.317a.5.5 0 1 0-.5-.866l-.549.317zm-2 4.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z" />
@@ -180,7 +180,7 @@
                         <li><a href="{{ route('admin.cms.home.testimonial.index') }}" class="slide-item">Testimonial Section</a></li>
                         <li><a href="{{ route('admin.cms.home.hero.index') }}" class="slide-item">Hero Section</a></li>
                     </ul>
-                </li>
+                </li> -->
 
 
 

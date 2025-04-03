@@ -170,15 +170,15 @@
         </div> -->
     </div>
     <!-- show selected signage price days and total -->
-    <div class="card col-md-3 mr-5 " style="background-color: #e9ecef;">
+    <div class="card col-md-3 mr-5 " style="background-color: #e9ecef;  display: none;">
         <!-- First Row -->
         <div class="row">
-            <div class="col-md-6 ">
+            <!-- <div class="col-md-6 ">
                 <div class="d-flex justify-content-between ">
                     <label for="pricePerDay">Price Per Day:</label>
                     <strong id="pricePerDay"></strong>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-6">
                 <div class="d-flex justify-content-between">
                     <label for="totalDays">Total Days:</label>
@@ -197,7 +197,7 @@
             </div>
             <div class="col-md-6">
                 <div class="d-flex justify-content-between">
-                    <label for="totalSubtotal">Total:</label>
+                    <label for="totalSubtotal">Total Price:</label>
                     <strong id="totalSubtotal"></strong>
                 </div>
             </div>
@@ -210,7 +210,7 @@
     <section>
         <div class="step-container">
             <div class="step">
-                <div class="step-label">{{__('userdashboard.objective')}}</div>
+                <div class="step-label" style="font-size:>{{__('userdashboard.objective')}}</div>
                 <div class="step-circle"></div>
             </div>
             <div class="step-line"></div>
@@ -1287,131 +1287,97 @@
 
 
 
-
-
     $(document).ready(function() {
-        // Clear localStorage when page reloads
-        localStorage.clear(); // This will clear all data every time the page is loaded
-        console.log('localStorage data cleared on page reload.');
+        // Clear localStorage when the page reloads
+        localStorage.clear();
+        console.log('LocalStorage cleared on reload.');
 
-        // Initialize the 'selectedSignages' array in localStorage if it doesn't exist
-        if (localStorage.getItem('selectedSignages') === null) {
-            localStorage.setItem('selectedSignages', JSON.stringify([])); // Empty array
+        // Initialize localStorage variables if not set
+        if (!localStorage.getItem('selectedSignages')) {
+            localStorage.setItem('selectedSignages', JSON.stringify([]));
         }
-
-        // Initialize the 'totalSubtotal' in localStorage if it doesn't exist
-        if (localStorage.getItem('totalSubtotal') === null) {
-            localStorage.setItem('totalSubtotal', 0);
+        if (!localStorage.getItem('totalSubtotal')) {
+            localStorage.setItem('totalSubtotal', '0');
+        }
+        if (!localStorage.getItem('differenceDays')) {
+            localStorage.setItem('differenceDays', '1'); // Default to 1 day
         }
 
         function showDetails(signageId) {
             if (!signageId) return;
 
-            // Retrieve the selectedSignages array from localStorage
-            let selectedSignages = JSON.parse(localStorage.getItem('selectedSignages'));
+            let selectedSignages = JSON.parse(localStorage.getItem('selectedSignages')) || [];
             let signageIndex = selectedSignages.findIndex(signage => signage.id === signageId);
+            let differenceDays = parseInt(localStorage.getItem('differenceDays')) || 1; // Get total days from localStorage
 
             if (signageIndex !== -1) {
-                // If the signage already exists, remove it and subtract its price
-                let removedSignage = selectedSignages.splice(signageIndex, 1)[0]; // Remove and get the signage
+                // If signage already exists, remove it
+                let removedSignage = selectedSignages.splice(signageIndex, 1)[0];
                 localStorage.setItem('selectedSignages', JSON.stringify(selectedSignages));
 
-                // Recalculate the subtotal (subtract the removed signage's total_price)
-                let totalSubtotal = parseFloat(localStorage.getItem('totalSubtotal')) - removedSignage.total_price;
+                console.log(`Removed Signage: ${signageId}`);
 
-                // Update the subtotal in localStorage
-                localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
+                updateTotals(differenceDays); // Update UI after removal
 
-                console.log("Signage removed. New Subtotal:", totalSubtotal);
-
-                // Update the UI to show the new subtotal
-                updateUI(totalSubtotal);
-
+                // Hide the card if no signages are left
+                if (selectedSignages.length === 0) {
+                    $('.card').fadeOut();
+                }
             } else {
-                // If the signage doesn't exist, add it and add its price to the subtotal show it card in top
+                // Fetch signage data if it doesn't exist
                 $.ajax({
                     url: '/get-signage-location/' + signageId,
                     type: 'GET',
                     success: function(response) {
-                        console.log("response:", response);
                         if (response) {
-                            var signage = response;
-                            var differenceDays = localStorage.getItem('differenceDays');
-                            var totalprice = signage.price_per_day * differenceDays;
-                            var estimatedViews = signage.avg_daily_views;
+                            let signage = response;
+                            let totalprice = signage.price_per_day * differenceDays;
+                            let estimatedViews = signage.avg_daily_views;
 
-                            // Add the current signage details to the array
+                            // Add signage to selected list
                             selectedSignages.push({
                                 id: signageId,
                                 price_per_day: signage.price_per_day,
-                                total_price: totalprice
+                                total_price: totalprice,
+                                avg_daily_views: estimatedViews,
                             });
-
 
                             localStorage.setItem('selectedSignages', JSON.stringify(selectedSignages));
 
+                            console.log(`Added Signage: ${signageId}`);
 
-                            let totalSubtotal = selectedSignages.reduce((total, signage) => {
-                                return total + signage.total_price;
-                            }, 0);
-
-
-                            localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
-
-                            console.log("Updated Subtotal:", totalSubtotal);
-
-                            // Populate the card with the retrieved data
-                            $('#pricePerDay').html(`${signage.price_per_day} <img src="{{ asset('currency/realcurrency.png') }}" style="width:10px;height:10px;">`);
-
-                            $('#totalDays').text(differenceDays || '0');
-                            $('#estimatedViews').text(estimatedViews);
-                            $('#totalSubtotal').html(`${totalSubtotal.toFixed(2)} <img src="{{ asset('currency/realcurrency.png') }}" style="width:10px;height:10px;">`);
+                            updateTotals(differenceDays); // Update UI after adding
+                            $('.card').fadeIn();
                         } else {
-                            $('#details-section').html("<p>Failed to load signage details. Please try again.</p>");
-                            $('#details-section').show();
+                            $('#details-section').html("<p>Failed to load signage details. Please try again.</p>").show();
                         }
                     },
-                    error: function(xhr, status, error) {
-                        $('#details-section').html("<p>There was an error fetching the data. Please try again.</p>");
-                        $('#details-section').show();
+                    error: function() {
+                        $('#details-section').html("<p>There was an error fetching the data. Please try again.</p>").show();
                     }
                 });
-
             }
         }
 
-        // Function to remove signage and subtract its price
-        function removeSignageFromTotal(signageId) {
-            let selectedSignages = JSON.parse(localStorage.getItem('selectedSignages'));
-            let signageIndex = selectedSignages.findIndex(signage => signage.id === signageId);
+        function updateTotals(differenceDays) {
+            let selectedSignages = JSON.parse(localStorage.getItem('selectedSignages')) || [];
+            let totalSubtotal = selectedSignages.reduce((total, signage) => total + signage.total_price, 0);
+            let totalViews = selectedSignages.reduce((total, signage) => total + signage.avg_daily_views, 0);
 
-            if (signageIndex !== -1) {
-                let removedSignage = selectedSignages.splice(signageIndex, 1)[0];
-                localStorage.setItem('selectedSignages', JSON.stringify(selectedSignages));
+            localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
+            localStorage.setItem('totalViews', totalViews);
 
-                let totalSubtotal = parseFloat(localStorage.getItem('totalSubtotal')) - removedSignage.total_price;
-                localStorage.setItem('totalSubtotal', totalSubtotal.toFixed(2));
-
-                updateUI(totalSubtotal);
-
-                console.log("Signage removed on double-click. New Subtotal:", totalSubtotal);
-            }
+            $('#totalDays').text(differenceDays); // Show total days
+            $('#estimatedViews').text(totalViews);
+            $('#totalSubtotal').html(`${totalSubtotal.toFixed(2)} <img src="{{ asset('currency/realcurrency.png') }}" style="width:10px;height:10px;">`);
         }
 
-        // Function to update the UI with the latest subtotal
-        function updateUI(subtotal) {
-            // Display the updated subtotal in the UI
-            $('#subtotalDisplay').text(`Subtotal: ${subtotal} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;">`);
-        }
-
-        function hideDetails() {
-            $('#details-section').hide();
-            event.preventDefault();
-        }
-
+        // Expose function globally
         window.showDetails = showDetails;
-        window.hideDetails = hideDetails;
     });
+
+
+
 
 
 
@@ -1474,75 +1440,116 @@
 </script> -->
 
 <script>
-    let map, marker;
+ let map;
+let markers = [];
+const defaultIcon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+const highlightedIcon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
 
-    function loadGoogleMapsAPI(callback) {
-        if (typeof google === 'object' && typeof google.maps === 'object') {
-            callback();
-        } else {
-            const script = document.createElement('script');
-            let api = '{{ env('
-            GOOGLE_MAPS_API_KEY ') }}';
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${api}&callback=initMap`;
-            script.async = true;
-            script.defer = true;
-            document.body.appendChild(script);
-
-            // Assign the callback for the API load
-            window.initMap = callback;
-        }
+function loadGoogleMapsAPI(callback) {
+    if (typeof google === 'object' && typeof google.maps === 'object') {
+        callback();
+    } else {
+        const script = document.createElement('script');
+        const api = "{{ env('GOOGLE_MAPS_API_KEY') }}";
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${api}&callback=initMap`;
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
+        window.initMap = callback;
     }
+}
 
-    function initMap() {
-        // Initial location (Default map center)
-        const initialLat = 26.4206828;
-        const initialLng = 50.0887943;
+function fetchSignages() {
+    return fetch('/get-signages')
+        .then(response => response.json())
+        .catch(error => console.error('Error fetching signages:', error));
+}
 
-        // Create map and marker
-        const mapDiv = document.getElementById('mapDiv');
-        map = new google.maps.Map(mapDiv, {
-            center: {
-                lat: initialLat,
-                lng: initialLng
-            },
-            zoom: 12
+function initMap() {
+    const initialLocation = { lat: 26.4206828, lng: 50.0887943 };
+    
+    map = new google.maps.Map(document.getElementById('mapDiv'), {
+        center: initialLocation,
+        zoom: 12
+    });
+
+    // Load and display signages
+    fetchSignages().then(signages => {
+        if (!signages?.length) return;
+
+        const bounds = new google.maps.LatLngBounds();
+        
+        // Clear existing markers
+        markers.forEach(marker => marker.setMap(null));
+        markers = [];
+
+        signages.forEach(signage => {
+            const lat = parseFloat(signage.lat);
+            const lng = parseFloat(signage.lan);
+            
+            if (isNaN(lat) || isNaN(lng)) {
+                console.warn('Invalid coordinates:', signage);
+                return;
+            }
+
+            const position = { lat, lng };
+            const marker = new google.maps.Marker({
+                position,
+                map,
+                title: signage.name,
+                icon: defaultIcon
+            });
+
+            // Add click listener to marker
+            marker.addListener('click', () => {
+                highlightMarker(marker);
+            });
+
+            markers.push(marker);
+            bounds.extend(position);
         });
 
-        marker = new google.maps.Marker({
-            position: {
-                lat: initialLat,
-                lng: initialLng
-            },
-            map: map,
-            title: 'Initial Location'
-        });
-    }
+        // Fit map to show all markers
+        map.fitBounds(bounds);
+    });
+}
 
-    function changeLocation(event, lat, lan) {
-        event.preventDefault();
+function highlightMarker(selectedMarker) {
+    // Reset all markers
+    markers.forEach(marker => {
+        marker.setIcon(defaultIcon);
+        marker.setAnimation(null);
+    });
 
-        lat = parseFloat(lat);
-        lan = parseFloat(lan);
-        if (isNaN(lat) || isNaN(lan)) {
-            console.error('Invalid latitude or longitude:', lat, lan);
-            return;
-        }
+    // Highlight selected marker
+    selectedMarker.setIcon(highlightedIcon);
+    selectedMarker.setAnimation(google.maps.Animation.BOUNCE);
+    
+    // Center map on selected marker
+    map.panTo(selectedMarker.getPosition());
+    map.setZoom(10);
+}
 
-        if (!map || !marker) {
-            console.error('Map or marker not initialized');
-            return;
-        }
+// For external clicks (e.g., from a list)
+function changeLocation(event, lat, lan) {
+    event.preventDefault();
+    const targetLat = parseFloat(lat);
+    const targetLng = parseFloat(lan);
 
-        map.setCenter({
-            lat: lat,
-            lng: lan
-        });
-        marker.setPosition({
-            lat: lat,
-            lng: lan
-        });
-    }
-    loadGoogleMapsAPI(initMap);
+    if (isNaN(targetLat) || isNaN(targetLng)) return;
+
+    // Find matching marker
+    const marker = markers.find(m => 
+        Math.abs(m.getPosition().lat() - targetLat) < 0.0001 &&
+        Math.abs(m.getPosition().lng() - targetLng) < 0.0001
+    );
+
+    if (marker) highlightMarker(marker);
+}
+
+loadGoogleMapsAPI(initMap);
+
+
 
 
 
@@ -1612,12 +1619,59 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
+                                      <span class="billboard-card-info-icon">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="24"
+                                                    height="24"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none">
+                                                    <path
+                                                        d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z"
+                                                        stroke="#4D4D4D"
+                                                        stroke-width="2"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path
+                                                        d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                                                        stroke="#4D4D4D"
+                                                        stroke-width="2"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </span>
                                         <p><strong>Estimated Views:</strong> ${signage.avg_daily_views}</p>
                                     </div>
                                     <div class="col-md-5">
+                                          <span class="billboard-card-info-icon">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="24"
+                                                    height="24"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none">
+                                                    <path
+                                                        d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                                        stroke="#4D4D4D"
+                                                        stroke-width="2"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <path
+                                                        d="M12 6V12L16 14"
+                                                        stroke="#4D4D4D"
+                                                        stroke-width="2"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </span>
                                         <p><strong>Exposure Time:</strong> ${signage.exposure_time} sec per a minutes</p>
                                     </div>
                                     <div class="col-md-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M12 2C8.13401 2 5 5.13401 5 8C5 11.0001 12 20 12 20C12 20 19 11.0001 19 8C19 5.13401 15.866 2 12 2ZM12 11C10.3431 11 9 9.65685 9 8C9 6.34315 10.3431 5 12 5C13.6569 5 15 6.34315 15 8C15 9.65685 13.6569 11 12 11Z" 
+  stroke="#4D4D4D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
                                        <p><strong>Location:</strong> ${signage.location}</p>
                                     </div>
                                 </div>

@@ -44,4 +44,11 @@ return view('client.layouts.dashboard', compact('orders', 'totalOrders'));
 
 
     }
+
+    public function getsignages()
+    {
+        $signages = Signage::where('status', 'active')->get();
+            
+       return view('client.layouts.new-campaigns', compact('signages'));
+    }
 }
