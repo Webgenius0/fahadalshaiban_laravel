@@ -20,7 +20,7 @@ class OrderListController extends Controller
             ->join('campaign_details', 'orders.id', '=', 'campaign_details.order_id')
             ->join('signages', 'signages.id', '=', 'order_items.signage_id')
             ->select('orders.*', 'order_items.*', 'campaign_details.*', 'signages.*', 'orders.user_id') 
-             
+             ->orderBy('created_at', 'desc')
             ->get();
 
             

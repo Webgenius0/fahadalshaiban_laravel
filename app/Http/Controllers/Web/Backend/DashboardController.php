@@ -26,6 +26,7 @@ class DashboardController extends Controller
                 'order_items.owner_profit' 
             )
             ->where('orders.payment_status', 'booked')
+            ->orderBy('order_items.created_at', 'desc')
             ->get();
 
         return DataTables::of($data)

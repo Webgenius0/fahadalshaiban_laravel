@@ -1,6 +1,7 @@
 @php
 use App\Enums\PageEnum;
 use App\Enums\SectionEnum;
+$setting = \App\Models\Setting::first();
 @endphp
 
 @extends('frontend.app', ['title' => 'contact us'])
@@ -36,7 +37,7 @@ use App\Enums\SectionEnum;
                         </span>
                         <div>
                             <p class="contact-info__label">Email:</p>
-                            <p class="contact-info__text">sales@shashh.com</p>
+                            <p class="contact-info__text">{{ $setting->email ?? 'sales@shashh.com' }}</p>
                         </div>
                     </div>
                     <div class="contact-info__item">
@@ -57,7 +58,7 @@ use App\Enums\SectionEnum;
                         </span>
                         <div>
                             <p class="contact-info__label">Phone:</p>
-                            <p class="contact-info__text">+966 54 873 0002</p>
+                            <p class="contact-info__text">{{ $setting->phone ?? '+966 54 873 0002' }}</p>
                         </div>
                     </div>
                     <div class="contact-info__item">
@@ -85,7 +86,7 @@ use App\Enums\SectionEnum;
                         <div>
                             <p class="contact-info__label">Address:</p>
                             <p class="contact-info__text">
-                                Dammam - Eastern Province, Saudi Arabia
+                                {{ $setting->address ?? 'Dammam - Eastern Province, Saudi Arabia' }}
                             </p>
                         </div>
                     </div>
