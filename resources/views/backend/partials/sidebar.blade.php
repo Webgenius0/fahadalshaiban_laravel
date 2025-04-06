@@ -140,9 +140,9 @@
                         <li><a href="{{ route('admin.setting.general.index') }}" class="slide-item">General Settings</a></li>
                         <li><a href="{{ route('admin.setting.profile.index') }}" class="slide-item">Profile Settings</a></li>
                         <li><a href="{{ route('admin.setting.mail.index') }}" class="slide-item">Mail Settings</a></li>
-                        <li><a href="{{ route('admin.setting.stripe.index') }}" class="slide-item">Stripe Settings</a></li>
+                        <!-- <li><a href="{{ route('admin.setting.stripe.index') }}" class="slide-item">Stripe Settings</a></li> -->
                         <li><a href="{{ route('admin.setting.firebase.index') }}" class="slide-item">Firebase Settings</a></li>
-                        <li><a href="{{ route('admin.setting.social.index') }}" class="slide-item">Social Settings</a></li>
+                        <!-- <li><a href="{{ route('admin.setting.social.index') }}" class="slide-item">Social Settings</a></li> -->
                         <li><a href="{{ route('admin.setting.google.map.index') }}" class="slide-item">Google Map Settings</a></li>
                         <li><a href="{{ route('admin.setting.dispatch.fee.index') }}" class="slide-item">Dispatch Fee</a></li>
                     </ul>

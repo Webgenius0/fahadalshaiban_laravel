@@ -10,7 +10,8 @@
 
             {{-- PAGE-HEADER --}}
             <div class="page-header">
-                <div>
+           
+                <div>              
                     <h1 class="page-title">Mail Settings <i class="fa-solid fa-triangle-exclamation text-danger" title="Warning"></i></h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
@@ -35,7 +36,7 @@
                                     <div class="col-md-9">
                                         <input class="form-control @error('mail_mailer') is-invalid @enderror" id="mail_mailer"
                                             name="mail_mailer" placeholder="Enter your mail mailer" type="text"
-                                            value="{{ env('MAIL_MAILER') ?? '' }}">
+                                            value="{{env('MAIL_MAILER') ?? ''}}">
                                         @error('mail_mailer')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
