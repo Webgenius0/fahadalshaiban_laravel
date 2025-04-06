@@ -200,159 +200,68 @@ $totalActivesignages = App\Models\Signage::where('status', 'active')->count();
         </div>
 
         <div class="campaign-list">
-            @foreach($orders as $order)
-            <article class="campaign-item ">
-                @php
-                $endDate = $order->end_date; 
-                $today = \Carbon\Carbon::today(); 
-                @endphp
+    @foreach($orders as $order)
+    <article class="campaign-item">
+        @php
+        $endDate = $order->end_date;
+        $today = \Carbon\Carbon::today();
+        @endphp
 
-                <div class="d-flex justify-content-end">
-                    <span class="d-flex align-items-center">
-                        @if (\Carbon\Carbon::parse($endDate)->isPast())
-                        <!-- Red round icon for Campaign End -->
+        <div class="d-flex justify-content-end">
+            <span class="d-flex align-items-center">
+                @if (\Carbon\Carbon::parse($endDate)->isPast())
+                    <strong style="color: red;">Campaign End</strong>
+                    <i class="fa fa-circle" style="color: red; font-size: 18px; margin-left: 5px;"></i>
+                @elseif($order->payment_status == 'pending')
+                    <strong style="color:#FFA500;">Pending Campaign</strong>
+                    <i class="fa fa-circle" style="color: #FFA500; font-size: 18px; margin-left: 5px;"></i>
+                @else
+                    <strong style="color: #34b26f;">Live Campaign</strong>
+                    <i class="fa fa-circle d-flex justify-items-end" style="color: #34b26f; font-size: 18px; margin-left: 5px;border-radius: 50%;"></i>
+                @endif
+            </span>
+        </div>
 
-                        <strong style="color: red;">Campaign End</strong>
-                        <i class="fa fa-circle" style="color: red; font-size: 18px; margin-left: 5px;"></i>
-                        @elseif($order->payment_status == 'pending')
-                        <!-- Orange round icon for Pending Campaign -->
+        <!-- Billboard Image -->
+        <img src="{{ asset($order->art_work ?? 'default/banner.png') }}" alt="Billboard" class="billboard-card-image" />
+        <div>
+            <strong style="color: #198754;">Campaign Title: {{$order->ad_title}}</strong>
+        </div>
 
-                        <strong style="color:#FFA500;">Pending Campaign</strong>
-                        <i class="fa fa-circle" style="color: #FFA500; font-size: 18px; margin-left: 5px;"></i>
-                        @else
-
-                        <!-- Green round icon for Live Campaign -->
-
-                        <strong style="color: #34b26f;">Live Campaign</strong>
-                        <i class="fa fa-circle d-flex justify-items-end" style=" color: #34b26f; font-size: 18px; margin-left: 5px;border-radius: 50%;"></i>
-                        @endif
-                    </span>
-                </div>
-
-
-                <!-- Billboard Image -->
-                <img src="{{ asset($order->art_work ?? 'default/banner.png') }}" alt="Billboard" class="billboard-card-image" />
-                <div>
-                    <strong style="color: #198754;">Campaign Title: {{$order->ad_title}}</strong>
-                </div>
-
-                <div class="d-flex flex-column">
-                    <!-- <div class="d-flex justify-content-between">
-                        <strong>Start Date: {{ \Carbon\Carbon::parse($order->start_date)->format('M d, Y') }}</strong>
-
-                        <strong><span style="color: red;">End Date:</span> {{ \Carbon\Carbon::parse($order->end_date)->format('M d, Y') }}</strong>
-                    </div>
-
-                    <div class="d-flex justify-content-between">
+        <div class="d-flex flex-column">
+            <div class="d-flex justify-content-between">
+                <div class="left-side">
+                    <div><strong style="color: #34b26f;">Start Date:</strong> {{ \Carbon\Carbon::parse($order->start_date)->format('M d, Y') }}</div>
+                    <div>
+                        <strong>Total Days:</strong>
                         @php
                         $startDate = \Carbon\Carbon::parse($order->start_date);
                         $endDate = \Carbon\Carbon::parse($order->end_date);
                         $totalDays = $startDate->diffInDays($endDate);
                         @endphp
-
-                        @if($totalDays > 0)
-                        <strong>Total Days: {{ $totalDays }}</strong>
-                        @else
-                        <strong>Total Days:0 </strong>
-                        @endif
-
-                        <strong>Total Price: {{ $order->per_day_price }} </strong>
+                        {{ $totalDays > 0 ? $totalDays : 0 }}
                     </div>
+                    <div><strong>Daily Views:</strong> {{ $order->avg_daily_views * 1000 }}</div>
+                </div>
+                <div class="right-side">
+                    <div><strong style="color: red;">End Date:</strong> {{ \Carbon\Carbon::parse($order->end_date)->format('M d, Y') }}</div>
+                    @php
+                    $perDayPrice = $order->per_day_price;
+                    $totalPrice = $perDayPrice * ($totalDays > 0 ? $totalDays : 1);
+                    @endphp
+                    <div><strong>Total Price:</strong> {{ $totalPrice }} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"></div>
+                    <div><strong>Total Signage:</strong> {{ $totalOrders }}</div>
+                </div>
+            </div>
 
-
-                    <div class="d-flex justify-content-between">
-                        @php
-                        $dailyViews = $order->avg_daily_views*1000;
-
-                        @endphp
-                        <strong>Daily Views: {{ $dailyViews }} </strong>
-
-                        <strong>Total Signage:{{$totalOrders}}</strong>
-                    </div> -->
-
-                    <div class="d-flex justify-content-between">
-                        <div class="left-side">
-                            <div><strong style="color: #34b26f;">Start Date:</strong> {{ \Carbon\Carbon::parse($order->start_date)->format('M d, Y') }}</div>
-                            <div>
-                                <strong>Total Days:</strong>
-                                @php
-                                $startDate = \Carbon\Carbon::parse($order->start_date);
-                                $endDate = \Carbon\Carbon::parse($order->end_date);
-                                $totalDays = $startDate->diffInDays($endDate);
-                                @endphp
-                                {{ $totalDays > 0 ? $totalDays : 0 }}
-                            </div>
-                            <div><strong>Daily Views:</strong> {{ $order->avg_daily_views * 1000 }}</div>
-                        </div>
-                        <div class="right-side">
-                            <div><strong style="color: red;">End Date:</strong> {{ \Carbon\Carbon::parse($order->end_date)->format('M d, Y') }}</div>
-                            @php
-                            $startDate = \Carbon\Carbon::parse($order->start_date);
-                            $endDate = \Carbon\Carbon::parse($order->end_date);
-                            $TotalDays = $startDate->diffInDays($endDate);
-                            $perDayPrice = $order->per_day_price;
-                            $totalPrice = $perDayPrice * ($TotalDays > 0 ? $TotalDays : 1); // Ensure at least 1 day is calculated
-                            @endphp
-                            <div><strong>Total Price:</strong> {{ $totalPrice }} <img src="{{ asset('currency/realcurrency.png') }}" alt="" style="width: 15px; height: 15px;"></div>
-                            <div><strong>Total Signage:</strong> {{ $totalOrders }}</div>
-                        </div>
-                    </div>
-
-                    <!-- Button and Campaign Top Section -->
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                        <!-- Calendar Button -->
-                        <!-- <button class="campaign-edit-btn btn btn-success" data-bs-toggle="modal" data-bs-target="#bookingScheduleModal" data-campaign-detail-id="{{ $order->id }}">
-                        Calendar
-                    </button> -->
-
-                        <!-- Campaign Status Section -->
-                        <!-- <div class="campaign-top" style="display: flex; justify-content: flex-end; align-items: center; width: 100%; padding: 0;">
-                        <div id="chart1" style="margin-right: 10px;"></div>
-                        <div>
-                            @if(\Carbon\Carbon::parse($order->end_date)->isPast())
-                            <span class="campaign-status bg-danger">Expired Date, Renew Again</span>
-                            @elseif($order->status == 'pending')
-                            <span class="campaign-end">Pending</span>
-                            @else
-                            <span class="campaign-status">On Going</span>
-                            @endif
-                        </div>
-                    </div> -->
-                    </div>
-
-                    <!-- Campaign ID -->
-                    <!-- <p class="campaign-id">#{{ $order->uuid }}</p> -->
-
-                    <!-- Published Date -->
-                    <!-- <p class="campaign-details">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="15" viewBox="0 0 17 15" fill="none">
-                        <path d="M15 2.2998L5 12.3098L2 9.3098" stroke="#737373" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    Published on <span>{{ \Carbon\Carbon::parse($order->created_at)->format('d F Y') }}</span>
-                </p> -->
-
-                    <!-- Campaign Bottom Section -->
-                    <div class="campaign-bottom">
-                        <!-- End Date -->
-                        <!-- <div class="campaign-end">
-                        Ending on <span>{{ \Carbon\Carbon::parse($order->end_date ?? '2023-01-01')->format('d F Y') }}</span>
-                    </div> -->
-
-                        <!-- Payment Button (Conditional) -->
-                        <!-- @if($order->status == 'pending')
-                        <a href="{{ route('page.billing') }}" class="btn btn-success mt-1">
-                            Payment
-                        </a>
-                        @endif -->
-                    </div>
-
-                    <div class="campaign-bottom d-flex justify-content-center">
-                        <!-- <button class="btn btn-success mt-1">Campaign Details</button> -->
-                         <a href="{{ route('getBookingDetails' , ['id' => $order->order_id]) }}" class="btn btn-success mt-1" class="btn btn-success mt-1" > Campaign Details</a>
-                    </div>
-            </article>
-            @endforeach
+            <div class="campaign-bottom d-flex justify-content-center">
+                <a href="{{ route('getBookingDetails' , ['id' => $order->order_id]) }}" class="btn btn-success mt-1">Campaign Details</a>
+            </div>
         </div>
+    </article>
+    @endforeach
+</div>
+
 
 
         <div>
