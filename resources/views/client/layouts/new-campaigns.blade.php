@@ -210,7 +210,7 @@
     <section>
         <div class="step-container">
             <div class="step">
-                <div class="step-label" style="font-size:>{{__('userdashboard.objective')}}</div>
+                <div class="step-label">{{__('userdashboard.objective')}}</div>
                 <div class="step-circle"></div>
             </div>
             <div class="step-line"></div>

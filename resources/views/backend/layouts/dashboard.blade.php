@@ -18,6 +18,13 @@ $query->where('name', 'admin');
 })->count();
 
 $toatalCategory=App\Models\Category::all()->count();
+$adminprofit = App\Models\OrderItem::whereHas('order', function ($query) {
+    $query->where('payment_status', 'booked');
+})->sum('admin_profit');
+
+$ownerprofit = App\Models\OrderItem::whereHas('order', function ($query) {
+    $query->where('payment_status', 'booked');
+})->sum('owner_profit');
 
 @endphp
 @extends('backend.app')
@@ -76,7 +83,7 @@ $toatalCategory=App\Models\Category::all()->count();
                             <div class="row">
                                 <div class="col">
                                     <h3>Total Income</h3>
-                                    <h6 class="mb-2 fw-semibold">{{$toatalCategory}}</h6>
+                                    <h6 class="mb-2 fw-semibold">{{$ownerprofit?? 0}}</h6>
 
                                 </div>
                                 <div class="col col-auto top-icn dash">
@@ -97,7 +104,7 @@ $toatalCategory=App\Models\Category::all()->count();
                             <div class="row">
                                 <div class="col">
                                     <h3>To Signage Owner</h3>
-                                    <h6 class="mb-2 fw-semibold">45</h6>
+                                    <h6 class="mb-2 fw-semibold">{{$activeOwner ?? 0}}</h6>
 
                                 </div>
                                 <div class="col col-auto top-icn dash">
@@ -118,7 +125,7 @@ $toatalCategory=App\Models\Category::all()->count();
                             <div class="row">
                                 <div class="col">
                                     <h3>Total Profit</h3>
-                                    <h6 class="mb-2 fw-semibold">65</h6>
+                                    <h6 class="mb-2 fw-semibold">{{$adminprofit?? 0}}</h6>
 
                                 </div>
                                 <div class="col col-auto top-icn dash">
@@ -150,19 +157,19 @@ $toatalCategory=App\Models\Category::all()->count();
 
                                 <div class="col">
                                     <strong class="text-muted fs-13 mb-0">Total Owners</strong>
-                                    <h3 class="mb-2 fw-semibold">{{$ownerCount}}</h3>
+                                    <h3 class="mb-2 fw-semibold">{{$ownerCount ?? 0}}</h3>
 
                                 </div>
 
                                 <div class="col">
                                     <strong class="text-muted fs-13 mb-0">Total Active Signage</strong>
-                                    <h3 class="mb-2 fw-semibold">{{$totalActivesignage}}</h3>
+                                    <h3 class="mb-2 fw-semibold">{{$totalActivesignage ?? 0}}</h3>
 
                                 </div>
 
                                 <div class="col">
                                     <strong class="text-muted fs-13 mb-0">Total Active Owner</strong>
-                                    <h3 class="mb-2 fw-semibold">{{$activeOwner}}</h3>
+                                    <h3 class="mb-2 fw-semibold">{{$activeOwner ?? 0}}</h3>
 
                                 </div>
                                 <div class="col col-auto top-icn dash">
@@ -186,7 +193,7 @@ $toatalCategory=App\Models\Category::all()->count();
                             <div class="row">
                                 <div class="col p-6">
                                     <p class="text-muted fs-13 mb-0">Page Visits</p>
-                                    <h3 class="mb-2 fw-semibold">65</h3>
+                                    <h3 class="mb-2 fw-semibold">{{ \App\Models\Visit::first()->home_views ?? 0 }}</h3>
 
                                 </div>
                                 <div class="col col-auto top-icn dash">
@@ -332,43 +339,7 @@ $toatalCategory=App\Models\Category::all()->count();
         }
     });
 
-    // Status Change Confirm Alert
-    function showStatusChangeAlert(id) {
-        event.preventDefault();
-
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'You want to update the status?',
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonText: 'Yes',
-            cancelButtonText: 'No',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                statusChange(id);
-            }
-        });
-    }
-
-    // Status Change
-    function statusChange(id) {
-        NProgress.start();
-        let url = "{{ route('admin.tap.status', ':id') }}";
-        $.ajax({
-            type: "GET",
-            url: url.replace(':id', id),
-            success: function(resp) {
-                NProgress.done();
-                toastr.success(resp.message);
-                $('#datatable').DataTable().ajax.reload();
-            },
-            error: function(error) {
-                NProgress.done();
-                toastr.error(error.message);
-            }
-        });
-    }
-
+    
     // delete Confirm
     function showDeleteConfirm(id) {
         event.preventDefault();
