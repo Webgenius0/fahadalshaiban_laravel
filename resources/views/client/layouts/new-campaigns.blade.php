@@ -75,6 +75,21 @@
         padding: 10px;
         cursor: pointer;
     }
+
+
+
+    .select-dropdown {
+        background-color: rgb(244, 245, 247);
+        border: 1px solid #b3b3b3;
+        border-radius: 8px;
+        padding-left: 20px;
+        height: 50px;
+    }
+
+    .select-dropdown option {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
 </style>
 @endpush
 @section('content')
@@ -170,7 +185,7 @@
         </div> -->
     </div>
     <!-- show selected signage price days and total -->
-    <div class="card col-md-3 mr-5 " style="background-color: #e9ecef;  display: none;">
+    <div class="card col-md-5 mr-6 " style="background-color:rgb(244, 245, 247);  display: none; height: 80px; border-radius: 10px; padding: 20px; margin-bottom: 20px;">
         <!-- First Row -->
         <div class="row">
             <!-- <div class="col-md-6 ">
@@ -179,29 +194,27 @@
                     <strong id="pricePerDay"></strong>
                 </div>
             </div> -->
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="d-flex justify-content-between">
                     <label for="totalDays">Total Days:</label>
                     <strong id="totalDays"></strong>
                 </div>
             </div>
-        </div>
 
-        <!-- Second Row -->
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="d-flex justify-content-between">
-                    <label for="estimatedViews">Estimated Views:</label>
+                    <label for="estimatedViews" style="font-size: 15px;">Estimated views per days:</label>
                     <strong id="estimatedViews"></strong>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="d-flex justify-content-between">
                     <label for="totalSubtotal">Total Price:</label>
                     <strong id="totalSubtotal"></strong>
                 </div>
             </div>
         </div>
+
     </div>
 
 
@@ -505,22 +518,22 @@
                     <!-- Dropdowns for different filters -->
 
 
-                    <select class="signage-filter-dropdown" id="cities" style="background-color:rgb(244, 245, 247); border: 1px solid #b3b3b3; border-radius: 8px; padding-left: 20px;">
-
+                    <select class="signage-filter-dropdown select-dropdown" id="cities">
                     </select>
 
-                    <select class="signage-filter-dropdown" id="category" style="background-color:rgb(244, 245, 247); border: 1px solid #b3b3b3; border-radius: 8px; padding-left: 20px;">
+                    <select class="signage-filter-dropdown select-dropdown" id="category">
                         <option value="">{{__('userdashboard.category')}}...</option>
                         @foreach ($categories as $category)
                         <option value="{{ $category->name }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
 
-                    <select class="signage-filter-dropdown" id="views" style="background-color:rgb(244, 245, 247); border: 1px solid #b3b3b3; border-radius: 8px; padding-left: 20px;">
+                    <select class="signage-filter-dropdown select-dropdown" id="views">
                         <option data-display="Daily Views">Daily Views...</option>
                         <option value="50-100">50k to 100k</option>
                         <option value="100-200">100k to 200k</option>
                     </select>
+
 
                     <!-- <select class="signage-filter-dropdown">
                         <option data-display="Pricing">Nothing</option>
@@ -528,7 +541,7 @@
                         <option>High to Low</option>
                     </select> -->
 
-                    <div class="signage-filter-date" id="">
+                    <div class="signage-filter-date" id="" hidden>
                         <input
                             type="date"
                             id="signage-date"
@@ -537,7 +550,7 @@
                     </div>
 
 
-                    <select class="signage-filter-dropdown" id="exposure" style="background-color:rgb(244, 245, 247); border: 1px solid #b3b3b3; border-radius: 8px; padding-left: 20px;">
+                    <select class="signage-filter-dropdown" id="exposure" hidden style="background-color:rgb(244, 245, 247); border: 1px solid #b3b3b3; border-radius: 8px; padding-left: 20px;">
                         <option data-display="Duration">{{__('userdashboard.exposure')}}</option>
                         <option value="5-10">5-10 Seconds</option>
                         <option value="10-20">10-20 Seconds</option>
@@ -1440,114 +1453,120 @@
 </script> -->
 
 <script>
- let map;
-let markers = [];
-const defaultIcon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
-const highlightedIcon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+    let map;
+    let markers = [];
+    const defaultIcon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+    const highlightedIcon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
 
-function loadGoogleMapsAPI(callback) {
-    if (typeof google === 'object' && typeof google.maps === 'object') {
-        callback();
-    } else {
-        const script = document.createElement('script');
-        const api = "{{ env('GOOGLE_MAPS_API_KEY') }}";
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${api}&callback=initMap`;
-        script.async = true;
-        script.defer = true;
-        document.body.appendChild(script);
-        window.initMap = callback;
+    function loadGoogleMapsAPI(callback) {
+        if (typeof google === 'object' && typeof google.maps === 'object') {
+            callback();
+        } else {
+            const script = document.createElement('script');
+            const api = "{{ env('GOOGLE_MAPS_API_KEY') }}";
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${api}&callback=initMap`;
+            script.async = true;
+            script.defer = true;
+            document.body.appendChild(script);
+            window.initMap = callback;
+        }
     }
-}
 
-function fetchSignages() {
-    return fetch('/get-signages')
-        .then(response => response.json())
-        .catch(error => console.error('Error fetching signages:', error));
-}
+    function fetchSignages() {
+        return fetch('/get-signages')
+            .then(response => response.json())
+            .catch(error => console.error('Error fetching signages:', error));
+    }
 
-function initMap() {
-    const initialLocation = { lat: 26.4206828, lng: 50.0887943 };
-    
-    map = new google.maps.Map(document.getElementById('mapDiv'), {
-        center: initialLocation,
-        zoom: 12
-    });
+    function initMap() {
+        const initialLocation = {
+            lat: 26.4206828,
+            lng: 50.0887943
+        };
 
-    // Load and display signages
-    fetchSignages().then(signages => {
-        if (!signages?.length) return;
-
-        const bounds = new google.maps.LatLngBounds();
-        
-        // Clear existing markers
-        markers.forEach(marker => marker.setMap(null));
-        markers = [];
-
-        signages.forEach(signage => {
-            const lat = parseFloat(signage.lat);
-            const lng = parseFloat(signage.lan);
-            
-            if (isNaN(lat) || isNaN(lng)) {
-                console.warn('Invalid coordinates:', signage);
-                return;
-            }
-
-            const position = { lat, lng };
-            const marker = new google.maps.Marker({
-                position,
-                map,
-                title: signage.name,
-                icon: defaultIcon
-            });
-
-            // Add click listener to marker
-            marker.addListener('click', () => {
-                highlightMarker(marker);
-            });
-
-            markers.push(marker);
-            bounds.extend(position);
+        map = new google.maps.Map(document.getElementById('mapDiv'), {
+            center: initialLocation,
+            zoom: 12
         });
 
-        // Fit map to show all markers
-        map.fitBounds(bounds);
-    });
-}
+        // Load and display signages
+        fetchSignages().then(signages => {
+            if (!signages?.length) return;
 
-function highlightMarker(selectedMarker) {
-    // Reset all markers
-    markers.forEach(marker => {
-        marker.setIcon(defaultIcon);
-        marker.setAnimation(null);
-    });
+            const bounds = new google.maps.LatLngBounds();
 
-    // Highlight selected marker
-    selectedMarker.setIcon(highlightedIcon);
-    selectedMarker.setAnimation(google.maps.Animation.BOUNCE);
-    
-    // Center map on selected marker
-    map.panTo(selectedMarker.getPosition());
-    map.setZoom(10);
-}
+            // Clear existing markers
+            markers.forEach(marker => marker.setMap(null));
+            markers = [];
 
-// For external clicks (e.g., from a list)
-function changeLocation(event, lat, lan) {
-    event.preventDefault();
-    const targetLat = parseFloat(lat);
-    const targetLng = parseFloat(lan);
+            signages.forEach(signage => {
+                const lat = parseFloat(signage.lat);
+                const lng = parseFloat(signage.lan);
 
-    if (isNaN(targetLat) || isNaN(targetLng)) return;
+                if (isNaN(lat) || isNaN(lng)) {
+                    console.warn('Invalid coordinates:', signage);
+                    return;
+                }
 
-    // Find matching marker
-    const marker = markers.find(m => 
-        Math.abs(m.getPosition().lat() - targetLat) < 0.0001 &&
-        Math.abs(m.getPosition().lng() - targetLng) < 0.0001
-    );
+                const position = {
+                    lat,
+                    lng
+                };
+                const marker = new google.maps.Marker({
+                    position,
+                    map,
+                    title: signage.name,
+                    icon: defaultIcon
+                });
 
-    if (marker) highlightMarker(marker);
-}
+                // Add click listener to marker
+                marker.addListener('click', () => {
+                    highlightMarker(marker);
+                });
 
-loadGoogleMapsAPI(initMap);
+                markers.push(marker);
+                bounds.extend(position);
+            });
+
+            // Fit map to show all markers
+            map.fitBounds(bounds);
+        });
+    }
+
+    function highlightMarker(selectedMarker) {
+        // Reset all markers
+        markers.forEach(marker => {
+            marker.setIcon(defaultIcon);
+            marker.setAnimation(null);
+        });
+
+        // Highlight selected marker
+        selectedMarker.setIcon(highlightedIcon);
+        selectedMarker.setAnimation(google.maps.Animation.BOUNCE);
+
+        // Center map on selected marker
+        map.panTo(selectedMarker.getPosition());
+        map.setZoom(10);
+    }
+
+    // For external clicks (e.g., from a list)
+    function changeLocation(event, lat, lan) {
+        event.preventDefault();
+        const targetLat = parseFloat(lat);
+        const targetLng = parseFloat(lan);
+
+        if (isNaN(targetLat) || isNaN(targetLng)) return;
+
+        // Find matching marker
+        const marker = markers.find(m =>
+            Math.abs(m.getPosition().lat() - targetLat) < 0.0001 &&
+            Math.abs(m.getPosition().lng() - targetLng) < 0.0001
+        );
+
+        if (marker) highlightMarker(marker);
+    }
+
+    loadGoogleMapsAPI(initMap);
 
 
 
@@ -1676,25 +1695,29 @@ loadGoogleMapsAPI(initMap);
                                     </div>
                                 </div>
                                 
-                                <div class="row">
-                                    <p class="d-flex justify-content-center">Art work Dimensinon</p>
+                                <div class="row d-flex">
+                                  <div class="col-md-12 d-flex justify-content-center gap-5 mb-3">
+                                        <p class="m-0">Art Work Dimension</p>
+                                        <p class="m-0">Actual Dimension</p>
+                                    </div>
+
                                     
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <p><strong>Height:</strong> ${signage.height} cm</p>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <p><strong>Width:</strong> ${signage.width} cm</p>
                                     </div>
-                                </div>
+                                
 
 
-                                <div class="row">
-                                    <p class="d-flex justify-content-center">Actual Dimensinon</p>
+                                
                                     
-                                    <div class="col-md-6">
+                                    
+                                    <div class="col-md-3">
                                         <p><strong>Height:</strong> ${signage.actual_height} cm</p>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <p><strong>Width:</strong> ${signage.actual_width} cm</p>
                                     </div>
                                 </div>
