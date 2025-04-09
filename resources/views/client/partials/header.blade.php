@@ -27,12 +27,15 @@
             <span>{{ \Carbon\Carbon::now()->format('M d, Y') }}</span>
         </div>
         <div class="btn-group" role="group">
-            <button type="button" class="btn tm-new-btn dropdown-toggle text-dark" data-bs-toggle="dropdown" aria-expanded="false">{{session()->get('locale')=='ar'?'العربية':'English'}}</button>
+            <button type="button" class="btn tm-new-btn dropdown-toggle text-dark" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ session()->get('locale') == 'ar' ? 'العربية' : 'English' }}
+            </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{ route('lang', ['lang' => 'en']) }}">English</a></li>
-                <li><a class="dropdown-item" href="{{ route('lang', ['lang' => 'ar']) }}">{{__('menu.arabic')}}</a></li>
+                <li><a class="dropdown-item" href="{{ route('lang', ['lang' => 'ar']) }}">{{ __('menu.arabic') }}</a></li>
             </ul>
         </div>
+
     </div>
 
     <div class="dashboard-profile">

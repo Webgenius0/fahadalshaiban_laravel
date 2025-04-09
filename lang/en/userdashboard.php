@@ -40,7 +40,7 @@ return [
     'describe'         => 'Describe your campaign bellow',
     'addtitle'         => 'Add Title',
     'campaigndetails'  => 'Campaign Description',
-    'objective'        => 'What is your Objective?',
+    'objective'        => 'Objective',
     'title1'           => 'Brand awareness and reach',
     'des1'             => 'Increase visibility and recognition of your brand or product among your target audience.',
     'title2'           => 'Store visitors',
