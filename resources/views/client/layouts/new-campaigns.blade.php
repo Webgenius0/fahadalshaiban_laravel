@@ -1471,6 +1471,8 @@
             script.async = true;
             script.defer = true;
             document.body.appendChild(script);
+
+            // Assign the callback for the API load
             window.initMap = callback;
         }
     }
