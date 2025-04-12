@@ -77,5 +77,6 @@ class Signage extends Model
         return $this->hasManyThrough(CampaignDetails::class, OrderItem::class, 'signage_id', 'order_id', 'id', 'order_id');
     }
 
+    
 
 }

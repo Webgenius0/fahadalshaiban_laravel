@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Helpers\Helper;
 use App\Models\Signage;
 use App\Models\Category;
+use App\Models\Setting;
 use Illuminate\Http\Request;
-
+use App\Mail\SignageAddedNotification;
+use Illuminate\Support\Facades\Mail;
 
 class SignageController extends Controller
 {
@@ -59,7 +61,7 @@ class SignageController extends Controller
         $slug = Helper::makeSlug(Signage::class, $validatedData['name']);
 
         // Create the new signage record
-        Signage::create([
+        $signage =  Signage::create([
             'user_id' => auth()->id(),
             'name' => $validatedData['name'],
             'category_name' => $validatedData['category_name'],
@@ -83,6 +85,13 @@ class SignageController extends Controller
             'status' => 'inactive',
         ]);
 
+        $mailto = Setting::first();
+        if ($mailto) {
+            Mail::to($mailto->email)->send(new SignageAddedNotification($signage));
+        }
+
+
+        // Mail::to('sagorwdpf@gmail.com')->send(new SignageAddedNotification($signage));
         flash('Signage created successfully.');
         return redirect()->route('owner.dashboard');
     }

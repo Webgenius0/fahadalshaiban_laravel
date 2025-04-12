@@ -185,7 +185,35 @@
         </div> -->
     </div>
     <!-- show selected signage price days and total -->
-    <div class="card col-md-5 mr-6 " style="background-color:rgb(244, 245, 247);  display: none; height: 80px; border-radius: 10px; padding: 20px; margin-bottom: 20px;">
+   
+
+
+
+
+    <section>
+        <div class="step-container">
+            <div class="step">
+                <div class="step-label">{{__('userdashboard.objective')}}</div>
+                <div class="step-circle"></div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step">
+                <div class="step-label">{{__('userdashboard.selectsignage')}}</div>
+                <div class="step-circle"></div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step">
+                <div class="step-label">{{__('userdashboard.adddesign')}}</div>
+                <div class="step-circle"></div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step">
+                <div class="step-label">{{__('userdashboard.review')}}</div>
+                <div class="step-circle"></div>
+            </div>
+        </div>
+
+        <div class="card col-md-5 mr-6 " style="background-color:rgb(244, 245, 247);  display: none; height: 80px; border-radius: 10px; padding: 20px; margin-bottom: 20px;">
         <!-- First Row -->
         <div class="row">
             <!-- <div class="col-md-6 ">
@@ -216,32 +244,6 @@
         </div>
 
     </div>
-
-
-
-
-    <section>
-        <div class="step-container">
-            <div class="step">
-                <div class="step-label">{{__('userdashboard.objective')}}</div>
-                <div class="step-circle"></div>
-            </div>
-            <div class="step-line"></div>
-            <div class="step">
-                <div class="step-label">{{__('userdashboard.selectsignage')}}</div>
-                <div class="step-circle"></div>
-            </div>
-            <div class="step-line"></div>
-            <div class="step">
-                <div class="step-label">{{__('userdashboard.adddesign')}}</div>
-                <div class="step-circle"></div>
-            </div>
-            <div class="step-line"></div>
-            <div class="step">
-                <div class="step-label">{{__('userdashboard.review')}}</div>
-                <div class="step-circle"></div>
-            </div>
-        </div>
 
         <form class="multi-step-form">
             <div class="describe-campaign-wrapper form-step active">
@@ -1275,28 +1277,29 @@
     document.getElementById('start-date').addEventListener('change', storeDifference);
     document.getElementById('end-date').addEventListener('change', storeDifference);
 
+    
+
+    // campaign details
     const idArray = new Set();
+    $(document).on('click', '.add-signage', function () {
+    var signageId = $(this).data('id');
+    if (!signageId) return;
 
-    $(document).on('click', '.add-signage', function() {
-        var signageId = $(this).data('id');
-        if (idArray.has(signageId)) {
+    if (idArray.has(signageId)) {
+        idArray.delete(signageId);
+        console.log("Removed Signage ID: ", signageId);
 
-            idArray.delete(signageId);
-            console.log("Removed Signage ID: ", signageId);
-        } else {
-
-            idArray.add(signageId);
-            console.log("Added Signage ID: ", signageId);
-            $(`.signage-table tbody tr[data-id="${signageId}"]`).remove();
-        }
-
-        $('#signage-count').val(idArray.size);
-
-        localStorage.setItem('selectedSignageIds', JSON.stringify(Array.from(idArray)));
+        $(`.signage-table tbody tr[data-id="${signageId}"]`).remove();
+    } else {
+        idArray.add(signageId);
+        console.log("Added Signage ID: ", signageId);
         fetchSignageLocation(signageId);
-        showDetails(signageId);
+    }
 
-    });
+    $('#signage-count').val(idArray.size);
+    localStorage.setItem('selectedSignageIds', JSON.stringify(Array.from(idArray)));
+    showDetails(signageId);
+});
 
 
 
