@@ -1613,7 +1613,7 @@
 
         // Send an AJAX request to fetch the signage details using the new URL
         $.ajax({
-            url: '/get-signage-location/' + signageId, // Update the URL to the new endpoint
+            url: '/get-signage-location/' + signageId, 
             type: 'GET',
             success: function(response) {
                 if (response) {
