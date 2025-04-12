@@ -90,8 +90,6 @@ class SignageController extends Controller
             Mail::to($mailto->email)->send(new SignageAddedNotification($signage));
         }
 
-
-        // Mail::to('sagorwdpf@gmail.com')->send(new SignageAddedNotification($signage));
         flash('Signage created successfully.');
         return redirect()->route('owner.dashboard');
     }
