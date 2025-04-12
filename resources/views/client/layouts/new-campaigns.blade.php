@@ -1708,11 +1708,7 @@
                                     <div class="col-md-3">
                                         <p><strong>Width:</strong> ${signage.width} cm</p>
                                     </div>
-                                
-
-
-                                
-                                    
+                         
                                     
                                     <div class="col-md-3">
                                         <p><strong>Height:</strong> ${signage.actual_height} cm</p>
