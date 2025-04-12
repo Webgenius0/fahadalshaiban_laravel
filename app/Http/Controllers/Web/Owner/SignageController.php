@@ -85,10 +85,10 @@ class SignageController extends Controller
             'status' => 'inactive',
         ]);
 
-        $mailto = Setting::first();
-        if ($mailto) {
-            Mail::to($mailto->email)->send(new SignageAddedNotification($signage));
-        }
+        // $mailto = Setting::first();
+        // if ($mailto) {
+        //     Mail::to($mailto->email)->send(new SignageAddedNotification($signage));
+        // }
 
         flash('Signage created successfully.');
         return redirect()->route('owner.dashboard');
