@@ -19,6 +19,7 @@ class OtpVerificationController extends Controller
 {
     public function index()
     {
+        dd('index');
         $user = auth()->user();
         Otp::where('user_id', $user->id)->delete();
         if ($user->otp) {
