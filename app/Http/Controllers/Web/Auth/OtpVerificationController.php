@@ -19,24 +19,25 @@ class OtpVerificationController extends Controller
 {
     public function index()
     {
-        // dd('index');
-        // $user = auth()->user();
-        // Otp::where('user_id', $user->id)->delete();
-        // if ($user->otp) {
-        //     $otp = $user->otp;
-        //     if (Carbon::parse($otp->created_at)->addMinutes(10) < Carbon::now()) {
-        //         $otp->delete();
-        //     } else {
-        //         return view('auth.otp', ['code' => $otp->code]);
-        //     }
-        // }
+        
+        $user = auth()->user();
+        dd($user);
+        Otp::where('user_id', $user->id)->delete();
+        if ($user->otp) {
+            $otp = $user->otp;
+            if (Carbon::parse($otp->created_at)->addMinutes(10) < Carbon::now()) {
+                $otp->delete();
+            } else {
+                return view('auth.otp', ['code' => $otp->code]);
+            }
+        }
 
-        // $code = rand(100000, 999999);
-        // Otp::create([
-        //     'code' => $code,
-        //     'user_id' => $user->id
-        // ]);
-        // Mail::to($user->email)->send(new OtpMail($code));
+        $code = rand(100000, 999999);
+        Otp::create([
+            'code' => $code,
+            'user_id' => $user->id
+        ]);
+        Mail::to($user->email)->send(new OtpMail($code));
         return view('auth.otp');
     }
 
