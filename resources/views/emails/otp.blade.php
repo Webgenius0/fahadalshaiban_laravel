@@ -85,7 +85,7 @@
     <p>Please verify your email address to ensure you are the owner of this account.</p>
     <p>Your OTP code is: <span class="otp-code">{{ $otp }}</span></p>
     <p>Enter this code on the verification page to complete the process.</p>
-    <a href="{{ route('email.otp') }}" class="btn">Verify Now</a>
+    <a href="{{ route('email.otp.show') }}" class="btn">Verify Now</a>
     <div class="footer">
         <p>Kind regards,</p>
         <p>{{ config('app.name') }}</p>

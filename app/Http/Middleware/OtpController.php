@@ -14,6 +14,6 @@ class OtpController
         if (Auth::check() && Auth::user()->email_verified_at != null) {
             return $next($request);
         }
-        return redirect()->route('email.otp');
+        return redirect()->route('email.otp.show');
     }
 }

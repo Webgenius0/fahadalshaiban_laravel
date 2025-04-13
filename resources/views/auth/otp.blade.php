@@ -17,7 +17,7 @@
             verify your email address. The code will expire in <span>4:59</span>
         </p>
 
-        <form method="POST" action="{{ route('email.otp') }}">
+        <form method="POST" action="{{ route('email.otp.send') }}">
             @csrf
             <div class="code-container">
                 @for ($i = 0; $i < 6; $i++)
