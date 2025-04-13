@@ -1466,27 +1466,14 @@
             callback();
         } else {
             const script = document.createElement('script');
-<<<<<<< HEAD
-            let api = "{{ env('GOOGLE_MAPS_API_KEY') }}";
-=======
             const api = "{{ env('GOOGLE_MAPS_API_KEY') }}";
->>>>>>> sagor
             script.src = `https://maps.googleapis.com/maps/api/js?key=${api}&callback=initMap`;
             script.async = true;
             script.defer = true;
             document.body.appendChild(script);
-<<<<<<< HEAD
-
-            // Assign the callback for the API load
             window.initMap = callback;
         }
     }
-
-=======
-            window.initMap = callback;
-        }
-    }
->>>>>>> sagor
 
     function fetchSignages() {
         return fetch('/get-signages')
