@@ -32,12 +32,12 @@ class OtpVerificationController extends Controller
         //     }
         // }
 
-        $code = rand(100000, 999999);
-        Otp::create([
-            'code' => $code,
-            'user_id' => $user->id
-        ]);
-        Mail::to($user->email)->send(new OtpMail($code));
+        // $code = rand(100000, 999999);
+        // Otp::create([
+        //     'code' => $code,
+        //     'user_id' => $user->id
+        // ]);
+        // Mail::to($user->email)->send(new OtpMail($code));
                         return view('auth.otp');
 
     }
