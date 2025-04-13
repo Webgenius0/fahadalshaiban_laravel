@@ -21,7 +21,7 @@ class OtpVerificationController extends Controller
     {
         
         $user = auth()->user();
-        dd($user);
+        // dd($user);
         // $otp =  Otp::where('user_id', $user->id)->delete();
         // dd($otp);
         // if ($user->otp) {
@@ -33,12 +33,14 @@ class OtpVerificationController extends Controller
         //     }
         // }
 
-        // $code = rand(100000, 999999);
-        // Otp::create([
-        //     'code' => $code,
-        //     'user_id' => $user->id
-        // ]);
-        // Mail::to($user->email)->send(new OtpMail($code));
+        $code = rand(100000, 999999);
+        $otp =  Otp::create([
+            'code' => $code,
+            'user_id' => $user->id
+        ]);
+
+        dd($otp);
+        Mail::to($user->email)->send(new OtpMail($code));
                         return view('auth.otp');
 
     }
