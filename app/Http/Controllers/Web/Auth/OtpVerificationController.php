@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Web\Auth;
 
 use App\Http\Controllers\Controller;
@@ -19,7 +20,7 @@ class OtpVerificationController extends Controller
 {
     public function index()
     {
-        
+
         $user = auth()->user();
         // dd($user);
         // $otp =  Otp::where('user_id', $user->id)->delete();
@@ -41,9 +42,8 @@ class OtpVerificationController extends Controller
 
         // dd($otp);
         $mail = Mail::to($user->email)->send(new OtpMail($otp->code));
-        dd($mail);
-                        return view('auth.otp');
-
+        // dd($mail);
+        return view('auth.otp');
     }
 
     public function store(Request $request)
@@ -81,9 +81,5 @@ class OtpVerificationController extends Controller
         } else {
             return redirect()->intended(route('home', absolute: false))->with('t-error', 'Something went wrong. Please try again.');
         }
-        
     }
-
-
 }
-
