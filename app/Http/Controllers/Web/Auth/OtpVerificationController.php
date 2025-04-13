@@ -24,7 +24,7 @@ class OtpVerificationController extends Controller
             if (Carbon::parse($otp->created_at)->addMinutes(10) < Carbon::now()) {
                 $otp->delete();
             } else {
-                return view('auth.login', ['code' => $otp->code]);
+                return view('auth.otp', ['code' => $otp->code]);
             }
         }
 
@@ -34,7 +34,7 @@ class OtpVerificationController extends Controller
             'user_id' => $user->id
         ]);
         Mail::to($user->email)->send(new OtpMail($code));
-        return view('auth.login');
+        return view('auth.otp');
     }
 
     public function store(Request $request)
