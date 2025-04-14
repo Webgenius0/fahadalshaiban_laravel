@@ -24,7 +24,7 @@ class OtpVerificationController extends Controller
         $user = auth()->user();
         
         $otp =  Otp::where('user_id', $user->id)->delete();
-        dd($otp);
+        // dd($otp);
         if ($user->otp) {
             $otp = $user->otp;
             if (Carbon::parse($otp->created_at)->addMinutes(10) < Carbon::now()) {
