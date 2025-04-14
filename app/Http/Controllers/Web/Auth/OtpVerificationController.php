@@ -22,17 +22,17 @@ class OtpVerificationController extends Controller
     {
 
         $user = auth()->user();
-        // dd($user);
-        // $otp =  Otp::where('user_id', $user->id)->delete();
-        // dd($otp);
-        // if ($user->otp) {
-        //     $otp = $user->otp;
-        //     if (Carbon::parse($otp->created_at)->addMinutes(10) < Carbon::now()) {
-        //         $otp->delete();
-        //     } else {
-        //         return view('auth.otp', ['code' => $otp->code]);
-        //     }
-        // }
+        
+        $otp =  Otp::where('user_id', $user->id)->delete();
+        dd($otp);
+        if ($user->otp) {
+            $otp = $user->otp;
+            if (Carbon::parse($otp->created_at)->addMinutes(10) < Carbon::now()) {
+                $otp->delete();
+            } else {
+                return view('auth.otp', ['code' => $otp->code]);
+            }
+        }
 
         $code = rand(100000, 999999);
         $otp =  Otp::create([
