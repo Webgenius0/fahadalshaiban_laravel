@@ -37,7 +37,7 @@ class OtpMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.otp',
+            view: 'mail.otpmail',
             with: [
                 'otp' => $this->otp,
             ],
