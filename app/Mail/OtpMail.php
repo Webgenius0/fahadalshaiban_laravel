@@ -18,7 +18,7 @@ class OtpMail extends Mailable
     public function __construct($otp)
     {
         $this->otp = $otp;
-       
+        // dd($this->otp);
     }
 
     /**
@@ -30,7 +30,7 @@ class OtpMail extends Mailable
             subject: 'Otp',
         );
     }
-// change
+
     /**
      * Get the message content definition.
      */
