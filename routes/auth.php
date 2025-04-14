@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function () {
         ->name('verification.verify'); */
 
 
-    Route::get('email/otp/show', [OtpVerificationController::class, 'index'])->name('email.otp.show');
+    Route::get('email/otp', [OtpVerificationController::class, 'index'])->name('email.otp');
     Route::post('email/otp/send', [OtpVerificationController::class, 'store'])->name('email.otp.send');
 
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
