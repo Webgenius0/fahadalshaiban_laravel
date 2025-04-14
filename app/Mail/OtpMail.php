@@ -29,7 +29,7 @@ class OtpMail extends Mailable
             subject: 'Otp',
         );
     }
-
+// change
     /**
      * Get the message content definition.
      */
