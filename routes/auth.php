@@ -54,8 +54,8 @@ Route::middleware('auth')->group(function () {
         ->name('verification.verify'); */
 
 
-    Route::get('email/otp', [OtpVerificationController::class, 'index'])->name('email.otp');
-    Route::post('email/otp', [OtpVerificationController::class, 'store'])->name('email.otp');
+    Route::get('email/otp', [OtpVerificationController::class, 'index'])->name('email.otp.show');
+    Route::post('email/otp', [OtpVerificationController::class, 'store'])->name('email.otp.store');
 
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
         ->middleware('throttle:6,1')
