@@ -79,7 +79,7 @@
 <body>
 <div class="container">
     <div class="logo">
-        <img src="{{ env('APP_URL').'/default/logo.png' }}" alt="Logo">
+        <img src="{{ env('APP_URL') . '/default/logo.png' }}" alt="Logo">
     </div>
     <h1>Email Verification Required</h1>
     <p>Please verify your email address to ensure you are the owner of this account.</p>
