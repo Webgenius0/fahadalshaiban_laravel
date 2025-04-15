@@ -39,9 +39,9 @@ class OtpVerificationController extends Controller
             'user_id' => $user->id
         ]);
 
-        // dd($otp);
-        $mail = Mail::to($user->email)->send(new OtpMail($otp->code));
-        // dd($mail);
+    
+         Mail::to($user->email)->send(new OtpMail($otp->code));
+     
         return view('auth.otp');
     }
 
