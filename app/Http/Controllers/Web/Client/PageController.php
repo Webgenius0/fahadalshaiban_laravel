@@ -38,9 +38,9 @@ class PageController extends Controller
                 'email' => 'required|email',
                 'password' => 'nullable',  // Make password optional
                 'confirm_password' => 'nullable|same:password',
-                'phone' => 'required',
-                'address' => 'required',
-                'vat_no' => 'required',
+                'phone' => 'nullable',
+                'address' => 'nullable',
+                'vat_no' => 'nullable',
                 'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Uncomment if you want to validate the avatar image type
             ]);
 

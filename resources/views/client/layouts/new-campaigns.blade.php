@@ -229,9 +229,9 @@
                 </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="d-flex justify-content-between">
-                    <label for="estimatedViews" style="font-size: 15px;">Estimated views per days:</label>
+                    <label for="estimatedViews" style="font-size: 15px;">Daily Views:</label>
                     <strong id="estimatedViews"></strong>
                 </div>
             </div>
@@ -1664,7 +1664,7 @@
                                                         stroke-linejoin="round" />
                                                 </svg>
                                             </span>
-                                        <p><strong>Estimated Views:</strong> ${signage.avg_daily_views}</p>
+                                        <p><strong>Daily Views:</strong> ${signage.avg_daily_views}</p>
                                     </div>
                                     <div class="col-md-5">
                                           <span class="billboard-card-info-icon">
@@ -1700,29 +1700,38 @@
                                     </div>
                                 </div>
                                 
-                                <div class="row d-flex">
-                                  <div class="col-md-12 d-flex justify-content-center gap-5 mb-3">
-                                        <p class="m-0">Art Work Dimension</p>
-                                        <p class="m-0">Actual Dimension</p>
+                              <div class="row d-flex">
+                                    <!-- Art Work Dimension -->
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-center">
+                                           
+                                            <span class="billboard-card-info-icon">
+                                                 <img src="{{ asset('currency/graphic.png') }}" style="height: 25px; width: 25px;" alt="Price" />
+                                            </span>
+                                        </div>
+                                        <p><strong>Art Work Dimension:</strong><br> ${signage.height} × ${signage.width} cm</p>
                                     </div>
 
-                                    
-                                    <div class="col-md-3">
-                                        <p><strong>Height:</strong> ${signage.height} cm</p>
+                                    <!-- Actual Dimension -->
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-center">
+                                           
+                                            <span class="billboard-card-info-icon">
+                                                <img src="{{ asset('currency/actual_dimension.png') }}" style="height: 25px; width: 25px;" alt="Price" />
+                                            </span>
+                                        </div>
+                                        <p><strong>Actual Dimension:</strong><br>${signage.actual_height} × ${signage.actual_width} cm</p>
                                     </div>
-                                    <div class="col-md-3">
-                                        <p><strong>Width:</strong> ${signage.width} cm</p>
-                                    </div>
-                         
-                                    
-                                    <div class="col-md-3">
-                                        <p><strong>Height:</strong> ${signage.actual_height} cm</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p><strong>Width:</strong> ${signage.actual_width} cm</p>
+
+                                    <!-- Icon Only Section -->
+                                    <div class="col-md-4">
+                                        <span class="billboard-card-info-icon">
+                                            <img src="{{ asset('currency/airplay.png') }}" style="height: 25px; width: 25px;" alt="Price" />
+                                        </span>
+                                         <p><strong>Disply Size:</strong><br>${signage.actual_height} × ${signage.actual_width} cm</p>
                                     </div>
                                 </div>
-                            </div>
+
 
                     </div>
                 `;

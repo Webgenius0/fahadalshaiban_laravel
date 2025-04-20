@@ -24,6 +24,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('page/cart', 'cart')->name('page.cart');
     Route::get('page/started/form', 'startedForm')->name('page.started.form');
     Route::get('page/profile', 'profile')->name('client.page.profile');
+  
     Route::put('/page/profile/update', 'updateProfile')->name('client.page.profile.update');
 
     Route::get('/get-signage-location/{id}', 'getLocation')->name('page.location');

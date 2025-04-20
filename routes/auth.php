@@ -56,6 +56,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('email/otp/show', [OtpVerificationController::class, 'index'])->name('email.otp.show');
     Route::post('email/otp/send', [OtpVerificationController::class, 'store'])->name('email.otp.send');
+    Route::controller(OtpVerificationController::class)->group(function () {
+        Route::get('page/update', 'updateProfile')->name('client.page.update');
+        Route::put('page/update', 'update')->name('client.update');
+
+        Route::get('owner/update', 'updateOwner')->name('owner.page.update');
+        Route::put('owner/update', 'ownerUpdate')->name('owner.biodata.update');
+    });
 
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
         ->middleware('throttle:6,1')

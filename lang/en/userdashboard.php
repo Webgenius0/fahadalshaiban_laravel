@@ -12,10 +12,10 @@ return [
     'hellouser'        => 'Hello ',
 
     // cards
-    'activecampaigns'  => 'Active Campaigns',
+    'activecampaigns'  => 'Total Payments Incompleate',
     'totalbooked'      => 'Total Booked Signage',
     'totalviewe'       => 'Total Views',
-    'totalspending'    => 'Total Spending',
+    'totalspending'    => 'Total Rejected Campaigns',
 
     // body
     'campaign'         => 'Campaign',
@@ -63,7 +63,7 @@ return [
     'exposure'             => 'Select Exposure',
 
     'addsignage'           => 'Add Signage',
-    'estimateview'         => 'Estimate Views',
+    'estimateview'         => 'Daily Views',
     'priceperday'          => 'Price Per Day',
 
     'time'                 => ' sec per a minute',
