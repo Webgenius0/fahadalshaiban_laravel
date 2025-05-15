@@ -1,3 +1,4 @@
+
 @extends('auth.app')
 
 @section('content')
@@ -10,7 +11,7 @@
 
         <div class="verify-divider-line"></div>
         <h5 class="notify-alert">
-            A verification code has been sent to @peatix.com
+            A verification code has been sent to {{ auth()->user()->email }}
         </h5>
         <p class="remaining-time-text">
             Please check your inbox and enter the verification code below to

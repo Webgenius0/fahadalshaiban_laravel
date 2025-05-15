@@ -550,8 +550,7 @@ $feedback=App\Models\Feedback::all();
 <!-- testimonial starts -->
 <section class="testimonial">
     <div class="my-container">
-        <h2 class="section-title testimonial-title text-center">Don't just take our words for it,<br> here from our
-            ecstatic customers</h2>
+        <h2 class="section-title testimonial-title text-center google-font-arabic">{{__('menu.review')}}</h2>
         <div class="review-flex ">
             <div class="slide-container swiper">
                 <div class="slide-content">

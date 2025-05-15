@@ -39,7 +39,7 @@ $count_client = App\Models\User::role('client')->count();
 @section('content')
 <div class="main-content">
     <section class="overview-cards-wrapper">
-        <div class="overview-card">
+        <div class="overview-card ">
             <h3 class="overview-card-title">Total Signage</h3>
             <div class="overview-card-content">
                 <p class="overview-card-amount">{{$total_signage}}</p>
@@ -100,7 +100,7 @@ $count_client = App\Models\User::role('client')->count();
                 </div>
             </div>
         </div>
-        <div class="overview-card">
+        <!-- <div class="overview-card">
             <h3 class="overview-card-title">Total Views</h3>
             <div class="overview-card-content">
                 <p class="overview-card-amount">18k</p>
@@ -121,7 +121,7 @@ $count_client = App\Models\User::role('client')->count();
                     </svg>
                 </div>
             </div>
-        </div>
+        </div> -->
     </section>
 
     <section class="campaign-wrapper">

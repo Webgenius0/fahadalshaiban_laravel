@@ -109,7 +109,7 @@
                         <h3 class="verified-message-header section-title">
                             Congratulations!!
                           </h3>
-                          <p class="section-sub-text">You have successfully applied for campaign, We need 15 days to approve </p>
+                          <p class="section-sub-text">You have successfully applied for campaign, We need 2 days to approve </p>
                       </div>
                       <a href="{{ route('page.new.campaigns') }}" class="new-btn">Run another campaign</a>
                 </div>

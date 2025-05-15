@@ -31,4 +31,7 @@ return [
     'owner_signup' => 'Sign up',
     'youremail_goes_here' => 'Your email goes here',
 
+    'review' => 'Don\'t just take our words for it,
+here from our ecstatic customers',
+
 ];

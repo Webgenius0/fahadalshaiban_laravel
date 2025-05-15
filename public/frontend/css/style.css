@@ -904,6 +904,15 @@
   align-items: center;
   padding-left: 120px;
 }
+.owner-register{
+  flex-grow: 1;
+  background: url("../images/image.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  padding-left: 120px;
+}
 
 .greeting-content h2 {
   overflow: hidden;

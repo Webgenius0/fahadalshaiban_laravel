@@ -7,20 +7,19 @@ use Illuminate\Support\Facades\Session;
 
 abstract class Controller
 {
-    // public function __construct()
-    // {
-    //     $locale = session()->get('locale') ?? "ar";
-    //     dd($locale);
-    //     Session::put('locale', $locale);
-    //     App::setLocale($locale);
-    // }
-
     public function __construct()
     {
-        $locale = session()->get('locale', 'ar'); 
-
-        session()->put('locale', $locale);
-        app()->setLocale($locale);
+        $locale = session()->get('locale') ?? "en";
+        Session::put('locale', $locale);
+        App::setLocale($locale);
     }
+
+    // public function __construct()
+    // {
+    //     $locale = session()->get('locale', 'en'); 
+
+    //     session()->put('locale', $locale);
+    //     app()->setLocale($locale);
+    // }
 
 }

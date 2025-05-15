@@ -209,7 +209,7 @@
         </div>
         <!-- home-tutorials -->
     </div>
-    <div class="greeting-box">
+    <div class="owner-register">
         <div class="greeting-content">
             <h2>{{__('login.welcometitle')}}</h2>
             <p>{{__('register.welcomedes')}}</p>
